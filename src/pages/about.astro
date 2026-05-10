@@ -1,0 +1,796 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const leadership = [
+  {
+    name: 'Pastor George Kamalu',
+    role: 'Senior Pastor',
+    bio: 'Pastor George Kamalu has served as the Senior Pastor of Jesus House Jamaica for over 18 years. A graduate of RCCG Bible College and the University of the West Indies, he is known for his deep exposition of Scripture and his passion for community transformation.',
+    initials: 'EJ',
+  },
+  {
+    name: 'Pastor Deborah Kamalu',
+    role: 'Co-Pastor & Women\'s Ministry Lead',
+    bio: 'Pastor Grace serves alongside her husband with a heart for healing, prayer, and the empowerment of women. She founded the Jesus House Women\'s Fellowship and leads quarterly retreats for women across the Caribbean region.',
+    initials: 'GJ',
+  },
+  {
+    name: 'Pastor George Kamalu',
+    role: 'Associate Pastor & Youth Director',
+    bio: 'With a background in youth psychology and theology, Pastor David leads a vibrant youth ministry that has seen hundreds of young people come to faith. He oversees the annual Youth Conference and campus ministry outreach.',
+    initials: 'DM',
+  },
+];
+
+const overseers = [
+  { name: 'Pastor G.O. Adeyemi', title: 'General Overseer, RCCG', note: 'Under whose leadership the global RCCG network advances.' },
+  { name: 'Pastor Rotimi Williams', title: 'Regional Overseer, RCCG Caribbean', note: 'Providing apostolic oversight to all RCCG parishes in the Caribbean region.' },
+];
+
+const trustees = [
+  'Elder Samuel Barrett',
+  'Deacon Olivia Reynolds',
+  'Elder Marcus Thompson',
+  'Deacon Janet Clarke',
+  'Elder Paul Watson',
+];
+
+const values = [
+  { title: 'Faith', desc: 'We anchor every decision, ministry, and vision in the unchanging Word of God.' },
+  { title: 'Community', desc: 'We are stronger together. We cultivate belonging, friendship, and mutual care.' },
+  { title: 'Worship', desc: 'We exalt God in spirit and truth — in song, in service, and in everyday life.' },
+  { title: 'Excellence', desc: 'We offer God and our community our very best — in character, conduct, and craft.' },
+  { title: 'Transformation', desc: 'We believe the Gospel changes lives — and we carry that message with urgency.' },
+  { title: 'Integrity', desc: 'We walk in transparency, accountability, and the character of Christ in all things.' },
+];
+
+const beliefs = [
+  { article: '01', title: 'The Holy Scriptures', text: 'We believe the Bible is the inspired, infallible, and authoritative Word of God — the supreme standard for faith and life.' },
+  { article: '02', title: 'The Holy Trinity', text: 'We believe in one God, eternally existing in three persons: Father, Son, and Holy Spirit — co-equal, co-eternal, and of one essence.' },
+  { article: '03', title: 'Jesus Christ', text: 'We believe in the deity of our Lord Jesus Christ, His virgin birth, sinless life, atoning death, bodily resurrection, and glorious return.' },
+  { article: '04', title: 'Salvation', text: 'We believe salvation is by grace through faith alone in Jesus Christ — a free gift that cannot be earned or merited.' },
+  { article: '05', title: 'The Holy Spirit', text: 'We believe in the present ministry of the Holy Spirit, who indwells believers, empowers the church, and distributes spiritual gifts.' },
+  { article: '06', title: 'The Church', text: 'We believe in the universal Church — the body of Christ — and the local church as the God-ordained community for worship, discipleship, and mission.' },
+];
+---
+
+<Layout
+  title="About"
+  description="Learn about Jesus House Jamaica — our history, leadership, mission, vision, and what we believe as an RCCG parish in Kingston, Jamaica."
+>
+  <Nav />
+
+  <!-- Hero -->
+  <section class="about-hero">
+    <div class="about-hero-bg" aria-hidden="true"></div>
+    <div class="container about-hero-inner">
+      <span class="section-label">Our Story</span>
+      <h1 class="about-hero-title">Built on Covenant,<br/>Rooted in Love</h1>
+      <p class="about-hero-sub">
+        From a small gathering in Kingston to a thriving parish touching thousands of lives —
+        this is the story of Jesus House Jamaica.
+      </p>
+    </div>
+    <div class="about-hero-scroll-clip" aria-hidden="true"></div>
+  </section>
+
+  <!-- History -->
+  <section class="history-section">
+    <div class="container history-grid">
+      <div class="history-text">
+        <span class="section-label">Our History</span>
+        <h2 class="history-heading">A Church Born of Prayer</h2>
+        <p>
+          Jesus House Jamaica was established in 1998 when a small group of Spirit-filled believers in Kingston
+          gathered in a living room, hungry for the authentic presence of God. Under the mentorship of the
+          Redeemed Christian Church of God's Caribbean leadership, what began as a prayer meeting of twelve
+          grew rapidly into a congregation that would reshape the spiritual landscape of the island.
+        </p>
+        <p>
+          By 2003, we had moved into our first dedicated building on Constant Spring Road, Kingston. In the
+          years following, God blessed the church with growth in numbers, depth, and influence — launching
+          outreach programs into rural communities, establishing a thriving youth ministry, and developing
+          partnerships with churches across the Caribbean and in the United Kingdom.
+        </p>
+        <p>
+          Today, Jesus House Jamaica stands as one of the flagship RCCG parishes in the English-speaking
+          Caribbean — a house of prayer for all nations, with a congregation that reflects the beautiful
+          diversity of Jamaica itself.
+        </p>
+      </div>
+
+      <div class="history-milestones">
+        <div class="milestone">
+          <span class="milestone-year">1998</span>
+          <p class="milestone-text">Founded as a prayer meeting in a Kingston living room.</p>
+        </div>
+        <div class="milestone">
+          <span class="milestone-year">2001</span>
+          <p class="milestone-text">Officially registered as an RCCG Parish under the Caribbean Region.</p>
+        </div>
+        <div class="milestone">
+          <span class="milestone-year">2003</span>
+          <p class="milestone-text">Moved into our first dedicated church building on Constant Spring Road.</p>
+        </div>
+        <div class="milestone">
+          <span class="milestone-year">2009</span>
+          <p class="milestone-text">Launched the annual Youth Conference, drawing delegates from across the region.</p>
+        </div>
+        <div class="milestone">
+          <span class="milestone-year">2015</span>
+          <p class="milestone-text">Completed major sanctuary expansion project, doubling seating capacity.</p>
+        </div>
+        <div class="milestone">
+          <span class="milestone-year">2022</span>
+          <p class="milestone-text">Launched online worship and digital sermon archive reaching thousands globally.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission / Vision / Values -->
+  <section class="mvv-section">
+    <div class="container">
+      <div class="mvv-top">
+        <div class="mvv-block">
+          <div class="mvv-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h2 class="mvv-title">Our Mission</h2>
+          <p class="mvv-text">
+            To make heaven and to take as many people as possible with us — by preaching the Gospel,
+            making disciples, and demonstrating the love of Christ in every community we serve.
+          </p>
+        </div>
+
+        <div class="mvv-block mvv-block--accent">
+          <div class="mvv-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h2 class="mvv-title">Our Vision</h2>
+          <p class="mvv-text">
+            To be a center of spiritual excellence, community transformation, and global mission —
+            a church where every soul encounters God, finds family, and is sent out as a world-changer.
+          </p>
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div class="values-section">
+        <span class="section-label" style="display:block; text-align:center; margin-bottom:1rem;">Core Values</span>
+        <h2 class="values-heading">What We Stand For</h2>
+        <div class="values-grid">
+          {values.map((val) => (
+            <div class="value-card">
+              <div class="value-dot" aria-hidden="true"></div>
+              <h3 class="value-title">{val.title}</h3>
+              <p class="value-desc">{val.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership -->
+  <section class="leadership-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Meet the Team</span>
+        <h2 class="section-heading section-heading--light">Church Leadership</h2>
+      </div>
+
+      <div class="leadership-grid">
+        {leadership.map((leader) => (
+          <div class="leader-card">
+            <div class="leader-avatar" aria-hidden="true">
+              <span>{leader.initials}</span>
+            </div>
+            <h3 class="leader-name">{leader.name}</h3>
+            <p class="leader-role">{leader.role}</p>
+            <p class="leader-bio">{leader.bio}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Overseers -->
+      <div class="overseers-block">
+        <h3 class="overseers-title">General Overseers</h3>
+        <div class="overseers-grid">
+          {overseers.map((o) => (
+            <div class="overseer-card">
+              <p class="overseer-name">{o.name}</p>
+              <p class="overseer-title-text">{o.title}</p>
+              <p class="overseer-note">{o.note}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Board of Trustees -->
+      <div class="trustees-block">
+        <h3 class="trustees-title">Board of Trustees</h3>
+        <div class="trustees-list">
+          {trustees.map((trustee) => (
+            <div class="trustee-item">
+              <div class="trustee-dot" aria-hidden="true"></div>
+              <span>{trustee}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statement of Beliefs -->
+  <section class="beliefs-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Theology</span>
+        <h2 class="section-heading">What We Believe</h2>
+        <p class="section-subheading">
+          Our faith is grounded in historic, orthodox Christianity as expressed through Scripture.
+        </p>
+      </div>
+
+      <div class="beliefs-grid">
+        {beliefs.map((belief) => (
+          <div class="belief-card">
+            <span class="belief-article">{belief.article}</span>
+            <h3 class="belief-title">{belief.title}</h3>
+            <p class="belief-text">{belief.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-cta">
+    <div class="container about-cta-inner">
+      <h2 class="about-cta-heading">Ready to Join the Family?</h2>
+      <p class="about-cta-sub">We would love to meet you. Come as you are — there is room for you at Jesus House Jamaica.</p>
+      <div class="about-cta-btns">
+        <a href="/contact#visit" class="btn btn-gold">Plan Your Visit</a>
+        <a href="/contact" class="btn btn-outline-white">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .about-hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+  }
+
+  .about-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(212, 168, 67, 0.08) 0%, transparent 65%);
+  }
+
+  .about-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .about-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-white);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.7;
+    max-width: 52ch;
+  }
+
+  .about-hero-scroll-clip {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--color-cream);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  /* History */
+  .history-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .history-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .history-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .history-heading {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+    margin-bottom: 1.5rem;
+  }
+
+  .history-text p {
+    color: var(--color-muted);
+    margin-bottom: 1.25rem;
+    font-size: 0.975rem;
+  }
+
+  .history-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .milestone {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(13, 27, 62, 0.08);
+  }
+
+  .milestone:last-child {
+    border-bottom: none;
+  }
+
+  .milestone-year {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    min-width: 50px;
+    flex-shrink: 0;
+  }
+
+  .milestone-text {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* MVV */
+  .mvv-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .mvv-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .mvv-top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .mvv-block {
+    background-color: var(--color-cream);
+    border-radius: var(--radius-card);
+    padding: 2.5rem;
+    border-top: 4px solid transparent;
+    border-image: linear-gradient(90deg, var(--color-gold), var(--color-coral)) 1;
+  }
+
+  .mvv-block--accent {
+    background-color: var(--color-navy);
+  }
+
+  .mvv-block--accent .mvv-title,
+  .mvv-block--accent .mvv-text {
+    color: var(--color-white);
+  }
+
+  .mvv-block--accent .mvv-icon {
+    color: var(--color-gold);
+  }
+
+  .mvv-icon {
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .mvv-title {
+    font-size: 1.5rem;
+    color: var(--color-navy);
+    margin-bottom: 0.875rem;
+  }
+
+  .mvv-text {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .mvv-block--accent .mvv-text {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  /* Values */
+  .values-heading {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .values-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .values-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .value-card {
+    padding: 1.75rem;
+    border: 1px solid rgba(13, 27, 62, 0.1);
+    border-radius: var(--radius-card);
+    transition: border-color var(--transition-base), transform 0.25s ease;
+  }
+
+  .value-card:hover {
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  .value-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .value-title {
+    font-size: 1.1rem;
+    color: var(--color-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .value-desc {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  /* Leadership */
+  .leadership-section {
+    background-color: var(--color-navy);
+    padding: var(--section-padding) 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-navy);
+  }
+
+  .section-heading--light {
+    color: var(--color-white);
+  }
+
+  .section-subheading {
+    font-size: 1rem;
+    color: var(--color-muted);
+    margin-top: 0.75rem;
+  }
+
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .leadership-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .leadership-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .leader-card {
+    background-color: #172040;
+    border-radius: var(--radius-card);
+    padding: 2rem 1.75rem;
+    text-align: center;
+    border: 1px solid rgba(212, 168, 67, 0.12);
+  }
+
+  .leader-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-gold), var(--color-coral));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+
+  .leader-name {
+    font-size: 1.1rem;
+    color: var(--color-white);
+    margin-bottom: 0.25rem;
+  }
+
+  .leader-role {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .leader-bio {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.65;
+  }
+
+  /* Overseers */
+  .overseers-block {
+    margin-bottom: 3rem;
+  }
+
+  .overseers-title {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .overseers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .overseers-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .overseer-card {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-card);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .overseer-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 0.25rem;
+  }
+
+  .overseer-title-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.625rem;
+  }
+
+  .overseer-note {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.5;
+  }
+
+  /* Trustees */
+  .trustees-block {
+    text-align: center;
+  }
+
+  .trustees-title {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .trustees-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .trustee-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .trustee-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  /* Beliefs */
+  .beliefs-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .beliefs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .beliefs-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .beliefs-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .belief-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.75rem;
+    position: relative;
+    border-left: 3px solid var(--color-gold);
+  }
+
+  .belief-article {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: rgba(13, 27, 62, 0.07);
+    line-height: 1;
+    margin-bottom: 0.375rem;
+  }
+
+  .belief-title {
+    font-size: 1.1rem;
+    color: var(--color-navy);
+    margin-bottom: 0.625rem;
+  }
+
+  .belief-text {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  /* CTA */
+  .about-cta {
+    background: linear-gradient(135deg, var(--color-navy) 0%, #1a2d5a 100%);
+    padding: 5rem 0;
+  }
+
+  .about-cta-inner {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .about-cta-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-white);
+    margin-bottom: 1rem;
+  }
+
+  .about-cta-sub {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+    line-height: 1.65;
+  }
+
+  .about-cta-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    .about-hero {
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .mvv-block {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .leader-card,
+    .belief-card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .value-card {
+      padding: 1.25rem;
+    }
+
+    .about-cta {
+      padding: 3.5rem 0;
+    }
+
+    .trustee-item {
+      font-size: 0.825rem;
+      padding: 0.425rem 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,738 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+import rawVideos from '../data/videos.json';
+
+const YOUTUBE_STREAMS = 'https://www.youtube.com/@jesushousekingston/streams';
+
+// Newest first
+const allVideos = [...rawVideos].sort((a, b) => b.date.localeCompare(a.date));
+
+// Featured = most recent Sunday Service
+const featuredVideo = allVideos.find(v => v.category === 'Sunday Service') ?? allVideos[0];
+
+// Group by "YYYY-Month"
+interface MonthGroup {
+  month: string;
+  monthShort: string;
+  year: string;
+  id: string;
+  videos: typeof allVideos;
+}
+const monthMap = new Map<string, MonthGroup>();
+for (const v of allVideos) {
+  const key = `${v.year}-${v.month}`;
+  if (!monthMap.has(key)) {
+    monthMap.set(key, { month: v.month, monthShort: v.monthShort, year: v.year, id: key.toLowerCase().replace(/\s+/g, '-'), videos: [] });
+  }
+  monthMap.get(key)!.videos.push(v);
+}
+
+// Show 8 most recent months; rest via YouTube link
+const MAX_MONTHS = 8;
+const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
+---
+
+<Layout
+  title="Sermons"
+  description="Browse the full sermon archive of Jesus House Jamaica — audio and video messages organized by month, series, and pastor. Faith, renewal, and the Word of God."
+>
+  <Nav />
+
+  <!-- Hero -->
+  <section class="sermons-hero">
+    <div class="sermons-hero-bg" aria-hidden="true"></div>
+    <div class="container sermons-hero-inner">
+      <span class="section-label">The Word</span>
+      <h1 class="sermons-hero-title">Sermons & Messages</h1>
+      <p class="sermons-hero-sub">
+        Every message is an invitation — to know God more deeply, to grow in grace,
+        and to be transformed by the living Word.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured Sermon -->
+  <section class="featured-section">
+    <div class="container">
+      <span class="section-label">Featured Message</span>
+      <div class="featured-card">
+        <div class="featured-thumb">
+          <img
+            src={featuredVideo.thumbnail}
+            alt={featuredVideo.title}
+            loading="lazy"
+            width="480"
+            height="270"
+          />
+          <a
+            href={featuredVideo.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="play-btn"
+            aria-label={`Watch ${featuredVideo.title} on YouTube`}
+          >
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </a>
+        </div>
+        <div class="featured-info">
+          <div class="featured-meta">
+            <span class="featured-series">{featuredVideo.category}</span>
+            <span class="featured-sep" aria-hidden="true">·</span>
+            <span class="featured-date">{featuredVideo.dateNice}</span>
+          </div>
+          <h2 class="featured-title">{featuredVideo.title}</h2>
+          <p class="featured-pastor">Pastor George Kamalu</p>
+          <p class="featured-desc">
+            {featuredVideo.weekday} service — {featuredVideo.duration} &nbsp;·&nbsp; {featuredVideo.views.toLocaleString()} views
+          </p>
+          <div class="featured-actions">
+            <a
+              href={featuredVideo.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-gold"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              Watch on YouTube
+            </a>
+            <a href="/watch-live" class="btn btn-outline-navy">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>
+              </svg>
+              Watch Live
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Month Filter Tabs -->
+  <section class="archive-section">
+    <div class="container">
+      <div class="archive-header">
+        <h2 class="archive-title">Sermon Archive</h2>
+        <p class="archive-sub">Browse messages by month and series.</p>
+      </div>
+
+      <!-- Month navigation tabs -->
+      <div class="tabs-container">
+        <div class="tabs-scroll" role="tablist" aria-label="Filter sermons by month">
+          {monthGroups.map((g) => (
+            <a href={`#month-${g.id}`} class="tab-btn" role="tab">
+              {g.month} {g.year}
+            </a>
+          ))}
+          <a
+            href={YOUTUBE_STREAMS}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tab-btn tab-btn--yt"
+            role="tab"
+          >
+            All on YouTube ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Sermon Archive Grid -->
+      <div class="archive-grid">
+        {monthGroups.map((group) => (
+          <div class="month-group" id={`month-${group.id}`}>
+            <div class="month-header">
+              <div class="month-label">
+                <span class="month-short">{group.monthShort}</span>
+                <span class="month-year">{group.year}</span>
+              </div>
+              <div class="month-meta">
+                <span class="month-series">{group.month} {group.year}</span>
+                <span class="month-count">{group.videos.length} messages</span>
+              </div>
+            </div>
+
+            <div class="sermon-list">
+              {group.videos.map((video) => (
+                <div class="sermon-row">
+                  <div class="sermon-type" aria-label="Video">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                    </svg>
+                  </div>
+                  <div class="sermon-row-info">
+                    <p class="sermon-row-title">{video.title}</p>
+                    <p class="sermon-row-pastor">
+                      <span class="sermon-cat-pill">{video.category}</span>
+                      {video.dateShort}{video.duration ? ` · ${video.duration}` : ''}
+                    </p>
+                  </div>
+                  <a
+                    href={video.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="sermon-row-listen"
+                    aria-label={`Watch ${video.title} on YouTube`}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe CTA -->
+  <section class="subscribe-section">
+    <div class="container subscribe-inner">
+      <div class="subscribe-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+          <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+        </svg>
+      </div>
+      <div class="subscribe-text">
+        <h2 class="subscribe-heading">Never Miss a Message</h2>
+        <p class="subscribe-sub">Subscribe to receive new sermons directly in your inbox each week.</p>
+      </div>
+      <form class="subscribe-form" action="#" method="POST" novalidate>
+        <input type="email" placeholder="Your email address" aria-label="Email address for sermon subscription" />
+        <button type="submit" class="btn btn-gold">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .sermons-hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 5.5rem;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+    margin-bottom: -2rem;
+  }
+
+  .sermons-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(224, 90, 43, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(212, 168, 67, 0.08) 0%, transparent 50%);
+  }
+
+  .sermons-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+
+  .sermons-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .sermons-hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.7;
+    max-width: 50ch;
+  }
+
+  /* Featured */
+  .featured-section {
+    background-color: var(--color-cream);
+    padding: 5rem 0;
+  }
+
+  .featured-card {
+    margin-top: 1.5rem;
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 1px solid rgba(13, 27, 62, 0.08);
+    box-shadow: 0 8px 40px rgba(13, 27, 62, 0.08);
+  }
+
+  @media (min-width: 768px) {
+    .featured-card {
+      grid-template-columns: 320px 1fr;
+    }
+    .featured-thumb {
+      min-height: 240px;
+    }
+  }
+
+  .featured-thumb {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-navy) 0%, #1a2d5a 100%);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .featured-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .play-btn {
+    position: relative;
+    z-index: 2;
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-navy);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: pulse-glow 2.5s ease infinite;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 6px rgba(0,0,0,0.35);
+  }
+
+  .play-btn:hover {
+    transform: scale(1.08);
+    color: var(--color-navy);
+  }
+
+  .featured-info {
+    padding: 2rem 2.5rem;
+  }
+
+  .featured-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .featured-series {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .featured-sep {
+    color: var(--color-muted);
+  }
+
+  .featured-date {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .featured-title {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    color: var(--color-navy);
+    margin-bottom: 0.375rem;
+    line-height: 1.2;
+  }
+
+  .featured-pastor {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-coral);
+    margin-bottom: 1rem;
+  }
+
+  .featured-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    max-width: 60ch;
+  }
+
+  .featured-scripture {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+
+  .featured-scripture svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .featured-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Archive */
+  .archive-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .archive-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .archive-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .archive-sub {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+  }
+
+  /* Tabs */
+  .tabs-container {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(13, 27, 62, 0.1);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabs-scroll {
+    display: flex;
+    gap: 0;
+    min-width: max-content;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover {
+    color: var(--color-navy);
+    border-bottom-color: var(--color-gold);
+  }
+
+  .tab-btn--yt {
+    color: #CC0000;
+    margin-left: auto;
+  }
+
+  .tab-btn--yt:hover {
+    color: #CC0000;
+    border-bottom-color: #CC0000;
+  }
+
+  /* Archive Grid */
+  .archive-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .month-group {
+    border: 1px solid rgba(13, 27, 62, 0.08);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+
+  .month-header {
+    background-color: var(--color-navy);
+    padding: 1.25rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .month-label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .month-short {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--color-gold);
+  }
+
+  .month-year {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+  }
+
+  .month-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.125rem;
+  }
+
+  .month-series {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .month-count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .sermon-list {
+    background-color: var(--color-white);
+  }
+
+  .sermon-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.125rem 1.75rem;
+    border-bottom: 1px solid rgba(13, 27, 62, 0.06);
+    transition: background-color var(--transition-base);
+  }
+
+  .sermon-row:last-child {
+    border-bottom: none;
+  }
+
+  .sermon-row:hover {
+    background-color: var(--color-cream);
+  }
+
+  .sermon-type {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(212, 168, 67, 0.1);
+    border-radius: 50%;
+    color: var(--color-gold);
+  }
+
+  .sermon-row-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sermon-row-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.125rem;
+  }
+
+  .sermon-row-pastor {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .sermon-cat-pill {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-coral);
+    background: rgba(224, 90, 43, 0.08);
+    padding: 0.1rem 0.45rem;
+    border-radius: 0.25rem;
+  }
+
+  .sermon-row-listen {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background-color: var(--color-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-navy);
+    transition: transform 0.2s ease, background-color var(--transition-base);
+  }
+
+  .sermon-row-listen:hover {
+    transform: scale(1.1);
+    background-color: var(--color-coral);
+    color: var(--color-white);
+  }
+
+  /* Subscribe */
+  .subscribe-section {
+    background-color: var(--color-cream);
+    padding: 4rem 0;
+    border-top: 1px solid rgba(13, 27, 62, 0.08);
+  }
+
+  .subscribe-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .subscribe-inner {
+      flex-direction: row;
+      text-align: left;
+      align-items: center;
+    }
+  }
+
+  .subscribe-icon {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .subscribe-text {
+    flex: 1;
+  }
+
+  .subscribe-heading {
+    font-size: 1.5rem;
+    color: var(--color-navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .subscribe-sub {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .subscribe-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .subscribe-form {
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+    }
+  }
+
+  .subscribe-form input {
+    padding: 0.75rem 1.25rem;
+    border: 1.5px solid rgba(13, 27, 62, 0.15);
+    border-radius: 0.375rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text);
+    background-color: var(--color-white);
+    min-width: 240px;
+    transition: border-color var(--transition-base);
+  }
+
+  .subscribe-form input:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15);
+  }
+
+  .subscribe-form input::placeholder {
+    color: var(--color-muted);
+  }
+
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    .sermons-hero {
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .featured-card {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-play {
+      min-height: 140px;
+      padding: 1.75rem;
+    }
+
+    .featured-info {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .month-header {
+      padding: 1rem 1.25rem;
+    }
+
+    .month-short {
+      font-size: 1.2rem;
+    }
+
+    .sermon-row {
+      padding: 0.875rem 1.25rem;
+    }
+
+    .subscribe-section {
+      padding: 2.5rem 0;
+    }
+
+    .subscribe-form {
+      width: 100%;
+    }
+
+    .subscribe-form input {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .tabs-scroll {
+      flex-wrap: wrap;
+    }
+
+    .tab-btn--yt {
+      margin-left: 0;
+    }
+  }
+</style>

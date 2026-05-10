@@ -1,0 +1,519 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const values = [
+  {
+    key: 'worship',
+    title: 'Worship',
+    tagline: 'Exalting God in spirit and truth',
+    description: 'Worship is the heartbeat of everything we do at Jesus House Jamaica. We believe that authentic worship — in song, in prayer, in daily surrender — is not an event but a lifestyle. We gather to magnify the name of God and to offer Him the sacrifice of praise He alone deserves.',
+    color: 'gold',
+    icon: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M9 18V5l12-2v13"/>
+      <circle cx="6" cy="18" r="3"/>
+      <circle cx="18" cy="16" r="3"/>
+    </svg>`,
+  },
+  {
+    key: 'word',
+    title: 'Word',
+    tagline: 'Anchored in Scripture',
+    description: 'We are a people of the Word. Every message preached, every decision made, every programme undertaken is measured against the unchanging standard of God\'s Word. We believe that the Bible is alive, powerful, and sufficient — and that a church that neglects the Word quickly loses its way.',
+    color: 'coral',
+    icon: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+    </svg>`,
+  },
+  {
+    key: 'fellowship',
+    title: 'Fellowship',
+    tagline: 'Stronger together in community',
+    description: 'The Christian life was never meant to be lived alone. Fellowship is the divine design — iron sharpening iron, bearing one another\'s burdens, and celebrating together the goodness of God. We cultivate genuine community where every person finds belonging, friendship, and a spiritual family.',
+    color: 'gold',
+    icon: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>`,
+  },
+  {
+    key: 'outreach',
+    title: 'Outreach',
+    tagline: 'Carrying the Gospel beyond our walls',
+    description: 'We are compelled by the Great Commission. Jesus House Jamaica exists not only for those within our walls but for the communities, the nation, and the world beyond them. We believe the church is most alive when it is most outward-facing — sharing the love of Christ in tangible, transformative ways.',
+    color: 'coral',
+    icon: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>`,
+  },
+  {
+    key: 'discipleship',
+    title: 'Discipleship',
+    tagline: 'Making and maturing followers of Jesus',
+    description: 'Making converts is not enough — we are called to make disciples. Discipleship at Jesus House Jamaica is intentional, relational, and Scripture-centred. Through small groups, mentorship, and structured teaching, we walk alongside every believer from spiritual birth through to mature fruit-bearing.',
+    color: 'gold',
+    icon: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    </svg>`,
+  },
+];
+---
+
+<Layout
+  title="Our Values"
+  description="Discover the core values that drive Jesus House Jamaica — Worship, Word, Fellowship, Outreach, and Discipleship. An RCCG parish in Kingston, Jamaica."
+>
+  <Nav heroDark={true} />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="section-label">What We Stand For</span>
+      <h1 class="hero-title">Our Values</h1>
+      <p class="hero-sub">
+        Five pillars that shape our culture, guide our decisions,
+        and define who we are as a community of faith.
+      </p>
+    </div>
+  </section>
+
+  <!-- Theme Banner -->
+  <section class="theme-banner">
+    <div class="container theme-inner">
+      <p class="theme-verse">
+        "I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice,
+        holy, acceptable unto God, which is your reasonable service."
+      </p>
+      <span class="theme-ref">Romans 12:1 — The Heartbeat of Jesus House Jamaica</span>
+    </div>
+  </section>
+
+  <!-- Values Grid -->
+  <section class="values-section">
+    <div class="container">
+      <div class="values-intro">
+        <span class="section-label">Core Values</span>
+        <h2 class="values-heading">Five Pillars of Our Community</h2>
+        <p class="values-sub">
+          These values are not aspirational slogans — they are the living DNA of Jesus House Jamaica,
+          practised week by week in every gathering, every ministry, and every encounter.
+        </p>
+      </div>
+
+      <div class="values-grid">
+        {values.map((value, idx) => (
+          <article class={`value-card value-card--${value.color}`} id={value.key}>
+            <div class="value-number" aria-hidden="true">0{idx + 1}</div>
+            <div class="value-icon" aria-hidden="true" set:html={value.icon} />
+            <h2 class="value-title">{value.title}</h2>
+            <p class="value-tagline">{value.tagline}</p>
+            <p class="value-desc">{value.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Values in Action -->
+  <section class="action-section">
+    <div class="container">
+      <div class="action-header">
+        <span class="section-label">Values in Action</span>
+        <h2 class="action-heading">How Our Values Come Alive</h2>
+      </div>
+
+      <div class="action-grid">
+        <div class="action-card">
+          <div class="action-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="action-text">
+            <h3 class="action-title">Sunday Worship Service</h3>
+            <p class="action-desc">Every Sunday at 9:00 AM — a full celebration of worship, Word, and community.</p>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+          </div>
+          <div class="action-text">
+            <h3 class="action-title">Wednesday Bible Study</h3>
+            <p class="action-desc">Deep dives into Scripture every Wednesday at 6:00 PM, in-person and via Zoom.</p>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="action-text">
+            <h3 class="action-title">Cell Groups & Fellowships</h3>
+            <p class="action-desc">Mid-week home fellowships where believers grow together in faith and friendship.</p>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="action-text">
+            <h3 class="action-title">Community Outreach</h3>
+            <p class="action-desc">Regular outreach programmes serving Kingston's most vulnerable communities.</p>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="action-text">
+            <h3 class="action-title">Discipleship Pathways</h3>
+            <p class="action-desc">Structured spiritual growth tracks from new believer through to ministry leadership.</p>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="action-text">
+            <h3 class="action-title">Night Vigil Prayers</h3>
+            <p class="action-desc">Monthly all-night intercession — holding fast to the power of persistent prayer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="values-cta">
+    <div class="container values-cta-inner">
+      <h2 class="cta-heading">Live These Values With Us</h2>
+      <p class="cta-sub">
+        Our values are most powerful when lived in community. Come join us — there is a place for you here.
+      </p>
+      <div class="cta-btns">
+        <a href="/services" class="btn btn-gold">Join Us Sunday</a>
+        <a href="/departments" class="btn btn-outline-white">Explore Departments</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+    min-height: 380px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 30%, rgba(212, 168, 67, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 90%, rgba(224, 90, 43, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.75;
+    max-width: 50ch;
+  }
+
+  /* Theme Banner */
+  .theme-banner {
+    background: linear-gradient(90deg, var(--color-gold), #c4952e);
+    padding: 2.5rem 0;
+  }
+
+  .theme-inner {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .theme-verse {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--color-navy);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .theme-ref {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-navy);
+    opacity: 0.7;
+  }
+
+  /* Values */
+  .values-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .values-intro {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 4rem;
+  }
+
+  .values-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 1rem;
+  }
+
+  .values-sub {
+    font-size: 0.975rem;
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .values-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .values-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .value-card {
+    position: relative;
+    background-color: var(--color-cream);
+    border-radius: var(--radius-card);
+    padding: 2.5rem 2rem;
+    overflow: hidden;
+    border: 1px solid rgba(13, 27, 62, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(13, 27, 62, 0.1);
+  }
+
+  .value-card--gold {
+    border-top: 4px solid var(--color-gold);
+  }
+
+  .value-card--coral {
+    border-top: 4px solid var(--color-coral);
+  }
+
+  .value-number {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: rgba(13, 27, 62, 0.05);
+    line-height: 1;
+  }
+
+  .value-icon {
+    color: var(--color-gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .value-card--coral .value-icon {
+    color: var(--color-coral);
+  }
+
+  .value-title {
+    font-size: 1.5rem;
+    color: var(--color-navy);
+    margin-bottom: 0.375rem;
+  }
+
+  .value-tagline {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .value-card--coral .value-tagline {
+    color: var(--color-coral);
+  }
+
+  .value-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+
+  /* Action Section */
+  .action-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .action-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .action-heading {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .action-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .action-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .action-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 1.75rem;
+    display: flex;
+    gap: 1.125rem;
+    align-items: flex-start;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+    transition: border-color var(--transition-base);
+  }
+
+  .action-card:hover {
+    border-color: rgba(212, 168, 67, 0.4);
+  }
+
+  .action-icon {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(212, 168, 67, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .action-title {
+    font-size: 1rem;
+    color: var(--color-navy);
+    margin-bottom: 0.375rem;
+  }
+
+  .action-desc {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  /* CTA */
+  .values-cta {
+    background: linear-gradient(135deg, var(--color-navy) 0%, #172040 100%);
+    padding: 5rem 0;
+  }
+
+  .values-cta-inner {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .cta-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    color: var(--color-white);
+    margin-bottom: 1rem;
+  }
+
+  .cta-sub {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .cta-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    [class$="-hero"] { padding-top: 5.5rem; padding-bottom: 3.5rem; }
+    [class*="-card"] { padding: 1.5rem 1.25rem; }
+  }
+</style>

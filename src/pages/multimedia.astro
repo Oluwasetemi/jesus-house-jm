@@ -1,0 +1,690 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const videoCards = [
+  {
+    title: 'Sunday Worship Highlights',
+    description: 'A selection of powerful moments from our Sunday worship services.',
+    tag: 'Worship',
+    color: '#1a2d5a',
+  },
+  {
+    title: 'Pastor George Kamalu — Sermons',
+    description: 'In-depth biblical teaching from our Senior Pastor, Pastor George Kamalu.',
+    tag: 'Sermons',
+    color: '#2a3f5a',
+  },
+  {
+    title: 'Women\'s Fellowship Sessions',
+    description: 'Empowering messages and ministry moments from the Jesus House Women\'s Fellowship.',
+    tag: "Women's Ministry",
+    color: '#1e3050',
+  },
+  {
+    title: 'Youth Conference 2023',
+    description: 'Highlights from our electrifying annual Youth Conference — faith and fire for the next generation.',
+    tag: 'Youth',
+    color: '#162840',
+  },
+  {
+    title: 'Night Vigil Recordings',
+    description: 'Recorded moments from our monthly Night Vigil — hours of intercession and encounter.',
+    tag: 'Prayer',
+    color: '#0e1e38',
+  },
+  {
+    title: 'Special Events & Concerts',
+    description: 'Recordings from our Christmas concerts, anniversaries, and special gatherings.',
+    tag: 'Events',
+    color: '#1a2d5a',
+  },
+];
+---
+
+<Layout
+  title="Multimedia"
+  description="Watch sermons, concerts, and worship content from Jesus House Jamaica on YouTube. Including the 360° Christmas Concert and live worship recordings. RCCG Kingston, Jamaica."
+>
+  <Nav heroDark={true} />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="section-label">Watch & Listen</span>
+      <h1 class="hero-title">Multimedia</h1>
+      <p class="hero-sub">
+        Sermons, worship, concerts, and more — experience the life and ministry of
+        Jesus House Jamaica wherever you are in the world.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured: 360° Christmas Concert -->
+  <section class="featured-section">
+    <div class="container">
+      <span class="section-label">Featured Event</span>
+      <h2 class="featured-heading">360° Christmas Concert</h2>
+      <p class="featured-sub">
+        An unforgettable evening of Christmas worship — recorded live at Jesus House Jamaica.
+        Experience the joy, the glory, and the presence of God in a 360° concert celebration.
+      </p>
+
+      <div class="video-embed">
+        <div class="video-placeholder" aria-label="360° Christmas Concert Video">
+          <div class="video-overlay" aria-hidden="true">
+            <div class="play-ring">
+              <a
+                href="https://www.youtube.com/@jesushousekingston"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="play-btn"
+                aria-label="Watch 360° Christmas Concert on YouTube"
+              >
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="video-info">
+            <span class="video-tag">360° Christmas Concert</span>
+            <h3 class="video-title">Jesus House Jamaica — Christmas Celebration</h3>
+            <p class="video-desc">Watch on our YouTube channel</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="youtube-cta">
+        <div class="yt-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="#ff0000" aria-hidden="true">
+            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+            <polygon fill="white" points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02"/>
+          </svg>
+        </div>
+        <div class="yt-text">
+          <h3 class="yt-heading">Subscribe on YouTube</h3>
+          <p class="yt-sub">Never miss a sermon, service, or special event. Subscribe to the Jesus House Jamaica YouTube channel for all our latest content.</p>
+        </div>
+        <a
+          href="https://www.youtube.com/@jesushousekingston"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-gold"
+        >
+          Visit YouTube Channel
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Watch Live Banner -->
+  <section class="live-banner">
+    <div class="container live-inner">
+      <div class="live-dot-wrap" aria-hidden="true">
+        <span class="live-dot"></span>
+      </div>
+      <div class="live-text">
+        <h2 class="live-heading">Watch Live Every Sunday</h2>
+        <p class="live-sub">Join us live online every Sunday at 9:00 AM (Jamaica time) — worship with us from anywhere in the world.</p>
+      </div>
+      <a href="/watch-live" class="btn btn-outline-white">
+        Watch Live
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Video Grid -->
+  <section class="videos-section">
+    <div class="container">
+      <div class="videos-header">
+        <span class="section-label">Our Content</span>
+        <h2 class="videos-heading">Browse Our Content</h2>
+        <p class="videos-sub">
+          From Sunday sermons to special events — our YouTube channel is home to all of Jesus House Jamaica's multimedia content.
+        </p>
+      </div>
+
+      <div class="videos-grid">
+        {videoCards.map((card) => (
+          <a
+            href="https://www.youtube.com/@jesushousekingston"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="video-card"
+            aria-label={`Watch ${card.title} on YouTube`}
+          >
+            <div class="video-card-thumb" style={`background-color: ${card.color}`} aria-hidden="true">
+              <div class="thumb-play" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+              </div>
+              <span class="thumb-tag">{card.tag}</span>
+            </div>
+            <div class="video-card-body">
+              <h3 class="video-card-title">{card.title}</h3>
+              <p class="video-card-desc">{card.description}</p>
+              <div class="video-card-link">
+                Watch on YouTube
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Online Services -->
+  <section class="online-section">
+    <div class="container">
+      <div class="online-header">
+        <span class="section-label">Join Online</span>
+        <h2 class="online-heading">Online Meeting Links</h2>
+        <p class="online-sub">Can't join us in person? Connect digitally for Bible Study and Night Vigil via Zoom.</p>
+      </div>
+
+      <div class="zoom-cards">
+        <div class="zoom-card">
+          <div class="zoom-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+          </div>
+          <div class="zoom-info">
+            <h3 class="zoom-title">Wednesday Bible Study</h3>
+            <p class="zoom-time">Every Wednesday · 6:00 PM (Jamaica Time)</p>
+            <p class="zoom-desc">Join our mid-week Bible Study on Zoom — deep, Spirit-led exploration of Scripture.</p>
+          </div>
+          <a
+            href="zoommtg://zoom.us/join?confno=8761234567"
+            class="btn btn-gold zoom-btn"
+            aria-label="Join Bible Study on Zoom"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+            Join Zoom
+          </a>
+        </div>
+
+        <div class="zoom-card">
+          <div class="zoom-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+          </div>
+          <div class="zoom-info">
+            <h3 class="zoom-title">Night Vigil</h3>
+            <p class="zoom-time">Monthly · Check calendar for dates</p>
+            <p class="zoom-desc">An all-night prayer and worship experience — join us from wherever you are in the world.</p>
+          </div>
+          <a
+            href="zoommtg://zoom.us/join?confno=8769876543"
+            class="btn btn-outline-navy zoom-btn"
+            aria-label="Join Night Vigil on Zoom"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+            Join Zoom
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 75% 30%, rgba(212, 168, 67, 0.1) 0%, transparent 55%),
+      radial-gradient(ellipse at 15% 75%, rgba(224, 90, 43, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.75;
+    max-width: 52ch;
+  }
+
+  /* Featured */
+  .featured-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .featured-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .featured-sub {
+    font-size: 0.975rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    max-width: 60ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .video-embed {
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+
+  .video-placeholder {
+    background: linear-gradient(135deg, var(--color-navy) 0%, #0a1428 100%);
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .video-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .play-ring {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 2px solid rgba(212, 168, 67, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-glow 2.5s ease infinite;
+  }
+
+  .play-btn {
+    width: 72px;
+    height: 72px;
+    background-color: var(--color-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-navy);
+    transition: transform 0.2s ease, background-color var(--transition-base);
+    padding-left: 4px;
+  }
+
+  .play-btn:hover {
+    transform: scale(1.08);
+    background-color: var(--color-coral);
+    color: var(--color-white);
+  }
+
+  .video-info {
+    text-align: center;
+  }
+
+  .video-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .video-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    color: var(--color-white);
+    margin-bottom: 0.375rem;
+  }
+
+  .video-desc {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  /* YouTube CTA */
+  .youtube-cta {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+    border: 1px solid rgba(13, 27, 62, 0.08);
+  }
+
+  @media (min-width: 900px) {
+    .youtube-cta {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .yt-icon {
+    flex-shrink: 0;
+  }
+
+  .yt-text {
+    flex: 1;
+  }
+
+  .yt-heading {
+    font-size: 1.2rem;
+    color: var(--color-navy);
+    margin-bottom: 0.375rem;
+  }
+
+  .yt-sub {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  /* Live Banner */
+  .live-banner {
+    background-color: #E53E3E;
+    padding: 3rem 0;
+  }
+
+  .live-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 900px) {
+    .live-inner {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .live-dot-wrap {
+    flex-shrink: 0;
+  }
+
+  .live-dot {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: var(--color-white);
+    border-radius: 50%;
+    animation: blink-dot 1.4s ease-in-out infinite;
+  }
+
+  @keyframes blink-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .live-text {
+    flex: 1;
+  }
+
+  .live-heading {
+    font-size: 1.4rem;
+    color: var(--color-white);
+    margin-bottom: 0.25rem;
+  }
+
+  .live-sub {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.6;
+  }
+
+  /* Videos Grid */
+  .videos-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .videos-header {
+    margin-bottom: 3rem;
+  }
+
+  .videos-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .videos-sub {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+    max-width: 56ch;
+  }
+
+  .videos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .videos-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .videos-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .video-card {
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: 1px solid rgba(13, 27, 62, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(13, 27, 62, 0.12);
+    color: inherit;
+  }
+
+  .video-card-thumb {
+    height: 160px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thumb-play {
+    width: 52px;
+    height: 52px;
+    background-color: rgba(212, 168, 67, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-navy);
+    padding-left: 3px;
+    transition: transform 0.2s ease;
+  }
+
+  .video-card:hover .thumb-play {
+    transform: scale(1.1);
+  }
+
+  .thumb-tag {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+
+  .video-card-body {
+    padding: 1.5rem;
+    flex: 1;
+    background-color: var(--color-white);
+  }
+
+  .video-card-title {
+    font-size: 1rem;
+    color: var(--color-navy);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .video-card-desc {
+    font-size: 0.835rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  .video-card-link {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    transition: gap var(--transition-base);
+  }
+
+  .video-card:hover .video-card-link {
+    gap: 0.625rem;
+  }
+
+  /* Online Section */
+  .online-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .online-header {
+    margin-bottom: 3rem;
+  }
+
+  .online-heading {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .online-sub {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+    max-width: 52ch;
+  }
+
+  .zoom-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .zoom-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .zoom-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+  }
+
+  .zoom-icon {
+    color: #2D8CFF;
+    width: 56px;
+    height: 56px;
+    background-color: rgba(45, 140, 255, 0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zoom-title {
+    font-size: 1.2rem;
+    color: var(--color-navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .zoom-time {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .zoom-desc {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .zoom-btn {
+    align-self: flex-start;
+  }
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    [class$="-hero"] { padding-top: 5.5rem; padding-bottom: 3.5rem; }
+    [class*="-card"] { padding: 1.5rem 1.25rem; }
+  }
+</style>

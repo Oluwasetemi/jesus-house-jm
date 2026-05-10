@@ -1,0 +1,714 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const categories = [
+  { id: 'all', label: 'All Posts' },
+  { id: 'devotionals', label: 'Devotionals' },
+  { id: 'news', label: 'Church News' },
+  { id: 'faith', label: 'Faith & Life' },
+  { id: 'community', label: 'Community' },
+];
+
+const posts = [
+  {
+    title: 'Presenting Yourself as a Living Sacrifice — What Romans 12:1 Really Means',
+    excerpt: 'At the heart of our church theme is one of the most demanding — and most liberating — calls in all of Scripture. What does it mean to offer your entire self to God as a living sacrifice, and what does that look like in daily Jamaican life?',
+    category: 'faith',
+    date: 'May 4, 2026',
+    dateShort: '04 MAY',
+    year: '2026',
+    author: 'Pastor George Kamalu',
+    readTime: '6 min read',
+    featured: true,
+  },
+  {
+    title: '5 Practical Ways to Make Prayer a Daily Habit',
+    excerpt: 'Many believers want a deeper prayer life but struggle to build consistency. Here are five practical, tested strategies that have transformed the prayer lives of members of our Jesus House family.',
+    category: 'devotionals',
+    date: 'April 27, 2026',
+    dateShort: '27 APR',
+    year: '2026',
+    author: 'Pastor Deborah Kamalu',
+    readTime: '5 min read',
+    featured: false,
+  },
+  {
+    title: 'Youth Conference 2023 — What God Did Among Us',
+    excerpt: 'We\'ve been reflecting on the extraordinary moments of last year\'s Youth Conference. Here\'s a full recap of the testimonies, salvations, and life-changing encounters that marked those three days.',
+    category: 'news',
+    date: 'April 18, 2026',
+    dateShort: '18 APR',
+    year: '2026',
+    author: 'Admin',
+    readTime: '8 min read',
+    featured: false,
+  },
+  {
+    title: 'When God Feels Far Away — Navigating Spiritual Dry Seasons',
+    excerpt: 'Every believer will pass through seasons when prayer feels hollow and heaven seems silent. This is normal — and it is not the end of your story. Here is how to navigate the spiritual dry season with faith and hope.',
+    category: 'faith',
+    date: 'April 10, 2026',
+    dateShort: '10 APR',
+    year: '2026',
+    author: 'Pastor George Kamalu',
+    readTime: '7 min read',
+    featured: false,
+  },
+  {
+    title: 'Jesus House Jamaica Partners with Kingston Community Outreach',
+    excerpt: 'We are thrilled to announce our new partnership with the Kingston Community Outreach Initiative — bringing food, medical care, and the Gospel to some of the most vulnerable communities in our city.',
+    category: 'community',
+    date: 'March 28, 2026',
+    dateShort: '28 MAR',
+    year: '2026',
+    author: 'Admin',
+    readTime: '4 min read',
+    featured: false,
+  },
+  {
+    title: 'The Power of Worship — Why We Sing (Even When We Don\'t Feel Like It)',
+    excerpt: 'Worship is not a thermometer — it is a thermostat. It does not merely reflect how we feel; it transforms how we feel. Here is a biblical and practical case for offering God worship even in our hardest seasons.',
+    category: 'devotionals',
+    date: 'March 15, 2026',
+    dateShort: '15 MAR',
+    year: '2026',
+    author: 'Pastor Deborah Kamalu',
+    readTime: '6 min read',
+    featured: false,
+  },
+];
+
+const featuredPost = posts.find(p => p.featured)!;
+const gridPosts = posts.filter(p => !p.featured);
+---
+
+<Layout
+  title="Blog"
+  description="Read devotionals, church news, and faith reflections from Jesus House Jamaica — RCCG Kingston, Jamaica. Empowering you for godly living through the written Word."
+>
+  <Nav heroDark={true} />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="section-label">Written Word</span>
+      <h1 class="hero-title">Blog</h1>
+      <p class="hero-sub">
+        Devotionals, church news, and faith reflections — the written ministry of
+        Jesus House Jamaica, for your daily walk with God.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured Post -->
+  <section class="featured-section">
+    <div class="container">
+      <span class="section-label">Featured Article</span>
+      <article class="featured-card">
+        <div class="featured-visual" aria-hidden="true">
+          <div class="featured-date-badge">
+            <span class="date-day">{featuredPost.dateShort.split(' ')[0]}</span>
+            <span class="date-month">{featuredPost.dateShort.split(' ')[1]}</span>
+            <span class="date-year">{featuredPost.year}</span>
+          </div>
+          <div class="featured-cross" aria-hidden="true"></div>
+        </div>
+        <div class="featured-content">
+          <div class="featured-meta">
+            <span class="featured-cat">
+              {categories.find(c => c.id === featuredPost.category)?.label}
+            </span>
+            <span class="meta-sep" aria-hidden="true">·</span>
+            <span class="featured-read">{featuredPost.readTime}</span>
+          </div>
+          <h2 class="featured-title">{featuredPost.title}</h2>
+          <p class="featured-excerpt">{featuredPost.excerpt}</p>
+          <div class="featured-footer">
+            <div class="featured-author">
+              <div class="author-dot" aria-hidden="true"></div>
+              <span>{featuredPost.author}</span>
+            </div>
+            <a href="#" class="featured-link">
+              Read Article
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Blog Archive -->
+  <section class="archive-section">
+    <div class="container">
+
+      <!-- Category Filter (CSS-only) -->
+      <div class="filter-bar" role="navigation" aria-label="Filter blog posts by category">
+        {categories.map((cat) => (
+          <a
+            href={cat.id === 'all' ? '#archive-grid' : `#cat-${cat.id}`}
+            class={`filter-btn${cat.id === 'all' ? ' filter-btn--active' : ''}`}
+          >
+            {cat.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- Posts Grid -->
+      <div class="archive-grid" id="archive-grid">
+        {gridPosts.map((post) => (
+          <article class="post-card" id={`cat-${post.category}`}>
+            <div class="post-card-top">
+              <div class="post-date">
+                <span class="post-date-day">{post.dateShort.split(' ')[0]}</span>
+                <span class="post-date-month">{post.dateShort.split(' ')[1]}</span>
+              </div>
+              <span class="post-cat">
+                {categories.find(c => c.id === post.category)?.label}
+              </span>
+            </div>
+            <h3 class="post-title">{post.title}</h3>
+            <p class="post-excerpt">{post.excerpt}</p>
+            <div class="post-footer">
+              <span class="post-author">{post.author}</span>
+              <span class="post-read">{post.readTime}</span>
+            </div>
+            <a href="#" class="post-link" aria-label={`Read: ${post.title}`}>
+              Read More
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe -->
+  <section class="subscribe-section">
+    <div class="container subscribe-inner">
+      <div class="subscribe-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </div>
+      <div class="subscribe-text">
+        <h2 class="subscribe-heading">Stay Connected</h2>
+        <p class="subscribe-sub">
+          Get new articles, devotionals, and church news delivered directly to your inbox.
+          No spam — just the Word and the news you need.
+        </p>
+      </div>
+      <form class="subscribe-form" action="#" method="POST" novalidate>
+        <input
+          type="email"
+          name="email"
+          placeholder="Your email address"
+          aria-label="Email address for blog subscription"
+          required
+        />
+        <button type="submit" class="btn btn-gold">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 25% 50%, rgba(212, 168, 67, 0.1) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 20%, rgba(224, 90, 43, 0.07) 0%, transparent 50%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.75;
+    max-width: 50ch;
+  }
+
+  /* Featured */
+  .featured-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .featured-card {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: 1px solid rgba(13, 27, 62, 0.08);
+    box-shadow: 0 8px 40px rgba(13, 27, 62, 0.07);
+  }
+
+  @media (min-width: 768px) {
+    .featured-card {
+      grid-template-columns: 280px 1fr;
+    }
+  }
+
+  .featured-visual {
+    background: linear-gradient(135deg, var(--color-navy) 0%, #1a2d5a 100%);
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-cross {
+    position: absolute;
+    inset: 0;
+  }
+
+  .featured-cross::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 160px;
+    background-color: var(--color-gold);
+    opacity: 0.08;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .featured-cross::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background-color: var(--color-gold);
+    opacity: 0.08;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .featured-date-badge {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .date-day {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .date-month {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 0.25rem;
+  }
+
+  .date-year {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 0.1rem;
+  }
+
+  .featured-content {
+    padding: 2.5rem 2.5rem;
+  }
+
+  .featured-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .featured-cat {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .meta-sep {
+    color: var(--color-muted);
+  }
+
+  .featured-read {
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+
+  .featured-title {
+    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+    color: var(--color-navy);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .featured-excerpt {
+    font-size: 0.925rem;
+    color: var(--color-muted);
+    line-height: 1.75;
+    margin-bottom: 1.75rem;
+    max-width: 66ch;
+  }
+
+  .featured-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .featured-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+
+  .author-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .featured-link {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    transition: gap var(--transition-base);
+  }
+
+  .featured-link:hover {
+    gap: 0.625rem;
+    color: var(--color-coral);
+  }
+
+  /* Archive */
+  .archive-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  /* Filter */
+  .filter-bar {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-bottom: 1px solid rgba(13, 27, 62, 0.1);
+    margin-bottom: 3rem;
+    scrollbar-width: none;
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color var(--transition-base), border-color var(--transition-base);
+  }
+
+  .filter-btn:hover,
+  .filter-btn--active {
+    color: var(--color-navy);
+    border-bottom-color: var(--color-gold);
+  }
+
+  /* Grid */
+  .archive-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .archive-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .archive-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .post-card {
+    background-color: var(--color-cream);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.75rem;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(13, 27, 62, 0.09);
+  }
+
+  .post-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .post-date {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+  }
+
+  .post-date-day {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .post-date-month {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .post-cat {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-coral);
+    background-color: rgba(224, 90, 43, 0.08);
+    padding: 0.2rem 0.625rem;
+    border-radius: 999px;
+  }
+
+  .post-title {
+    font-size: 1.05rem;
+    color: var(--color-navy);
+    line-height: 1.35;
+  }
+
+  .post-excerpt {
+    font-size: 0.855rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(13, 27, 62, 0.08);
+  }
+
+  .post-author {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+
+  .post-read {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+
+  .post-link {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin-top: 0.25rem;
+    transition: gap var(--transition-base);
+  }
+
+  .post-link:hover {
+    gap: 0.5rem;
+    color: var(--color-coral);
+  }
+
+  /* Subscribe */
+  .subscribe-section {
+    background-color: var(--color-cream);
+    padding: 4.5rem 0;
+    border-top: 1px solid rgba(13, 27, 62, 0.07);
+  }
+
+  .subscribe-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  @media (min-width: 900px) {
+    .subscribe-inner {
+      flex-direction: row;
+      text-align: left;
+      align-items: center;
+    }
+  }
+
+  .subscribe-icon {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .subscribe-text {
+    flex: 1;
+  }
+
+  .subscribe-heading {
+    font-size: 1.5rem;
+    color: var(--color-navy);
+    margin-bottom: 0.375rem;
+  }
+
+  .subscribe-sub {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .subscribe-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 900px) {
+    .subscribe-form {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .subscribe-form input {
+    padding: 0.75rem 1.25rem;
+    border: 1.5px solid rgba(13, 27, 62, 0.15);
+    border-radius: 0.375rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text);
+    background-color: var(--color-white);
+    min-width: 240px;
+    transition: border-color var(--transition-base);
+  }
+
+  .subscribe-form input:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15);
+  }
+
+  .subscribe-form input::placeholder {
+    color: var(--color-muted);
+  }
+
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    .date-day {
+      font-size: 2.5rem;
+    }
+
+    .featured-card {
+      grid-template-columns: 1fr;
+    }
+
+    .post-card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .subscribe-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .subscribe-form {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .subscribe-form input {
+      min-width: 0;
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,677 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const upcomingEvents = [
+  {
+    name: 'Night Vigil — May',
+    date: 'Friday, May 30, 2026',
+    time: '10:00 PM – 4:00 AM',
+    location: 'Main Sanctuary',
+    category: 'Prayer',
+    categoryColor: '#0D1B3E',
+    description: 'Our monthly all-night prayer and worship experience. Come expect an encounter. Every vigil is marked by breakthroughs, miracles, and the powerful presence of God.',
+    featured: true,
+  },
+  {
+    name: 'Covenant Prayers',
+    date: 'Saturday, May 17, 2026',
+    time: '6:00 AM – 8:00 AM',
+    location: 'Main Sanctuary',
+    category: 'Prayer',
+    categoryColor: '#0D1B3E',
+    description: 'A sacred time of standing on God\'s covenant promises together as a congregation. Early morning prayer that sets the tone for the month.',
+    featured: false,
+  },
+  {
+    name: "Children's Day Celebration",
+    date: 'Sunday, June 1, 2026',
+    time: '9:00 AM – 12:00 PM',
+    location: 'Main Sanctuary & Fellowship Hall',
+    category: 'Family',
+    categoryColor: '#D4A843',
+    description: 'A joyful celebration dedicated to the children of Jesus House Jamaica. Special performances, awards, and a message just for our little ones.',
+    featured: false,
+  },
+  {
+    name: 'Annual Fasting Season',
+    date: 'July 7–21, 2026',
+    time: 'Daily — 6:00 AM Prayer',
+    location: 'Online & In Person',
+    category: 'Fasting',
+    categoryColor: '#E05A2B',
+    description: 'Two weeks of dedicated prayer and fasting as a congregation. Each day features early morning prayer led by our pastoral team, with accompanying devotional materials.',
+    featured: true,
+  },
+  {
+    name: 'Youth Conference 2026',
+    date: 'August 7–9, 2026',
+    time: 'Friday 6 PM – Sunday 5 PM',
+    location: 'Jesus House Jamaica',
+    category: 'Youth',
+    categoryColor: '#E05A2B',
+    description: 'Our flagship annual event for young people aged 13–35. Three days of powerful worship, dynamic speakers, workshops, and unparalleled community. This year\'s theme: "Unshakeable."',
+    featured: true,
+  },
+  {
+    name: "Men's Ministry Annual Retreat",
+    date: 'August 22–24, 2026',
+    time: 'Multi-day',
+    location: 'Blue Mountains Retreat Centre, Jamaica',
+    category: "Men's Ministry",
+    categoryColor: '#0D1B3E',
+    description: 'A transformative weekend for the men of Jesus House Jamaica. Accountability, teaching, nature, and brotherhood in the stunning Blue Mountains of Jamaica.',
+    featured: false,
+  },
+  {
+    name: 'Harvest Thanksgiving Service',
+    date: 'Sunday, October 19, 2026',
+    time: '9:00 AM',
+    location: 'Main Sanctuary',
+    category: 'Special Service',
+    categoryColor: '#D4A843',
+    description: 'Our annual harvest thanksgiving — a joyful celebration of God\'s faithfulness throughout the year. A special offering goes toward community outreach programs.',
+    featured: false,
+  },
+  {
+    name: 'Night Vigil — December (Watchnight)',
+    date: 'Wednesday, December 31, 2026',
+    time: '10:00 PM – 1:00 AM',
+    location: 'Main Sanctuary',
+    category: 'Prayer',
+    categoryColor: '#0D1B3E',
+    description: 'See in the New Year in the presence of God. Our Watchnight service is one of the most powerful gatherings of the year — worship, testimony, and crossing into January in prayer.',
+    featured: true,
+  },
+];
+
+const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Ministry", 'Special Service'];
+---
+
+<Layout
+  title="Events"
+  description="Upcoming events at Jesus House Jamaica — Night Vigil, Youth Conference, Covenant Prayers, Fasting Season, and more. Find out what's happening at our RCCG parish."
+>
+  <Nav />
+
+  <!-- Hero -->
+  <section class="events-hero">
+    <div class="events-hero-bg" aria-hidden="true"></div>
+    <div class="container events-hero-inner">
+      <span class="section-label">What's Happening</span>
+      <h1 class="events-hero-title">Events & Gatherings</h1>
+      <p class="events-hero-sub">
+        From powerful night vigils to the annual Youth Conference, there is always
+        something happening at Jesus House Jamaica. Come, gather, and encounter God.
+      </p>
+    </div>
+    <div class="events-hero-clip" aria-hidden="true"></div>
+  </section>
+
+  <!-- Featured Events -->
+  <section class="featured-events">
+    <div class="container">
+      <span class="section-label">Not to Be Missed</span>
+      <h2 class="featured-events-title">Featured Events</h2>
+
+      <div class="featured-grid">
+        {upcomingEvents.filter(e => e.featured).map((event) => (
+          <article class="featured-event-card">
+            <div class="featured-event-badge" style={`background-color: ${event.categoryColor}`}>
+              {event.category}
+            </div>
+            <h3 class="featured-event-name">{event.name}</h3>
+            <p class="featured-event-desc">{event.description}</p>
+            <div class="featured-event-details">
+              <div class="event-detail">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span>{event.date}</span>
+              </div>
+              <div class="event-detail">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span>{event.time}</span>
+              </div>
+              <div class="event-detail">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>{event.location}</span>
+              </div>
+            </div>
+            <a href="/contact" class="btn btn-gold">Register / Learn More</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- All Events List -->
+  <section class="all-events">
+    <div class="container">
+      <div class="all-events-header">
+        <h2 class="all-events-title">Full Calendar — 2026</h2>
+        <!-- Category filter tabs -->
+        <div class="event-filters" role="navigation" aria-label="Filter events by category">
+          {categories.map((cat) => (
+            <a href="#" class="filter-tag">{cat}</a>
+          ))}
+        </div>
+      </div>
+
+      <div class="events-list">
+        {upcomingEvents.map((event) => (
+          <article class="event-list-item">
+            <div class="event-list-date">
+              <div class="event-date-badge">
+                <span class="event-date-month">
+                  {event.date.split(' ')[1]?.replace(',', '') ?? ''}
+                </span>
+                <span class="event-date-day">
+                  {event.date.match(/\d{1,2},/)?.[0]?.replace(',', '') ?? '—'}
+                </span>
+              </div>
+            </div>
+            <div class="event-list-content">
+              <div class="event-list-top">
+                <h3 class="event-list-name">{event.name}</h3>
+                <span class="event-list-category" style={`color: ${event.categoryColor}; border-color: ${event.categoryColor}`}>
+                  {event.category}
+                </span>
+              </div>
+              <p class="event-list-desc">{event.description}</p>
+              <div class="event-list-meta">
+                <span class="event-list-time">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  {event.time}
+                </span>
+                <span class="event-list-location">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  {event.location}
+                </span>
+              </div>
+            </div>
+            <div class="event-list-action">
+              <a href="/contact" class="event-register-btn">Register</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Never Miss Out CTA -->
+  <section class="events-subscribe">
+    <div class="container events-subscribe-inner">
+      <div class="events-subscribe-text">
+        <h2 class="events-subscribe-title">Never Miss an Event</h2>
+        <p class="events-subscribe-sub">
+          Get event announcements, reminders, and updates delivered to your inbox.
+        </p>
+      </div>
+      <form class="events-sub-form" action="#" method="POST" novalidate>
+        <input type="email" placeholder="Your email address" aria-label="Email address for event notifications" />
+        <button type="submit" class="btn btn-gold">Stay Updated</button>
+      </form>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .events-hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+  }
+
+  .events-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 10% 90%, rgba(224, 90, 43, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 10%, rgba(212, 168, 67, 0.07) 0%, transparent 50%);
+  }
+
+  .events-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+
+  .events-hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .events-hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.7;
+    max-width: 52ch;
+  }
+
+  .events-hero-clip {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--color-cream);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  /* Featured */
+  .featured-events {
+    background-color: var(--color-cream);
+    padding: 5rem 0 var(--section-padding);
+  }
+
+  .featured-events-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 2.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .featured-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .featured-event-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    border: 1px solid rgba(13, 27, 62, 0.08);
+    box-shadow: 0 4px 20px rgba(13, 27, 62, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .featured-event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(13, 27, 62, 0.1);
+  }
+
+  .featured-event-badge {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  .featured-event-name {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    color: var(--color-navy);
+    line-height: 1.2;
+  }
+
+  .featured-event-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .featured-event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(13, 27, 62, 0.07);
+    border-bottom: 1px solid rgba(13, 27, 62, 0.07);
+  }
+
+  .event-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+  }
+
+  .event-detail svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  /* All events list */
+  .all-events {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .all-events-header {
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .all-events-header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .all-events-title {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: var(--color-navy);
+  }
+
+  .event-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-tag {
+    padding: 0.375rem 1rem;
+    border: 1.5px solid rgba(13, 27, 62, 0.15);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+  }
+
+  .filter-tag:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    background-color: rgba(212, 168, 67, 0.08);
+  }
+
+  .filter-tag:first-child {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    border-color: var(--color-navy);
+  }
+
+  /* Events list */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .event-list-item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid rgba(13, 27, 62, 0.07);
+    align-items: flex-start;
+    transition: background-color var(--transition-base);
+  }
+
+  .event-list-item:hover {
+    background-color: rgba(250, 248, 243, 0.5);
+  }
+
+  .event-list-item:last-child {
+    border-bottom: none;
+  }
+
+  .event-list-date {
+    flex-shrink: 0;
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .event-list-date {
+      display: block;
+    }
+  }
+
+  .event-date-badge {
+    width: 64px;
+    background-color: var(--color-navy);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .event-date-month {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .event-date-day {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--color-white);
+    line-height: 1;
+  }
+
+  .event-list-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .event-list-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .event-list-name {
+    font-size: 1.1rem;
+    color: var(--color-navy);
+  }
+
+  .event-list-category {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.625rem;
+    border: 1.5px solid;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .event-list-desc {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .event-list-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .event-list-time,
+  .event-list-location {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .event-list-time svg,
+  .event-list-location svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .event-list-action {
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .event-register-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    background-color: transparent;
+    border: 1.5px solid var(--color-gold);
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all var(--transition-base);
+  }
+
+  .event-register-btn:hover {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+  }
+
+  /* Subscribe */
+  .events-subscribe {
+    background-color: var(--color-navy);
+    padding: 4rem 0;
+  }
+
+  .events-subscribe-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .events-subscribe-inner {
+      flex-direction: row;
+      text-align: left;
+      align-items: center;
+    }
+  }
+
+  .events-subscribe-text {
+    flex: 1;
+  }
+
+  .events-subscribe-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    color: var(--color-white);
+    margin-bottom: 0.375rem;
+  }
+
+  .events-subscribe-sub {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .events-sub-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .events-sub-form {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .events-sub-form input {
+    padding: 0.75rem 1.25rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.375rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-white);
+    background-color: rgba(255, 255, 255, 0.08);
+    min-width: 240px;
+    transition: border-color var(--transition-base);
+  }
+
+  .events-sub-form input:focus {
+    outline: none;
+    border-color: var(--color-gold);
+  }
+
+  .events-sub-form input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    .events-hero {
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .event-card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .events-sub-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .events-sub-form {
+      width: 100%;
+    }
+
+    .events-sub-form input {
+      min-width: 0;
+      width: 100%;
+    }
+  }
+</style>

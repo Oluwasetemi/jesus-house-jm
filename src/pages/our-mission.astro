@@ -1,0 +1,615 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const pillars = [
+  {
+    number: '01',
+    title: 'Transformative Worship',
+    description: 'We create an environment where every believer encounters the living God — not just attending a service, but experiencing genuine, life-changing worship that reshapes identity, heals brokenness, and ignites purpose.',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
+  },
+  {
+    number: '02',
+    title: 'Intentional Discipleship',
+    description: 'We walk alongside every person — from their first Sunday through to ministry leadership — providing structured pathways for spiritual growth, biblical literacy, and character formation rooted in the Gospel.',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  },
+  {
+    number: '03',
+    title: 'Compassionate Outreach',
+    description: 'We are compelled by the love of Christ to serve our city and our world. Through community outreach, care ministries, and global missions partnerships, we carry the Gospel beyond our walls into every sphere of society.',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+  },
+];
+---
+
+<Layout
+  title="Our Mission"
+  description="Discover the mission and vision of Jesus House Jamaica — empowering men and women for godly living through worship, discipleship, and outreach. RCCG Kingston, Jamaica."
+>
+  <Nav heroDark={true} />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="section-label">Purpose & Direction</span>
+      <h1 class="hero-title">Our Mission</h1>
+      <p class="hero-sub">
+        Every decision, every ministry, every gathering is shaped by a singular driving purpose —
+        to empower men and women for godly living.
+      </p>
+    </div>
+    <div class="hero-clip" aria-hidden="true"></div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="mission-statement">
+    <div class="container mission-inner">
+      <div class="cross-motif mission-cross" aria-hidden="true"></div>
+      <span class="section-label" style="display:block; text-align:center; margin-bottom:1.25rem;">Mission Statement</span>
+      <h2 class="mission-theme">
+        "Empowering men and women<br/>for godly living"
+      </h2>
+      <div class="mission-scripture">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <blockquote>
+          "I beseech you therefore, brethren, by the mercies of God, that ye present your bodies
+          a living sacrifice, holy, acceptable unto God, which is your reasonable service."
+          <cite>— Romans 12:1</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision Blocks -->
+  <section class="mv-section">
+    <div class="container">
+      <div class="mv-grid">
+
+        <div class="mv-block">
+          <div class="mv-icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <span class="section-label">Our Mission</span>
+          <h2 class="mv-title">Why We Exist</h2>
+          <p class="mv-text">
+            Jesus House Jamaica exists to make heaven and to take as many people as possible with us —
+            by preaching the uncompromised Gospel of Jesus Christ, making authentic disciples, and
+            demonstrating the love and power of God in every community we touch.
+          </p>
+          <p class="mv-text">
+            We are called to be a house of prayer for all nations — where every person, regardless of
+            background or history, can encounter the transforming grace of God and find their place in
+            His family.
+          </p>
+        </div>
+
+        <div class="mv-block mv-block--dark">
+          <div class="mv-icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <span class="section-label">Our Vision</span>
+          <h2 class="mv-title">Where We Are Going</h2>
+          <p class="mv-text">
+            To be a centre of spiritual excellence, community transformation, and global mission —
+            a church where every soul encounters God, finds family, and is sent out as a world-changer
+            for the Kingdom of Christ.
+          </p>
+          <p class="mv-text">
+            We envision a Jesus House Jamaica that is multiplying — planting new churches, raising new
+            leaders, and expanding the reach of the Gospel across the Caribbean and into every nation
+            under heaven.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Three Pillars -->
+  <section class="pillars-section">
+    <div class="container">
+      <div class="pillars-header">
+        <span class="section-label">How We Live It Out</span>
+        <h2 class="pillars-heading">Three Mission Pillars</h2>
+        <p class="pillars-sub">
+          Our mission comes to life through three core commitments that shape every ministry and programme.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        {pillars.map((pillar) => (
+          <div class="pillar-card">
+            <div class="pillar-header">
+              <span class="pillar-number">{pillar.number}</span>
+              <div class="pillar-icon" aria-hidden="true" set:html={pillar.icon} />
+            </div>
+            <h3 class="pillar-title">{pillar.title}</h3>
+            <p class="pillar-desc">{pillar.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Living the Mission -->
+  <section class="living-section">
+    <div class="container living-grid">
+      <div class="living-text">
+        <span class="section-label">In Practice</span>
+        <h2 class="living-heading">Mission in Daily Life</h2>
+        <p>
+          The mission of Jesus House Jamaica is not confined to Sunday services. It pulses through
+          every cell group gathering, every outreach trip, every act of pastoral care, and every
+          prayer meeting. We are a 24/7 mission community.
+        </p>
+        <p>
+          From Wednesday evening Bible studies to monthly Night Vigils, from youth conferences to
+          women's retreats — every programme is a vehicle for living out our mission of empowering
+          men and women for godly living.
+        </p>
+        <div class="living-links">
+          <a href="/services" class="btn btn-gold">View Our Services</a>
+          <a href="/departments" class="btn btn-outline-navy">Explore Departments</a>
+        </div>
+      </div>
+      <div class="living-metrics">
+        <div class="metric-item">
+          <div class="metric-dot" aria-hidden="true"></div>
+          <div>
+            <h4 class="metric-title">Sunday Worship</h4>
+            <p class="metric-desc">Every Sunday at 9:00 AM — in-person and online</p>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-dot" aria-hidden="true"></div>
+          <div>
+            <h4 class="metric-title">Wednesday Bible Study</h4>
+            <p class="metric-desc">6:00 PM in-person and via Zoom</p>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-dot" aria-hidden="true"></div>
+          <div>
+            <h4 class="metric-title">Covenant Prayers</h4>
+            <p class="metric-desc">Regular early morning intercession</p>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-dot" aria-hidden="true"></div>
+          <div>
+            <h4 class="metric-title">Night Vigil</h4>
+            <p class="metric-desc">Monthly all-night prayer on Zoom and in-person</p>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-dot" aria-hidden="true"></div>
+          <div>
+            <h4 class="metric-title">Community Outreach</h4>
+            <p class="metric-desc">Regular programmes serving Kingston communities</p>
+          </div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-dot" aria-hidden="true"></div>
+          <div>
+            <h4 class="metric-title">Annual Youth Conference</h4>
+            <p class="metric-desc">Empowering the next generation of believers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join CTA -->
+  <section class="join-cta">
+    <div class="container join-inner">
+      <h2 class="join-heading">Be Part of the Mission</h2>
+      <p class="join-sub">
+        You were created for purpose. Come discover yours at Jesus House Jamaica.
+        We are stronger, bolder, and more effective together.
+      </p>
+      <div class="join-btns">
+        <a href="/contact#visit" class="btn btn-gold">Plan Your Visit</a>
+        <a href="/contact" class="btn btn-outline-white">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 60% 20%, rgba(212, 168, 67, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 10% 85%, rgba(224, 90, 43, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.75;
+    max-width: 52ch;
+  }
+
+  .hero-clip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: var(--color-cream);
+    clip-path: polygon(0 100%, 100% 30%, 100% 100%);
+  }
+
+  /* Mission Statement */
+  .mission-statement {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mission-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .mission-cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .mission-cross::before {
+    width: 2px;
+    height: 200px;
+    background-color: var(--color-gold);
+    opacity: 0.07;
+  }
+
+  .mission-cross::after {
+    width: 140px;
+    height: 2px;
+    background-color: var(--color-gold);
+    opacity: 0.07;
+  }
+
+  .mission-theme {
+    font-size: clamp(1.75rem, 4vw, 3.25rem);
+    color: var(--color-navy);
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .mission-scripture {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2rem 2.5rem;
+    text-align: left;
+    border-left: 4px solid var(--color-gold);
+  }
+
+  .mission-scripture svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+
+  .mission-scripture blockquote {
+    font-family: var(--font-accent);
+    font-size: 1rem;
+    color: var(--color-navy);
+    line-height: 1.7;
+  }
+
+  .mission-scripture cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  /* Mission & Vision */
+  .mv-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .mv-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .mv-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .mv-block {
+    background-color: var(--color-cream);
+    border-radius: var(--radius-card);
+    padding: 3rem 2.5rem;
+    border-top: 4px solid var(--color-gold);
+  }
+
+  .mv-block--dark {
+    background-color: var(--color-navy);
+    border-top-color: var(--color-coral);
+  }
+
+  .mv-icon {
+    color: var(--color-gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .mv-block--dark .mv-icon {
+    color: var(--color-coral);
+  }
+
+  .mv-title {
+    font-size: 1.75rem;
+    color: var(--color-navy);
+    margin-bottom: 1.25rem;
+  }
+
+  .mv-block--dark .mv-title {
+    color: var(--color-white);
+  }
+
+  .mv-text {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .mv-block--dark .mv-text {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  /* Pillars */
+  .pillars-section {
+    background-color: var(--color-navy);
+    padding: var(--section-padding) 0;
+  }
+
+  .pillars-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    max-width: 580px;
+    margin-inline: auto;
+    margin-bottom: 3.5rem;
+  }
+
+  .pillars-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-white);
+    margin-bottom: 0.875rem;
+  }
+
+  .pillars-sub {
+    font-size: 0.975rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .pillars-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .pillar-card {
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-card);
+    padding: 2.25rem 2rem;
+    transition: border-color var(--transition-base), background-color var(--transition-base);
+  }
+
+  .pillar-card:hover {
+    border-color: rgba(212, 168, 67, 0.3);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .pillar-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: rgba(212, 168, 67, 0.2);
+    line-height: 1;
+  }
+
+  .pillar-icon {
+    color: var(--color-gold);
+  }
+
+  .pillar-title {
+    font-size: 1.2rem;
+    color: var(--color-white);
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.75;
+  }
+
+  /* Living Section */
+  .living-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .living-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .living-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .living-heading {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 1.25rem;
+  }
+
+  .living-text p {
+    font-size: 0.975rem;
+    color: var(--color-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .living-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+
+  .living-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+  }
+
+  .metric-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+  }
+
+  .metric-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+  }
+
+  .metric-title {
+    font-size: 0.975rem;
+    color: var(--color-navy);
+    margin-bottom: 0.2rem;
+  }
+
+  .metric-desc {
+    font-size: 0.835rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  /* Join CTA */
+  .join-cta {
+    background: linear-gradient(135deg, var(--color-navy) 0%, #172040 100%);
+    padding: 5rem 0;
+  }
+
+  .join-inner {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .join-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    color: var(--color-white);
+    margin-bottom: 1rem;
+  }
+
+  .join-sub {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .join-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    [class$="-hero"] { padding-top: 5.5rem; padding-bottom: 3.5rem; }
+    [class*="-card"] { padding: 1.5rem 1.25rem; }
+  }
+</style>

@@ -1,0 +1,52 @@
+name: Fetch Latest YouTube Videos
+
+# Runs after each service day to pull new recordings into videos.json
+# Jamaica is UTC-5; schedules below are timed so the stream has ended.
+#   Sunday Service  → runs at 17:00 UTC (12:00 PM Jamaica)
+#   Monday Prayer   → runs at 14:00 UTC  (9:00 AM Jamaica)
+#   Wednesday Study → runs at 00:00 UTC Thu (7:00 PM Jamaica Wed)
+on:
+  schedule:
+    - cron: '0 17 * * 0'   # Sunday 17:00 UTC
+    - cron: '0 14 * * 1'   # Monday 14:00 UTC
+    - cron: '0 0  * * 4'   # Thursday 00:00 UTC (Wednesday evening Jamaica)
+  workflow_dispatch:        # allow manual trigger from GitHub Actions UI
+
+jobs:
+  update-videos:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # needed to push the updated JSON
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install yt-dlp
+        run: pip install yt-dlp
+
+      - name: Fetch latest 15 recordings and merge
+        run: |
+          python3 scripts/fetch-youtube.py \
+            --limit 15 \
+            --merge \
+            --out src/data/videos.json
+
+      - name: Check for changes
+        id: diff
+        run: |
+          git diff --quiet src/data/videos.json && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push updated videos.json
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/videos.json
+          git commit -m "chore: update YouTube video archive [skip ci]"
+          git push

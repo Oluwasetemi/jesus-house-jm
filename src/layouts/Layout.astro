@@ -1,0 +1,395 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  /** Absolute URL for og:image / twitter:image. Defaults to church logo. */
+  ogImage?: string;
+  /** Canonical URL for this page. Defaults to current request URL. */
+  canonicalUrl?: string;
+  /** Open Graph type — 'website' for most pages, 'article' for blog posts */
+  ogType?: 'website' | 'article';
+  /** Article published date (ISO 8601) — only used when ogType='article' */
+  articlePublishedTime?: string;
+  /** Robots directive — defaults to 'index, follow' */
+  robots?: string;
+}
+
+const {
+  title,
+  description,
+  ogImage = 'https://static.wixstatic.com/media/1aec49_184f6afce99f418fb6cc02455eccbd8f~mv2.png/v1/fill/w_188,h_118,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Jesus%20House%20new%20logo%20(2).png',
+  ogType = 'website',
+  articlePublishedTime,
+  robots = 'index, follow',
+} = Astro.props;
+
+const SITE_URL = 'https://www.jesushousejamaica.org';
+const canonicalUrl = Astro.props.canonicalUrl ?? `${SITE_URL}${Astro.url.pathname}`;
+const fullTitle = title === 'Home' ? 'Jesus House Jamaica | RCCG Kingston' : `${title} | Jesus House Jamaica`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['Church', 'LocalBusiness'],
+  name: 'Jesus House Jamaica',
+  alternateName: 'RCCG Jesus House Kingston',
+  description: 'A member of the Redeemed Christian Church of God (RCCG), rooted in the heart of Kingston, Jamaica. Empowering men and women for godly living.',
+  url: SITE_URL,
+  logo: ogImage,
+  image: ogImage,
+  telephone: '+18769202260',
+  email: 'jesushousekgn@hotmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '3 McGregor Square, corner of Beechwood Avenue, off Halfway Tree',
+    addressLocality: 'Kingston',
+    addressRegion: 'Kingston 5',
+    addressCountry: 'JM',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: '18.0179',
+    longitude: '-76.7930',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Sunday',
+      opens: '09:00',
+      closes: '12:00',
+      description: 'Sunday Service',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Wednesday',
+      opens: '18:00',
+      closes: '20:00',
+      description: 'Bible Study',
+    },
+  ],
+  sameAs: [
+    'https://www.facebook.com/rccg.jesushouse.kingston',
+    'https://www.instagram.com/rccgjesushousekgnjamaica',
+    'https://www.youtube.com/channel/UCO1S3nxtFg0_HXEMuZji5zg',
+    'https://twitter.com/rccgjhkingston',
+  ],
+  denomination: 'Redeemed Christian Church of God',
+  slogan: 'Empowering men and women for godly living',
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- ── Primary Meta ──────────────────────────────── -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#0d1b3e" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- ── Open Graph ────────────────────────────────── -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Jesus House Jamaica" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Jesus House Jamaica — RCCG Kingston" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_JM" />
+    {articlePublishedTime && (
+      <meta property="article:published_time" content={articlePublishedTime} />
+    )}
+
+    <!-- ── Twitter / X Card ──────────────────────────── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@rccgjhkingston" />
+    <meta name="twitter:creator" content="@rccgjhkingston" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Jesus House Jamaica — RCCG Kingston" />
+
+    <!-- ── Icons ─────────────────────────────────────── -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- ── JSON-LD Structured Data ───────────────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- ── Google Fonts ──────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* === CSS Custom Properties === */
+  :root {
+    --color-navy: #0d1b3e;
+    --color-gold: #d4a843;
+    --color-coral: #e05a2b;
+    --color-cream: #faf8f3;
+    --color-text: #2c2c2c;
+    --color-muted: #6b7280;
+    --color-white: #ffffff;
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-accent: 'DM Serif Display', Georgia, serif;
+
+    --max-width: 1280px;
+    --section-padding: clamp(4rem, 8vw, 7rem);
+    --container-px: clamp(1.25rem, 4vw, 2.5rem);
+
+    --transition-base: 0.25s ease;
+    --radius-card: 0.75rem;
+  }
+
+  /* === Reset === */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  a:hover {
+    color: var(--color-gold);
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  p {
+    line-height: 1.75;
+  }
+
+  /* === Utility Classes === */
+  .container {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--container-px);
+  }
+
+  .section-label {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    border-radius: 0.375rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+  }
+
+  .btn-gold {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+    border-color: var(--color-gold);
+  }
+
+  .btn-gold:hover {
+    background-color: #c4952e;
+    border-color: #c4952e;
+    color: var(--color-navy);
+  }
+
+  .btn-outline-white {
+    background-color: transparent;
+    color: var(--color-white);
+    border-color: var(--color-white);
+  }
+
+  .btn-outline-white:hover {
+    background-color: var(--color-white);
+    color: var(--color-navy);
+  }
+
+  .btn-outline-navy {
+    background-color: transparent;
+    color: var(--color-navy);
+    border-color: var(--color-navy);
+  }
+
+  .btn-outline-navy:hover {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+  }
+
+  /* === Cross Motif Decoration === */
+  .cross-motif {
+    position: relative;
+  }
+
+  .cross-motif::before,
+  .cross-motif::after {
+    content: '';
+    position: absolute;
+    background-color: var(--color-gold);
+    opacity: 0.12;
+  }
+
+  .cross-motif::before {
+    width: 2px;
+    height: 120px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cross-motif::after {
+    width: 80px;
+    height: 2px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* === Animations === */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(212, 168, 67, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(212, 168, 67, 0);
+    }
+  }
+
+  /* === Responsive helpers === */
+  @media (max-width: 640px) {
+    .hide-mobile {
+      display: none !important;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .btn {
+      padding: 0.625rem 1.25rem;
+      font-size: 0.825rem;
+    }
+  }
+
+  @media (min-width: 641px) {
+    .show-mobile-only {
+      display: none !important;
+    }
+  }
+</style>

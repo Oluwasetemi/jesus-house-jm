@@ -1,0 +1,449 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const trustees = [
+  {
+    name: 'Elder Samuel Barrett',
+    role: 'Chairman, Board of Trustees',
+    initials: 'SB',
+    bio: 'A respected elder with over two decades of service to Jesus House Jamaica. Elder Barrett brings extensive experience in church administration and community development.',
+  },
+  {
+    name: 'Deacon Olivia Reynolds',
+    role: 'Secretary, Board of Trustees',
+    initials: 'OR',
+    bio: 'Deacon Reynolds serves as the board secretary, providing administrative oversight and maintaining the integrity of board records and communications.',
+  },
+  {
+    name: 'Elder Marcus Thompson',
+    role: 'Treasurer, Board of Trustees',
+    initials: 'MT',
+    bio: 'With a background in accounting and finance, Elder Thompson stewards the church\'s financial resources with transparency and godly wisdom.',
+  },
+  {
+    name: 'Deacon Janet Clarke',
+    role: 'Trustee — Community Relations',
+    initials: 'JC',
+    bio: 'Deacon Clarke oversees the church\'s engagement with the broader Kingston community, ensuring Jesus House Jamaica is a blessing to its neighbours.',
+  },
+  {
+    name: 'Elder Paul Watson',
+    role: 'Trustee — Property & Facilities',
+    initials: 'PW',
+    bio: 'Elder Watson brings expertise in property management and oversees all matters relating to the church\'s physical facilities and building development.',
+  },
+  {
+    name: 'Deacon Grace Hylton',
+    role: 'Trustee — Ministry Development',
+    initials: 'GH',
+    bio: 'A passionate advocate for ministry growth, Deacon Hylton works to ensure that every church department is resourced, supported, and aligned with the church\'s mission.',
+  },
+  {
+    name: 'Elder Nathaniel Brown',
+    role: 'Trustee — Legal Affairs',
+    initials: 'NB',
+    bio: 'Elder Brown provides legal counsel to the board, ensuring that the church operates within all applicable laws and governance standards in Jamaica.',
+  },
+  {
+    name: 'Deacon Yvonne Morrison',
+    role: 'Trustee — Welfare & Care',
+    initials: 'YM',
+    bio: 'Deacon Morrison champions the welfare and pastoral care needs of the congregation, ensuring that no member faces difficulty without the church\'s support.',
+  },
+];
+
+const responsibilities = [
+  {
+    title: 'Governance & Oversight',
+    desc: 'The Board of Trustees provides the highest level of governance for Jesus House Jamaica, ensuring that the church is managed with integrity, transparency, and faithfulness to its founding mission.',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  },
+  {
+    title: 'Financial Stewardship',
+    desc: 'The board ensures rigorous financial accountability — overseeing budgets, audits, and expenditures, and safeguarding the financial health of the church and its ministries.',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  },
+  {
+    title: 'Legal Compliance',
+    desc: 'The board ensures that Jesus House Jamaica operates in full compliance with Jamaican law, RCCG governance standards, and all applicable charity and religious organisation regulations.',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+  },
+  {
+    title: 'Strategic Direction',
+    desc: 'Working alongside the pastoral team, the board contributes to the long-term strategic vision of the church — including building projects, ministry expansion, and community impact goals.',
+    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  },
+];
+---
+
+<Layout
+  title="Board of Trustees"
+  description="Meet the Board of Trustees of Jesus House Jamaica — the governance body responsible for overseeing the church's administration, finances, and strategic direction."
+>
+  <Nav heroDark={true} />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="section-label">Church Governance</span>
+      <h1 class="hero-title">Board of Trustees</h1>
+      <p class="hero-sub">
+        Faithful stewards charged with protecting, guiding, and advancing the mission of
+        Jesus House Jamaica with wisdom and integrity.
+      </p>
+    </div>
+  </section>
+
+  <!-- Role of the Board -->
+  <section class="role-section">
+    <div class="container">
+      <div class="role-intro">
+        <span class="section-label">About the Board</span>
+        <h2 class="role-heading">Governance with Godly Wisdom</h2>
+        <p class="role-text">
+          The Board of Trustees of Jesus House Jamaica is the highest governance body of the church,
+          operating under the authority of the RCCG Caribbean Regional structure. The board comprises
+          experienced elders and deacons who bring professional expertise and deep spiritual maturity
+          to the oversight of the church's affairs.
+        </p>
+        <p class="role-text">
+          The board does not govern the spiritual direction of the church — that rests with the
+          pastoral team — but provides essential accountability, financial oversight, legal compliance,
+          and strategic counsel that allows the church to thrive and fulfil its God-given mission.
+        </p>
+      </div>
+
+      <div class="responsibilities-grid">
+        {responsibilities.map((item) => (
+          <div class="responsibility-card">
+            <div class="resp-icon" aria-hidden="true" set:html={item.icon} />
+            <h3 class="resp-title">{item.title}</h3>
+            <p class="resp-desc">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Board Members -->
+  <section class="members-section">
+    <div class="container">
+      <div class="members-header">
+        <span class="section-label">Meet the Board</span>
+        <h2 class="members-heading">Our Trustees</h2>
+        <p class="members-sub">
+          Serving the body of Christ through faithful governance and dedicated service.
+        </p>
+      </div>
+
+      <div class="members-grid">
+        {trustees.map((trustee) => (
+          <article class="trustee-card">
+            <div class="trustee-avatar" aria-hidden="true">
+              <span>{trustee.initials}</span>
+            </div>
+            <div class="trustee-info">
+              <h3 class="trustee-name">{trustee.name}</h3>
+              <p class="trustee-role">{trustee.role}</p>
+              <p class="trustee-bio">{trustee.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Board -->
+  <section class="board-cta">
+    <div class="container board-cta-inner">
+      <div class="board-cta-text">
+        <h2 class="board-cta-heading">Contact the Board</h2>
+        <p class="board-cta-sub">
+          For matters of church governance, formal enquiries, or to submit a concern to the board,
+          please reach out through the church office. All communications are handled with discretion
+          and in accordance with our governance procedures.
+        </p>
+        <div class="board-cta-details">
+          <div class="detail-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            jesushousekgn@hotmail.com
+          </div>
+          <div class="detail-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+18769202260">+1 876 920 2260</a>
+          </div>
+          <div class="detail-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <a href="https://maps.google.com/?q=3+McGregor+Square,+corner+of+Beechwood+Avenue,+off+Halfway+Tree,+Kingston+5,+Jamaica" target="_blank" rel="noopener noreferrer">3 McGregor Square, Halfway Tree, Kingston 5, Jamaica</a>
+          </div>
+        </div>
+      </div>
+      <a href="/contact" class="btn btn-gold" style="flex-shrink:0;">Contact Us</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 75% 25%, rgba(212, 168, 67, 0.1) 0%, transparent 55%),
+      radial-gradient(ellipse at 15% 75%, rgba(224, 90, 43, 0.07) 0%, transparent 50%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.75;
+    max-width: 52ch;
+  }
+
+  /* Role Section */
+  .role-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .role-intro {
+    max-width: 760px;
+    margin-bottom: 3.5rem;
+  }
+
+  .role-heading {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 1.25rem;
+  }
+
+  .role-text {
+    font-size: 0.975rem;
+    color: var(--color-muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .responsibilities-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .responsibilities-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .responsibility-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.75rem;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+    transition: border-color var(--transition-base);
+  }
+
+  .responsibility-card:hover {
+    border-color: rgba(212, 168, 67, 0.35);
+  }
+
+  .resp-icon {
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .resp-title {
+    font-size: 1.1rem;
+    color: var(--color-navy);
+    margin-bottom: 0.625rem;
+  }
+
+  .resp-desc {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  /* Members */
+  .members-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .members-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    max-width: 560px;
+    margin-inline: auto;
+    margin-bottom: 3.5rem;
+  }
+
+  .members-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 0.875rem;
+  }
+
+  .members-sub {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .members-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .members-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .members-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .trustee-card {
+    background-color: var(--color-cream);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .trustee-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(13, 27, 62, 0.08);
+  }
+
+  .trustee-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-navy), #2a3f6e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    border: 2px solid rgba(212, 168, 67, 0.2);
+  }
+
+  .trustee-name {
+    font-size: 1rem;
+    color: var(--color-navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .trustee-role {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .trustee-bio {
+    font-size: 0.825rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  /* Board CTA */
+  .board-cta {
+    background-color: var(--color-navy);
+    padding: 5rem 0;
+  }
+
+  .board-cta-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 900px) {
+    .board-cta-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .board-cta-heading {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-white);
+    margin-bottom: 0.875rem;
+  }
+
+  .board-cta-sub {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.75;
+    max-width: 560px;
+    margin-bottom: 1.5rem;
+  }
+
+  .board-cta-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    [class$="-hero"] {
+      padding-top: 5.5rem;
+      padding-bottom: 3.5rem;
+    }
+  }
+
+  .detail-item svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+</style>

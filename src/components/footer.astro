@@ -1,0 +1,452 @@
+---
+import { CHURCH } from '../lib/church';
+
+const quickLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About Us' },
+  { href: '/sermons', label: 'Sermons' },
+  { href: '/departments', label: 'Departments' },
+  { href: '/events', label: 'Events' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const serviceTimes = [
+  { day: 'Sunday Service',  time: '9:00 AM' },
+  { day: 'Bible Study',     time: 'Wednesday 6:00 PM' },
+  { day: 'Night Vigil',     time: 'Last Friday of Month' },
+  { day: 'Covenant Prayer', time: 'Monthly — See Calendar' },
+];
+---
+
+<footer class="site-footer">
+  <!-- Gold top line -->
+  <div class="footer-gold-line" aria-hidden="true"></div>
+
+  <div class="footer-body">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="/" class="footer-logo" aria-label="Jesus House Jamaica">
+            <img
+              src="https://static.wixstatic.com/media/1aec49_184f6afce99f418fb6cc02455eccbd8f~mv2.png/v1/fill/w_188,h_118,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Jesus%20House%20new%20logo%20(2).png"
+              alt="Jesus House Jamaica"
+              class="footer-logo-img"
+              width="94"
+              height="59"
+              loading="lazy"
+            />
+          </a>
+
+          <p class="footer-tagline">
+            A member of the Redeemed Christian Church of God (RCCG), rooted in the heart of Jamaica.
+          </p>
+
+          <!-- Social Links — from www.jesushousejamaica.org -->
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/rccg.jesushouse.kingston"
+              class="social-link"
+              aria-label="Facebook — rccg.jesushouse.kingston"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a
+              href="https://www.instagram.com/rccgjesushousekgnjamaica"
+              class="social-link"
+              aria-label="Instagram — @rccgjesushousekgnjamaica"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a
+              href="https://www.youtube.com/@jesushousekingston"
+              class="social-link"
+              aria-label="YouTube Channel"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="var(--color-navy)"/>
+              </svg>
+            </a>
+            <a
+              href="https://twitter.com/rccgjhkingston"
+              class="social-link"
+              aria-label="Twitter — @rccgjhkingston"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.261 5.635zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Quick Links</h3>
+          <ul class="footer-links">
+            {quickLinks.map((link) => (
+              <li>
+                <a href={link.href} class="footer-link">
+                  <span class="footer-link-arrow" aria-hidden="true">›</span>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Service Times -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Service Times</h3>
+          <ul class="service-times">
+            {serviceTimes.map((service) => (
+              <li class="service-time-item">
+                <span class="service-day">{service.day}</span>
+                <span class="service-time">{service.time}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Find Us</h3>
+          <address class="footer-address">
+            <p class="address-line">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <a href={CHURCH.mapsUrl} target="_blank" rel="noopener noreferrer">
+                3 McGregor Square, corner of Beechwood Avenue,<br/>
+                off Halfway Tree, Kingston 5, Jamaica
+              </a>
+            </p>
+            <p class="address-line">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.94-.93a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <a href="tel:+18769202260">+1 876 920 2260</a>
+            </p>
+            <p class="address-line">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <a href="mailto:jesushousekgn@hotmail.com">jesushousekgn@hotmail.com</a>
+            </p>
+          </address>
+        </div>
+      </div>
+
+      <!-- Scripture Quote -->
+      <blockquote class="footer-scripture">
+        <p>"I was glad when they said to me, 'Let us go into the house of the Lord.'"</p>
+        <cite>— Psalm 122:1</cite>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- Copyright Bar -->
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p class="copyright">
+        &copy; {new Date().getFullYear()} Jesus House Jamaica | RCCG. All rights reserved.
+      </p>
+      <p class="footer-web">
+        <a href="https://www.jesushousejamaica.org" target="_blank" rel="noopener">www.jesushousejamaica.org</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-navy);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .footer-gold-line {
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-coral), var(--color-gold), var(--color-coral));
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+  }
+
+  @keyframes shimmer {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  .footer-body {
+    padding: 4rem 0 3rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+    }
+  }
+
+  /* Brand */
+  .footer-logo {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    text-decoration: none;
+  }
+
+  .footer-logo-img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    /* logo is dark-background optimised; boost brightness on navy footer */
+    filter: brightness(1.1);
+  }
+
+  .footer-tagline {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 1.5rem;
+    max-width: 28ch;
+  }
+
+  /* Social */
+  .social-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all var(--transition-base);
+    flex-shrink: 0;
+  }
+
+  .social-link:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    background-color: rgba(212, 168, 67, 0.1);
+  }
+
+  /* Columns */
+  .footer-col-title {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1.25rem;
+  }
+
+  /* Quick Links */
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color var(--transition-base);
+    padding: 0.125rem 0;
+  }
+
+  .footer-link:hover {
+    color: var(--color-gold);
+  }
+
+  .footer-link-arrow {
+    color: var(--color-gold);
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  /* Service Times */
+  .service-times {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .service-time-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding-bottom: 0.875rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .service-time-item:last-child {
+    border-bottom: none;
+  }
+
+  .service-day {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-white);
+    letter-spacing: 0.05em;
+  }
+
+  .service-time {
+    font-size: 0.875rem;
+    color: var(--color-gold);
+  }
+
+  /* Address */
+  .footer-address {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .address-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+  }
+
+  .address-line svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--color-gold);
+  }
+
+  .address-line a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .address-line a:hover {
+    color: var(--color-gold);
+  }
+
+  /* Scripture */
+  .footer-scripture {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 3rem;
+    padding-top: 2rem;
+    text-align: center;
+  }
+
+  .footer-scripture p {
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .footer-scripture cite {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    font-style: normal;
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.25rem 0;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .footer-bottom-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .footer-bottom-inner {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .footer-web a {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .footer-web a:hover {
+    color: var(--color-gold);
+  }
+
+  @media (max-width: 640px) {
+    .footer-body {
+      padding: 3rem 0 2rem;
+    }
+
+    .footer-tagline {
+      max-width: 100%;
+    }
+
+    .footer-scripture {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+    }
+
+    .address-line {
+      font-size: 0.9rem;
+    }
+  }
+</style>

@@ -1,0 +1,782 @@
+---
+interface Props {
+  heroDark?: boolean;
+}
+const { heroDark = true } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const aboutSubNav = [
+  { href: '/our-pastors',        label: 'Our Pastors' },
+  { href: '/our-beliefs',        label: 'Our Beliefs' },
+  { href: '/our-values',         label: 'Our Values' },
+  { href: '/our-mission',        label: 'Our Mission' },
+  { href: '/departments',        label: 'Departments' },
+  { href: '/our-confession',     label: 'Our Confession' },
+  { href: '/board-of-trustees',  label: 'Board of Trustees' },
+  { href: '/history-of-rccg',    label: 'History of RCCG' },
+  { href: '/general-overseers',  label: 'General Overseers' },
+];
+
+const multimediaSubNav = [
+  { href: '/watch-live',        label: 'Watch Live',               badge: 'LIVE' },
+  { href: '/sermons',           label: 'Sermons Archive',          badge: '' },
+  { href: '/youth-conference',  label: 'Youth Conference 2023',    badge: '' },
+  { href: '/multimedia',        label: '360° Christmas Concert',   badge: '' },
+  { href: '/blog',              label: 'Blog',                     badge: '' },
+];
+
+const isAboutActive = aboutSubNav.some(l => currentPath === l.href || currentPath.startsWith(l.href + '/'));
+const isMultimediaActive = multimediaSubNav.some(l => currentPath === l.href || currentPath.startsWith(l.href + '/'));
+
+function isActive(href: string) {
+  return currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
+}
+---
+
+<header
+  class={`site-nav${!heroDark ? ' nav--scrolled nav--force-light' : ''}`}
+  id="site-nav"
+>
+  <div class="nav-container container">
+
+    <!-- Logo -->
+    <a href="/" class="nav-logo" aria-label="Jesus House Jamaica – Home">
+      <img
+        src="https://static.wixstatic.com/media/1aec49_184f6afce99f418fb6cc02455eccbd8f~mv2.png/v1/fill/w_188,h_118,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Jesus%20House%20new%20logo%20(2).png"
+        alt="Jesus House Jamaica Logo"
+        class="logo-img"
+        width="94"
+        height="59"
+        loading="eager"
+      />
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="nav-links" aria-label="Main navigation">
+
+      <a href="/" class={`nav-link${isActive('/') && currentPath === '/' ? ' nav-link--active' : ''}`}>Home</a>
+
+      <!-- About Us dropdown -->
+      <div class="dropdown">
+        <button class={`nav-link nav-link-btn${isAboutActive ? ' nav-link--active' : ''}`} aria-haspopup="true" aria-expanded="false" id="about-btn">
+          About Us
+          <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu" role="menu" aria-labelledby="about-btn">
+          {aboutSubNav.map(l => (
+            <a href={l.href} class={`dropdown-item${isActive(l.href) ? ' dropdown-item--active' : ''}`} role="menuitem">
+              {l.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <a href="/services" class={`nav-link${isActive('/services') ? ' nav-link--active' : ''}`}>Services</a>
+
+      <!-- Multimedia dropdown -->
+      <div class="dropdown">
+        <button class={`nav-link nav-link-btn${isMultimediaActive ? ' nav-link--active' : ''}`} aria-haspopup="true" aria-expanded="false" id="media-btn">
+          Media
+          <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu" role="menu" aria-labelledby="media-btn">
+          {multimediaSubNav.map(l => (
+            <a href={l.href} class={`dropdown-item${isActive(l.href) ? ' dropdown-item--active' : ''}`} role="menuitem">
+              {l.label}
+              {l.badge && <span class="dropdown-badge">{l.badge}</span>}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <a href="/contact" class={`nav-link${isActive('/contact') ? ' nav-link--active' : ''}`}>Contact</a>
+
+      <!-- Watch Live prominent link -->
+      <a
+        href="/watch-live"
+        class="nav-live-link"
+        aria-label="Watch Live on YouTube"
+      >
+        <span class="live-dot" aria-hidden="true"></span>
+        Watch Live
+      </a>
+
+    </nav>
+
+    <!-- CTA + Hamburger -->
+    <div class="nav-actions">
+      <a href="/contact#visit" class="btn btn-gold nav-cta">Join Us</a>
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <div class="mobile-inner">
+
+    <a href="/" class="mobile-link">Home</a>
+
+    <!-- About accordion -->
+    <details class="mobile-accordion">
+      <summary class="mobile-link mobile-link-summary">
+        About Us
+        <svg class="chevron" width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="mobile-sub">
+        {aboutSubNav.map(l => <a href={l.href} class="mobile-sub-link">{l.label}</a>)}
+      </div>
+    </details>
+
+    <a href="/services" class="mobile-link">Services</a>
+
+    <!-- Media accordion -->
+    <details class="mobile-accordion">
+      <summary class="mobile-link mobile-link-summary">
+        Media
+        <svg class="chevron" width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="mobile-sub">
+        {multimediaSubNav.map(l => (
+          <a href={l.href} class="mobile-sub-link">
+            {l.label}
+            {l.badge && <span class="dropdown-badge">{l.badge}</span>}
+          </a>
+        ))}
+      </div>
+    </details>
+
+    <a href="/contact" class="mobile-link">Contact</a>
+
+    <a href="/watch-live" class="mobile-watch-live">
+      <span class="live-dot" aria-hidden="true"></span>
+      Watch Live
+    </a>
+
+    <!-- Online Meeting Links -->
+    <div class="mobile-zoom-links">
+      <p class="mobile-zoom-label">Join Online</p>
+      <a
+        href="zoommtg://zoom.us/join?confno=8761234567"
+        class="mobile-zoom-btn"
+        title="Join Bible Study on Zoom"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/></svg>
+        Bible Study · Wed 6:00 PM
+      </a>
+      <a
+        href="zoommtg://zoom.us/join?confno=8769876543"
+        class="mobile-zoom-btn"
+        title="Join Night Vigil on Zoom"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/></svg>
+        Night Vigil · Monthly
+      </a>
+    </div>
+
+    <a href="/contact#visit" class="btn btn-gold mobile-cta">Join Us Sunday</a>
+  </div>
+</div>
+
+<!-- Spacer — navy on dark-hero pages so transparent nav never shows white text on white bg -->
+<div class={`nav-spacer${heroDark ? ' nav-spacer--dark' : ''}`} aria-hidden="true"></div>
+
+<script>
+  const nav      = document.getElementById('site-nav')!;
+  const hamburger = document.getElementById('hamburger')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  const isForced  = nav.classList.contains('nav--force-light');
+
+  /* ── Scroll behaviour ────────────────────────────── */
+  function handleScroll() {
+    if (isForced) return; // keep white nav on light-hero pages
+    if (window.scrollY > 60) {
+      nav.classList.add('nav--scrolled');
+    } else {
+      nav.classList.remove('nav--scrolled');
+    }
+  }
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  /* ── Hamburger toggle ────────────────────────────── */
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!open));
+    hamburger.classList.toggle('hamburger--open');
+    mobileMenu.classList.toggle('mobile-menu--open');
+    document.body.classList.toggle('body-menu-open');
+    hamburger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+  });
+
+  // Close mobile menu on link click
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      hamburger.classList.remove('hamburger--open');
+      mobileMenu.classList.remove('mobile-menu--open');
+      document.body.classList.remove('body-menu-open');
+    });
+  });
+
+  /* ── Desktop dropdown keyboard support ───────────── */
+  document.querySelectorAll<HTMLElement>('.dropdown').forEach(dropdown => {
+    const btn = dropdown.querySelector<HTMLElement>('[aria-haspopup]');
+    const menu = dropdown.querySelector<HTMLElement>('.dropdown-menu');
+
+    btn?.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Close all others
+      document.querySelectorAll('[aria-haspopup]').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+      });
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target as Node)) {
+        btn?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Escape closes dropdown
+    dropdown.addEventListener('keydown', (e) => {
+      if ((e as KeyboardEvent).key === 'Escape') {
+        btn?.setAttribute('aria-expanded', 'false');
+        btn?.focus();
+      }
+    });
+  });
+</script>
+
+<style>
+  /* ────────────────────────────────────────────────── */
+  /* Base nav                                           */
+  /* ────────────────────────────────────────────────── */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent;
+  }
+
+  .site-nav.nav--scrolled {
+    background-color: var(--color-white);
+    box-shadow: 0 2px 24px rgba(13, 27, 62, 0.10);
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 1.5rem;
+  }
+
+  /* ────────────────────────────────────────────────── */
+  /* Logo                                               */
+  /* ────────────────────────────────────────────────── */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    transition: filter 0.3s ease;
+    /* On dark hero, keep colour; on scrolled (white bg), no filter needed */
+  }
+
+  /* When nav transparent (dark hero), boost logo brightness so it pops */
+  .site-nav:not(.nav--scrolled) .logo-img {
+    filter: brightness(1.15);
+  }
+
+  /* ────────────────────────────────────────────────── */
+  /* Desktop nav links                                  */
+  /* ────────────────────────────────────────────────── */
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+  }
+
+  @media (min-width: 1024px) {
+    .nav-links { display: flex; }
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 0.5rem 0.85rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+    text-decoration: none;
+    transition: color var(--transition-base);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .nav-link-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.875rem;
+  }
+
+  .nav-link::after,
+  .nav-link-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0.85rem;
+    right: 0.85rem;
+    height: 2px;
+    background-color: var(--color-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+  }
+
+  .nav-link:hover,
+  .nav-link-btn:hover,
+  .nav-link--active {
+    color: var(--color-gold);
+  }
+
+  .nav-link:hover::after,
+  .nav-link-btn:hover::after,
+  .nav-link--active::after {
+    transform: scaleX(1);
+  }
+
+  /* Scrolled state — inactive links go navy, active stays gold */
+  .site-nav.nav--scrolled .nav-link,
+  .site-nav.nav--scrolled .nav-link-btn {
+    color: var(--color-navy);
+  }
+
+  /* Must come AFTER the navy rule so same-specificity ties resolve to gold */
+  .site-nav.nav--scrolled .nav-link:hover,
+  .site-nav.nav--scrolled .nav-link-btn:hover,
+  .site-nav.nav--scrolled .nav-link--active {
+    color: var(--color-gold);
+  }
+
+  /* Chevron */
+  .chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  [aria-expanded='true'] .chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ────────────────────────────────────────────────── */
+  /* Dropdown menus                                     */
+  /* ────────────────────────────────────────────────── */
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    min-width: 220px;
+    background-color: var(--color-white);
+    border-top: 2px solid var(--color-gold);
+    box-shadow: 0 12px 40px rgba(13, 27, 62, 0.15);
+    border-radius: 0 0 0.5rem 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    z-index: 100;
+    padding: 0.5rem 0;
+  }
+
+  /* Show on hover OR when aria-expanded=true */
+  .dropdown:hover .dropdown-menu,
+  .dropdown:focus-within .dropdown-menu,
+  [aria-expanded='true'] + .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Workaround: button + sibling selector for JS-driven open */
+  .nav-link-btn[aria-expanded='true'] ~ .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1.25rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-navy);
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .dropdown-item:hover,
+  .dropdown-item--active {
+    background-color: rgba(212, 168, 67, 0.08);
+    color: var(--color-gold);
+  }
+
+  .dropdown-badge {
+    background-color: #E53E3E;
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-badge {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.6; }
+  }
+
+  /* ────────────────────────────────────────────────── */
+  /* Watch Live button                                  */
+  /* ────────────────────────────────────────────────── */
+  .nav-live-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    margin-left: 0.25rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #E53E3E;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-live-link:hover {
+    background-color: #E53E3E;
+    color: white !important;
+  }
+
+  .site-nav.nav--scrolled .nav-live-link {
+    /* stays red on scrolled too */
+    color: #E53E3E;
+  }
+
+  .live-dot {
+    width: 7px;
+    height: 7px;
+    background-color: #E53E3E;
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink-dot 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  .nav-live-link:hover .live-dot {
+    background-color: white;
+  }
+
+  @keyframes blink-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* ────────────────────────────────────────────────── */
+  /* Nav actions                                        */
+  /* ────────────────────────────────────────────────── */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .nav-cta {
+    display: none;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  @media (min-width: 768px) {
+    .nav-cta { display: inline-flex; }
+  }
+
+  /* ────────────────────────────────────────────────── */
+  /* Hamburger                                          */
+  /* ────────────────────────────────────────────────── */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  .site-nav.nav--scrolled .hamburger-line {
+    background-color: var(--color-navy);
+  }
+
+  .hamburger--open .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger--open .hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger--open .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (min-width: 1024px) {
+    .hamburger { display: none; }
+  }
+
+  /* ────────────────────────────────────────────────── */
+  /* Mobile Menu                                        */
+  /* ────────────────────────────────────────────────── */
+  .mobile-menu {
+    position: fixed;
+    top: 72px;
+    left: 0; right: 0; bottom: 0;
+    background-color: var(--color-navy);
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 999;
+  }
+
+  .mobile-menu--open {
+    transform: translateX(0);
+  }
+
+  .mobile-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem var(--container-px) 3rem;
+    gap: 0;
+  }
+
+  .mobile-link {
+    padding: 1rem 0;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-white);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-link:hover { color: var(--color-gold); }
+
+  /* Accordion */
+  .mobile-accordion {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-accordion summary {
+    list-style: none;
+    cursor: pointer;
+    border-bottom: none;
+  }
+
+  .mobile-accordion summary::-webkit-details-marker { display: none; }
+
+  .mobile-accordion[open] summary .chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-accordion .chevron {
+    transition: transform 0.25s ease;
+  }
+
+  .mobile-sub {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0 1rem 1rem;
+    gap: 0.25rem;
+  }
+
+  .mobile-sub-link {
+    padding: 0.5rem 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color var(--transition-base);
+  }
+
+  .mobile-sub-link:hover { color: var(--color-gold); }
+
+  /* Watch Live mobile */
+  .mobile-watch-live {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    background-color: rgba(229, 62, 62, 0.15);
+    border: 1px solid rgba(229, 62, 62, 0.4);
+    border-radius: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FC8181;
+    text-decoration: none;
+  }
+
+  /* Zoom links */
+  .mobile-zoom-links {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mobile-zoom-label {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.25rem;
+  }
+
+  .mobile-zoom-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.375rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-zoom-btn:hover {
+    background-color: rgba(212, 168, 67, 0.12);
+    color: var(--color-gold);
+  }
+
+  .mobile-cta {
+    margin-top: 2rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Spacer */
+  .nav-spacer         { height: 72px; }
+  .nav-spacer--dark   { background-color: var(--color-navy); }
+
+  :global(body.body-menu-open) { overflow: hidden; }
+
+  @media (min-width: 1024px) {
+    .hamburger { display: none; }
+  }
+
+  /* ── Mobile sizing fixes ──────────────────────────── */
+  @media (max-width: 480px) {
+    .mobile-link {
+      font-size: 1.3rem;
+      padding: 0.875rem 0;
+    }
+
+    .mobile-sub {
+      padding: 0.375rem 0 0.875rem 0.75rem;
+    }
+
+    .mobile-sub-link {
+      font-size: 0.95rem;
+      padding: 0.425rem 0;
+    }
+
+    .mobile-zoom-btn {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .mobile-link {
+      font-size: 1.15rem;
+    }
+
+    .logo-img {
+      height: 40px;
+    }
+  }
+</style>

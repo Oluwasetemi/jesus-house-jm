@@ -1,0 +1,367 @@
+---
+// Three.js "Ascending Light" animation
+// Romans 12:1 — Empowering men and women for godly living
+---
+
+<section class="inspiration-section" aria-label="Inspiration — Romans 12:1">
+  <canvas id="inspiration-canvas" aria-hidden="true"></canvas>
+
+  <div class="inspiration-overlay">
+    <p class="inspiration-label">ROMANS 12:1</p>
+    <h2 class="inspiration-heading">
+      Empowering<br />
+      <em>men and women</em><br />
+      for godly living
+    </h2>
+    <p class="inspiration-verse">
+      "I urge you, brothers and sisters, to offer your bodies as a living sacrifice,<br class="verse-break" />
+      holy and pleasing to God — this is your true and proper worship."
+    </p>
+    <a href="/our-mission" class="inspiration-cta">Explore Our Mission</a>
+  </div>
+</section>
+
+<!-- Three.js from CDN -->
+<script is:inline src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+(function () {
+  /* Respect prefers-reduced-motion */
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('inspiration-canvas'));
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  /* ── Scene ─────────────────────────────────────────── */
+  const scene    = new THREE.Scene();
+  const W        = canvas.offsetWidth;
+  const H        = canvas.offsetHeight;
+  const camera   = new THREE.PerspectiveCamera(60, W / H, 0.1, 80);
+  camera.position.set(0, 0, 9);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+  renderer.setClearColor(0x000000, 0);
+
+  /* ── Particle counts ───────────────────────────────── */
+  const IS_MOBILE   = window.innerWidth < 768;
+  const TOTAL       = IS_MOBILE ? 2200 : 5000;
+  const CROSS_COUNT = IS_MOBILE ? 220  : 500;
+  const DRIFT_COUNT = TOTAL - CROSS_COUNT;
+
+  /* ── Build cross positions ─────────────────────────── */
+  function buildCrossPoints(n) {
+    const pts = [];
+    const vert = Math.floor(n * 0.62);
+    const horiz = n - vert;
+    const vHalf = 2.4, hHalf = 1.6, thickness = 0.055;
+
+    for (let i = 0; i < vert; i++) {
+      pts.push([
+        (Math.random() - 0.5) * thickness,
+        (i / vert) * (vHalf * 2) - vHalf,
+        (Math.random() - 0.5) * thickness,
+      ]);
+    }
+    for (let i = 0; i < horiz; i++) {
+      pts.push([
+        (i / horiz) * (hHalf * 2) - hHalf,
+        0.5 + (Math.random() - 0.5) * thickness,
+        (Math.random() - 0.5) * thickness,
+      ]);
+    }
+    return pts;
+  }
+
+  const crossPts = buildCrossPoints(CROSS_COUNT);
+
+  /* ── Buffer arrays ─────────────────────────────────── */
+  const positions  = new Float32Array(TOTAL * 3);
+  const colors     = new Float32Array(TOTAL * 3);
+  const speeds     = new Float32Array(TOTAL);
+  const isCross    = new Uint8Array(TOTAL);  // 1 = cross particle
+
+  /* Cross particles */
+  for (let i = 0; i < CROSS_COUNT; i++) {
+    positions[i*3]   = crossPts[i][0];
+    positions[i*3+1] = crossPts[i][1];
+    positions[i*3+2] = crossPts[i][2];
+    // warm gold
+    colors[i*3]   = 1.0;
+    colors[i*3+1] = 0.75 + Math.random() * 0.15;
+    colors[i*3+2] = 0.1  + Math.random() * 0.2;
+    speeds[i]    = 0.0;
+    isCross[i]   = 1;
+  }
+
+  /* Drifting particles */
+  for (let i = CROSS_COUNT; i < TOTAL; i++) {
+    const radius = 0.5 + Math.cbrt(Math.random()) * 5.5;
+    const theta  = Math.random() * Math.PI * 2;
+    const phi    = Math.acos(2 * Math.random() - 1);
+    positions[i*3]   = radius * Math.sin(phi) * Math.cos(theta);
+    positions[i*3+1] = (Math.random() - 0.5) * 10;
+    positions[i*3+2] = radius * Math.sin(phi) * Math.sin(theta) * 0.4;
+
+    // Mix: gold, amber, warm white
+    const t = Math.random();
+    if (t < 0.5) {
+      // gold
+      colors[i*3] = 0.83; colors[i*3+1] = 0.66; colors[i*3+2] = 0.26;
+    } else if (t < 0.8) {
+      // amber
+      colors[i*3] = 1.0;  colors[i*3+1] = 0.50; colors[i*3+2] = 0.12;
+    } else {
+      // warm white
+      colors[i*3] = 1.0;  colors[i*3+1] = 0.95; colors[i*3+2] = 0.80;
+    }
+
+    speeds[i]   = 0.004 + Math.random() * 0.010;
+    isCross[i]  = 0;
+  }
+
+  /* ── Geometry & Material ───────────────────────────── */
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(colors,    3));
+
+  const mat = new THREE.PointsMaterial({
+    size: IS_MOBILE ? 0.055 : 0.04,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    sizeAttenuation: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+
+  const points = new THREE.Points(geo, mat);
+  scene.add(points);
+
+  /* ── Ambient glow sprite (cross centre) ────────────── */
+  const glowGeo = new THREE.PlaneGeometry(3, 3);
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: 0xD4A843,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const glow = new THREE.Mesh(glowGeo, glowMat);
+  glow.position.set(0, 0, -0.5);
+  scene.add(glow);
+
+  /* ── Mouse parallax ────────────────────────────────── */
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    targetX = (e.clientX / window.innerWidth  - 0.5) * 0.8;
+    targetY = (e.clientY / window.innerHeight - 0.5) * 0.4;
+  });
+
+  /* ── Resize ────────────────────────────────────────── */
+  window.addEventListener('resize', () => {
+    const w = canvas.offsetWidth;
+    const h = canvas.offsetHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  /* ── Animation loop ────────────────────────────────── */
+  let time   = 0;
+  let frameId = 0;
+
+  // Pause when tab hidden to save GPU
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      cancelAnimationFrame(frameId);
+    } else {
+      tick();
+    }
+  });
+
+  function tick() {
+    frameId = requestAnimationFrame(tick);
+    time   += 0.008;
+
+    const pos = geo.attributes.position.array;
+
+    /* Update particle positions */
+    for (let i = CROSS_COUNT; i < TOTAL; i++) {
+      pos[i*3+1] += speeds[i];
+      if (pos[i*3+1] > 5.5) {
+        pos[i*3+1] = -5.5;
+      }
+    }
+
+    /* Cross particles: subtle shimmer */
+    for (let i = 0; i < CROSS_COUNT; i++) {
+      pos[i*3]   = crossPts[i][0] + Math.sin(time * 1.2 + i * 0.7) * 0.008;
+      pos[i*3+1] = crossPts[i][1] + Math.cos(time * 0.9 + i * 0.5) * 0.008;
+    }
+
+    geo.attributes.position.needsUpdate = true;
+
+    /* Pulsing opacity & glow */
+    const pulse = 0.70 + Math.sin(time * 1.5) * 0.12;
+    mat.opacity = pulse;
+    glowMat.opacity = 0.04 + Math.sin(time * 1.5) * 0.03;
+
+    /* Slow rotation */
+    points.rotation.y = Math.sin(time * 0.12) * 0.18;
+
+    /* Mouse parallax — lerp camera */
+    currentX += (targetX - currentX) * 0.04;
+    currentY += (-targetY - currentY) * 0.04;
+    camera.position.x = currentX;
+    camera.position.y = currentY;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+
+  tick();
+})();
+</script>
+
+<style>
+  .inspiration-section {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    min-height: 560px;
+    background: radial-gradient(ellipse at 50% 40%, #1a1230 0%, #0a0b1a 55%, #07080f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #inspiration-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .inspiration-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem var(--container-px);
+    max-width: 800px;
+    animation: fadeInUp 1.2s ease both;
+  }
+
+  .inspiration-label {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+  }
+
+  .inspiration-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--color-white);
+    margin-bottom: 2rem;
+    text-shadow: 0 0 60px rgba(212, 168, 67, 0.35);
+    animation: fadeInUp 1.2s 0.2s ease both;
+  }
+
+  .inspiration-heading em {
+    font-style: italic;
+    color: var(--color-gold);
+    display: inline-block;
+    /* gentle text shimmer */
+    background: linear-gradient(90deg, #D4A843 0%, #f7d88b 45%, #c4952e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+    background-size: 200% auto;
+  }
+
+  .inspiration-verse {
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.62);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    animation: fadeInUp 1.2s 0.4s ease both;
+  }
+
+  .verse-break { display: none; }
+  @media (min-width: 640px) { .verse-break { display: block; } }
+
+  .inspiration-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2.25rem;
+    border: 1.5px solid rgba(212, 168, 67, 0.55);
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--color-gold);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    animation: fadeInUp 1.2s 0.6s ease both;
+    backdrop-filter: blur(4px);
+  }
+
+  .inspiration-cta:hover {
+    background-color: var(--color-gold);
+    color: #0a0b1a;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 32px rgba(212, 168, 67, 0.4);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes shimmer {
+    to { background-position: 200% center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .inspiration-overlay,
+    .inspiration-heading,
+    .inspiration-verse,
+    .inspiration-cta { animation: none; }
+  }
+
+  @media (max-width: 480px) {
+    .inspiration-section {
+      height: 80vh;
+      min-height: 480px;
+    }
+
+    .inspiration-cta {
+      padding: 0.75rem 1.75rem;
+      font-size: 0.82rem;
+    }
+
+    .inspiration-verse {
+      font-size: 0.875rem;
+    }
+  }
+</style>

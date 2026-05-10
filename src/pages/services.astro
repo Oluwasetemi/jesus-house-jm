@@ -1,0 +1,862 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/nav.astro';
+import Footer from '../components/footer.astro';
+
+const regularServices = [
+  {
+    id: 'sunday',
+    title: 'Sunday Worship Service',
+    time: 'Every Sunday · 9:00 AM',
+    location: 'In-Person & Online',
+    description: 'Our flagship weekly gathering — a full celebration of Spirit-filled worship, powerful expository preaching, and vibrant community. All are welcome. Come as you are.',
+    details: [
+      'Praise and worship with our live band and choir',
+      'Expository message from the Word of God',
+      'Communion on the first Sunday of every month',
+      'Children\'s church runs concurrently',
+      'Altar call and prayer ministry after service',
+    ],
+    badge: 'Weekly',
+    badgeColor: 'gold',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    zoomLink: null,
+    featured: true,
+  },
+  {
+    id: 'bible-study',
+    title: 'Wednesday Bible Study',
+    time: 'Every Wednesday · 6:00 PM',
+    location: 'In-Person & Zoom',
+    description: 'A mid-week deep dive into Scripture — verse-by-verse, Spirit-led, and practically applied. Sharpen your understanding of God\'s Word and grow in faith alongside your church family.',
+    details: [
+      'Verse-by-verse expository teaching',
+      'Interactive Q&A and group discussion',
+      'Available in-person and via Zoom',
+      'Prayer and intercession time',
+      'Fellowship following the study',
+    ],
+    badge: 'Weekly',
+    badgeColor: 'gold',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+    zoomLink: 'zoommtg://zoom.us/join?confno=8761234567',
+    featured: false,
+  },
+  {
+    id: 'night-vigil',
+    title: 'Night Vigil',
+    time: 'Monthly · Check Calendar',
+    location: 'In-Person & Zoom',
+    description: 'An all-night prayer and worship experience — one of the most powerful nights in our church calendar. We intercede for the nations, for our families, and for breakthrough.',
+    details: [
+      'Extended worship and praise',
+      'Midnight prayer and intercession',
+      'Prophetic ministry and prayer stations',
+      'Pre-dawn declaration service',
+      'Available in-person and via Zoom',
+    ],
+    badge: 'Monthly',
+    badgeColor: 'coral',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`,
+    zoomLink: 'zoommtg://zoom.us/join?confno=8769876543',
+    featured: false,
+  },
+  {
+    id: 'covenant-prayers',
+    title: 'Covenant Prayers',
+    time: 'Early Morning · Regular Schedule',
+    location: 'In-Person',
+    description: 'Our regular early morning prayer meeting — where the intercessors of Jesus House Jamaica gather before dawn to seek the face of God for our church, our nation, and our world.',
+    details: [
+      'Early morning intercession',
+      'Covenant prayer declarations',
+      'Prayer for the church and nation',
+      'Individual prayer support available',
+      'Led by trained intercession team',
+    ],
+    badge: 'Regular',
+    badgeColor: 'navy',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+    zoomLink: null,
+    featured: false,
+  },
+];
+
+const specialServices = [
+  {
+    title: 'First Sunday Communion',
+    desc: 'We observe the Lord\'s Supper on the first Sunday of every month as part of our regular worship service.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>`,
+  },
+  {
+    title: 'Annual Youth Conference',
+    desc: 'Held each October, our Youth Conference gathers young believers from across the Caribbean for worship, ministry, and encounter with God.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  },
+  {
+    title: '360° Christmas Concert',
+    desc: 'Our annual Christmas celebration — a full evening of worship, music, and the proclamation of the incarnation.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+  },
+  {
+    title: 'Easter Celebrations',
+    desc: 'Special Good Friday service and Easter Sunday celebration — commemorating the death and resurrection of Jesus Christ.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,
+  },
+  {
+    title: 'Annual Church Convention',
+    desc: 'Our yearly celebration gathering — a weekend of thanksgiving, testimony, and renewed vision for the year ahead.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+  },
+  {
+    title: 'Wedding & Dedication Services',
+    desc: 'We conduct wedding ceremonies and baby dedication services for members of the Jesus House Jamaica family. Contact the church office to schedule.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+  },
+];
+---
+
+<Layout
+  title="Services"
+  description="Join us for Sunday worship at 9:00 AM, Wednesday Bible Study at 6:00 PM, Night Vigil, and more at Jesus House Jamaica — RCCG Kingston. In-person and online via Zoom."
+>
+  <Nav heroDark={true} />
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <span class="section-label">Gather with Us</span>
+      <h1 class="hero-title">Services</h1>
+      <p class="hero-sub">
+        In-person in Kingston and online around the world — every service is an opportunity
+        to encounter God, grow in faith, and find community.
+      </p>
+    </div>
+    <div class="hero-clip" aria-hidden="true"></div>
+  </section>
+
+  <!-- Quick Info -->
+  <section class="quick-info">
+    <div class="container quick-grid">
+      <div class="quick-item">
+        <div class="quick-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <p class="quick-label">Sunday Service</p>
+          <p class="quick-value">9:00 AM every week</p>
+        </div>
+      </div>
+      <div class="quick-item">
+        <div class="quick-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div>
+          <p class="quick-label">Bible Study</p>
+          <p class="quick-value">Wednesday 6:00 PM</p>
+        </div>
+      </div>
+      <div class="quick-item">
+        <div class="quick-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <p class="quick-label">Location</p>
+          <a href="https://maps.google.com/?q=3+McGregor+Square,+corner+of+Beechwood+Avenue,+off+Halfway+Tree,+Kingston+5,+Jamaica" target="_blank" rel="noopener noreferrer" class="quick-value quick-link">3 McGregor Square, Kingston 5</a>
+        </div>
+      </div>
+      <div class="quick-item">
+        <div class="quick-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <p class="quick-label">Phone</p>
+          <a href="tel:+18769202260" class="quick-value quick-link">+1 876 920 2260</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regular Services -->
+  <section class="services-section">
+    <div class="container">
+      <div class="services-header">
+        <span class="section-label">Regular Gatherings</span>
+        <h2 class="services-heading">Our Weekly & Monthly Services</h2>
+        <p class="services-sub">
+          Every gathering is planned to bring you into the presence of God — whether you join us
+          in Kingston or from the other side of the world via Zoom or YouTube.
+        </p>
+      </div>
+
+      <div class="services-list">
+        {regularServices.map((service) => (
+          <article
+            class={`service-card${service.featured ? ' service-card--featured' : ''}`}
+            id={service.id}
+          >
+            <div class="service-icon" aria-hidden="true" set:html={service.icon} />
+            <div class="service-body">
+              <div class="service-meta">
+                <span class={`service-badge service-badge--${service.badgeColor}`}>
+                  {service.badge}
+                </span>
+                <span class="service-location">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  {service.location}
+                </span>
+              </div>
+              <h2 class="service-title">{service.title}</h2>
+              <p class="service-time">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                {service.time}
+              </p>
+              <p class="service-desc">{service.description}</p>
+              <ul class="service-details">
+                {service.details.map(detail => (
+                  <li class="service-detail-item">
+                    <div class="detail-bullet" aria-hidden="true"></div>
+                    {detail}
+                  </li>
+                ))}
+              </ul>
+              {service.zoomLink && (
+                <a href={service.zoomLink} class="btn btn-gold service-zoom-btn" aria-label={`Join ${service.title} on Zoom`}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+                  </svg>
+                  Join on Zoom
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Events -->
+  <section class="special-section">
+    <div class="container">
+      <div class="special-header">
+        <span class="section-label">Special Occasions</span>
+        <h2 class="special-heading">Annual & Special Services</h2>
+        <p class="special-sub">
+          Beyond our regular gatherings, the Jesus House Jamaica calendar includes these special services and events throughout the year.
+        </p>
+      </div>
+
+      <div class="special-grid">
+        {specialServices.map((item) => (
+          <div class="special-card">
+            <div class="special-icon" aria-hidden="true" set:html={item.icon} />
+            <div class="special-content">
+              <h3 class="special-title">{item.title}</h3>
+              <p class="special-desc">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Online Meeting Links -->
+  <section class="zoom-section">
+    <div class="container">
+      <div class="zoom-header">
+        <span class="section-label">Join Online</span>
+        <h2 class="zoom-heading">Online Zoom Meetings</h2>
+        <p class="zoom-sub">
+          Can't be with us in person? Join us virtually. Click the Zoom link below to join
+          the corresponding service directly from your device.
+        </p>
+      </div>
+
+      <div class="zoom-grid">
+        <div class="zoom-card">
+          <div class="zoom-card-icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="#2D8CFF" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+          </div>
+          <h3 class="zoom-card-title">Bible Study</h3>
+          <p class="zoom-card-time">Wednesday · 6:00 PM Jamaica Time</p>
+          <p class="zoom-card-id">Conference ID: 876 123 4567</p>
+          <a
+            href="zoommtg://zoom.us/join?confno=8761234567"
+            class="btn btn-gold"
+            aria-label="Join Wednesday Bible Study on Zoom"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+            Join Bible Study
+          </a>
+        </div>
+
+        <div class="zoom-card zoom-card--dark">
+          <div class="zoom-card-icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="rgba(212,168,67,0.9)" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+          </div>
+          <h3 class="zoom-card-title">Night Vigil</h3>
+          <p class="zoom-card-time">Monthly · Check calendar for dates</p>
+          <p class="zoom-card-id">Conference ID: 876 987 6543</p>
+          <a
+            href="zoommtg://zoom.us/join?confno=8769876543"
+            class="btn btn-outline-white"
+            aria-label="Join Night Vigil on Zoom"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+            </svg>
+            Join Night Vigil
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan Your Visit CTA -->
+  <section class="visit-cta">
+    <div class="container visit-inner">
+      <h2 class="visit-heading">Join Us This Sunday</h2>
+      <p class="visit-sub">
+        We would love to welcome you to Jesus House Jamaica. Whether it's your first time or
+        you're returning home — there is room for you here.
+      </p>
+      <div class="visit-info">
+        <div class="visit-detail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <a href="https://maps.google.com/?q=3+McGregor+Square,+corner+of+Beechwood+Avenue,+off+Halfway+Tree,+Kingston+5,+Jamaica" target="_blank" rel="noopener noreferrer">3 McGregor Square, corner of Beechwood Avenue, off Halfway Tree, Kingston 5, Jamaica</a>
+        </div>
+        <div class="visit-detail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Sunday Service begins at 9:00 AM — doors open from 8:30 AM
+        </div>
+        <div class="visit-detail">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+18769202260">+1 876 920 2260</a> · <a href="mailto:jesushousekgn@hotmail.com">jesushousekgn@hotmail.com</a>
+        </div>
+      </div>
+      <div class="visit-btns">
+        <a href="/contact#visit" class="btn btn-gold">Plan Your Visit</a>
+        <a href="/watch-live" class="btn btn-outline-white">Watch Online</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    background-color: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+    padding: 9rem 0 6rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 20%, rgba(212, 168, 67, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 15% 80%, rgba(224, 90, 43, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.75;
+    max-width: 52ch;
+  }
+
+  .hero-clip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: var(--color-gold);
+    opacity: 0.05;
+    clip-path: polygon(0 100%, 100% 20%, 100% 100%);
+  }
+
+  /* Quick Info */
+  .quick-info {
+    background-color: var(--color-gold);
+    padding: 2rem 0;
+  }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .quick-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .quick-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .quick-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+
+  .quick-icon {
+    color: var(--color-navy);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .quick-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(13, 27, 62, 0.6);
+    margin-bottom: 0.2rem;
+  }
+
+  .quick-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    line-height: 1.35;
+  }
+
+  /* Services */
+  .services-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .services-header {
+    margin-bottom: 3.5rem;
+    max-width: 700px;
+  }
+
+  .services-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-navy);
+    margin-bottom: 0.875rem;
+  }
+
+  .services-sub {
+    font-size: 0.975rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    background-color: var(--color-cream);
+    border-radius: var(--radius-card);
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+    transition: border-color var(--transition-base);
+  }
+
+  @media (min-width: 768px) {
+    .service-card {
+      grid-template-columns: 64px 1fr;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+  }
+
+  .service-card:hover {
+    border-color: rgba(212, 168, 67, 0.3);
+  }
+
+  .service-card--featured {
+    background-color: var(--color-navy);
+    border-color: transparent;
+  }
+
+  .service-card--featured .service-title,
+  .service-card--featured .service-time {
+    color: var(--color-white);
+  }
+
+  .service-card--featured .service-desc {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .service-card--featured .service-detail-item {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .service-card--featured .service-icon {
+    color: var(--color-gold);
+  }
+
+  .service-icon {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .service-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .service-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  .service-badge--gold {
+    background-color: rgba(212, 168, 67, 0.15);
+    color: var(--color-gold);
+  }
+
+  .service-badge--coral {
+    background-color: rgba(224, 90, 43, 0.12);
+    color: var(--color-coral);
+  }
+
+  .service-badge--navy {
+    background-color: rgba(13, 27, 62, 0.08);
+    color: var(--color-navy);
+  }
+
+  .service-card--featured .service-badge--gold {
+    background-color: rgba(212, 168, 67, 0.2);
+  }
+
+  .service-card--featured .service-badge--navy {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .service-location {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .service-card--featured .service-location {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .service-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+    color: var(--color-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .service-time {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  .service-desc {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    max-width: 66ch;
+  }
+
+  .service-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .detail-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .service-zoom-btn {
+    align-self: flex-start;
+  }
+
+  /* Special Services */
+  .special-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .special-header {
+    margin-bottom: 3rem;
+    max-width: 600px;
+  }
+
+  .special-heading {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .special-sub {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .special-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .special-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .special-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .special-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    border: 1px solid rgba(13, 27, 62, 0.07);
+    transition: border-color var(--transition-base);
+  }
+
+  .special-card:hover {
+    border-color: rgba(212, 168, 67, 0.3);
+  }
+
+  .special-icon {
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .special-title {
+    font-size: 1rem;
+    color: var(--color-navy);
+    margin-bottom: 0.375rem;
+  }
+
+  .special-desc {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  /* Zoom Section */
+  .zoom-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .zoom-header {
+    margin-bottom: 3rem;
+    max-width: 560px;
+  }
+
+  .zoom-heading {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .zoom-sub {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .zoom-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .zoom-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .zoom-card {
+    background-color: var(--color-cream);
+    border-radius: var(--radius-card);
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(13, 27, 62, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .zoom-card--dark {
+    background-color: var(--color-navy);
+    border-color: transparent;
+  }
+
+  .zoom-card-title {
+    font-size: 1.5rem;
+    color: var(--color-navy);
+  }
+
+  .zoom-card--dark .zoom-card-title {
+    color: var(--color-white);
+  }
+
+  .zoom-card-time {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .zoom-card-id {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    font-family: monospace;
+    background-color: rgba(13, 27, 62, 0.06);
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.25rem;
+    display: inline-block;
+  }
+
+  .zoom-card--dark .zoom-card-id {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Visit CTA */
+  .visit-cta {
+    background: linear-gradient(135deg, var(--color-navy) 0%, #172040 100%);
+    padding: 5rem 0;
+  }
+
+  .visit-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .visit-heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    color: var(--color-white);
+    margin-bottom: 1rem;
+  }
+
+  .visit-sub {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .visit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .visit-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
+  }
+
+  .visit-detail svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .visit-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ── Mobile overrides ─────────────────────────────── */
+  @media (max-width: 640px) {
+    .service-card {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .special-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .zoom-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
