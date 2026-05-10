@@ -1,10 +1,12 @@
 name: Fetch Latest YouTube Videos
 
 # Runs after each service day to pull new recordings into videos.json
-# Jamaica is UTC-5; schedules below are timed so the stream has ended.
-#   Sunday Service  → runs at 17:00 UTC (12:00 PM Jamaica)
+# Jamaica is UTC-5; schedules below are timed so even long streams have ended.
+#   Sunday Service  → runs at 19:00 UTC (2:00 PM Jamaica) — safe for 4-hr services
 #   Monday Prayer   → runs at 14:00 UTC  (9:00 AM Jamaica)
 #   Wednesday Study → runs at 00:00 UTC Thu (7:00 PM Jamaica Wed)
+# Netlify rebuild is triggered automatically when videos.json is pushed (git push webhook).
+# [skip ci] on the commit prevents a GitHub Actions re-run loop but Netlify still rebuilds.
 on:
   schedule:
     - cron: '0 19 * * 0'   # Sunday 19:00 UTC (2:00 PM Jamaica) — after even 4-hr services
