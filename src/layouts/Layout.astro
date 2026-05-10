@@ -17,13 +17,13 @@ interface Props {
 const {
   title,
   description,
-  ogImage = 'https://www.jesushousejamaica.org/og-image.png',
+  ogImage = 'https://jesus-house-jamaica.netlify.app/og-image.png',
   ogType = 'website',
   articlePublishedTime,
   robots = 'index, follow',
 } = Astro.props;
 
-const SITE_URL = 'https://www.jesushousejamaica.org';
+const SITE_URL = 'https://jesus-house-jamaica.netlify.app';
 const canonicalUrl = Astro.props.canonicalUrl ?? `${SITE_URL}${Astro.url.pathname}`;
 const fullTitle = title === 'Home' ? 'Jesus House Jamaica | RCCG Kingston' : `${title} | Jesus House Jamaica`;
 

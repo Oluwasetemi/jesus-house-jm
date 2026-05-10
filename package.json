@@ -3,6 +3,7 @@
   "description": "Official website for Jesus House Jamaica — RCCG Kingston",
   "type": "module",
   "version": "1.0.0",
+  "packageManager": "npm@11.12.1",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
