@@ -6,7 +6,7 @@ import rawVideos from '../data/videos.json';
 
 const CHANNEL_ID = 'UCO1S3nxtFg0_HXEMuZji5zg';
 const YOUTUBE_CHANNEL = 'https://www.youtube.com/@jesushousekingston/streams';
-const YOUTUBE_LIVE    = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=0&enablejsapi=1&origin=https://www.jesushousejamaica.org`;
+const YOUTUBE_LIVE    = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=0&enablejsapi=1&origin=https://jesus-house-jamaica.netlify.app`;
 
 // 6 most recent videos from real data
 const recentSermons = [...rawVideos]
@@ -91,8 +91,8 @@ const onlineMeetings = [
         </a>
       </div>
 
-      <!-- Player: hidden until live stream confirmed -->
-      <div class="player-wrap" id="player-wrap" style="display:none">
+      <!-- Player: always loaded (opacity hidden) so IFrame API can initialise -->
+      <div class="player-wrap" id="player-wrap">
         <iframe
           id="live-iframe"
           class="player-iframe"
@@ -100,7 +100,6 @@ const onlineMeetings = [
           title="Jesus House Jamaica — Live Stream"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
-          loading="lazy"
         ></iframe>
       </div>
 
@@ -232,14 +231,14 @@ const onlineMeetings = [
   <Footer />
 </Layout>
 
-<!-- Live stream detector: shows player only when channel is actually live -->
+<!-- Live stream detector: reveals player when channel is actually live -->
 <script>
 (function () {
-  const playerWrap   = document.getElementById('player-wrap');
-  const offlineState = document.getElementById('offline-state');
-  const liveBadge    = document.getElementById('live-badge');
-  const offlineBadge = document.getElementById('offline-badge');
-  const iframe       = document.getElementById('live-iframe');
+  const playerWrap   = document.getElementById('player-wrap') as HTMLElement | null;
+  const offlineState = document.getElementById('offline-state') as HTMLElement | null;
+  const liveBadge    = document.getElementById('live-badge')   as HTMLElement | null;
+  const offlineBadge = document.getElementById('offline-badge') as HTMLElement | null;
+  const iframe       = document.getElementById('live-iframe')  as HTMLIFrameElement | null;
 
   if (!playerWrap || !offlineState || !iframe) return;
 
@@ -250,40 +249,43 @@ const onlineMeetings = [
     if (liveConfirmed) return;
     liveConfirmed = true;
     clearTimeout(checkTimeout);
+    // Reveal player, hide offline overlay
+    playerWrap.classList.add('is-live');
     offlineState.style.display = 'none';
-    playerWrap.style.display   = 'block';
-    if (liveBadge)    liveBadge.style.display    = 'inline-flex';
-    if (offlineBadge) offlineBadge.style.display = 'none';
+    if (liveBadge)    { liveBadge.style.display    = 'inline-flex'; }
+    if (offlineBadge) { offlineBadge.style.display = 'none'; }
   }
 
-  // YouTube iFrame API sends postMessage events when the player state changes.
-  // State 1 = playing, 3 = buffering — both indicate an active live stream.
+  // YouTube IFrame API fires postMessage events automatically.
+  // onStateChange: {"event":"onStateChange","info": <number>}
+  //   info = 1 (playing) or 3 (buffering) means the live stream is active.
+  // infoDelivery: {"event":"infoDelivery","info":{"playerState":<number>,...}}
   window.addEventListener('message', (e: MessageEvent) => {
     if (!e.origin.includes('youtube.com')) return;
     try {
       const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-      const state = data?.info?.playerState ?? data?.event;
+      // onStateChange delivers info as a bare number; infoDelivery nests it
+      const state: unknown = typeof data?.info === 'number'
+        ? data.info
+        : data?.info?.playerState;
       if (state === 1 || state === 3) showLive();
     } catch { /* ignore parse errors */ }
   });
 
-  // Also detect via iframe load: ask the player for its state after load
+  // After iframe loads, poll the player state as a backup.
+  // The iframe is always rendered (no display:none) so this fires reliably.
   iframe.addEventListener('load', () => {
     setTimeout(() => {
       try {
-        (iframe as HTMLIFrameElement).contentWindow?.postMessage(
+        iframe.contentWindow?.postMessage(
           '{"event":"command","func":"getPlayerState","args":""}',
           'https://www.youtube.com'
         );
-      } catch { /* cross-origin — expected */ }
-    }, 1500);
+      } catch { /* expected — cross-origin */ }
+    }, 2000);
 
-    // Fallback: if no live signal within 6 s, stay on offline state
-    checkTimeout = setTimeout(() => {
-      if (!liveConfirmed) {
-        // Leave offline state visible — player stays hidden
-      }
-    }, 6000);
+    // After 12 s with no live signal, keep offline state visible
+    checkTimeout = setTimeout(() => { /* offline state already showing */ }, 12000);
   });
 })();
 </script>
@@ -411,6 +413,15 @@ const onlineMeetings = [
     background: #0a0a0a;
     box-shadow: 0 24px 64px rgba(13, 27, 62, 0.22);
     margin-bottom: 2.5rem;
+    /* Hidden until live stream confirmed; kept in DOM so IFrame API loads */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .player-wrap.is-live {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .player-iframe {
