@@ -3,30 +3,22 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/nav.astro';
 import Footer from '../components/footer.astro';
 import InspirationAnimation from '../components/inspiration-animation.astro';
+import rawVideos from '../data/videos.json';
 
-const sermons = [
-  {
-    month: 'APRIL',
-    title: 'Walking in Covenant Promise',
-    pastor: 'Pastor George Kamalu',
-    series: 'Faith Foundations',
-    date: 'April 21, 2026',
-  },
-  {
-    month: 'MARCH',
-    title: 'The Power of Persistent Prayer',
-    pastor: 'Pastor Deborah Kamalu',
-    series: 'Prayer & Revival',
-    date: 'March 30, 2026',
-  },
-  {
-    month: 'FEBRUARY',
-    title: 'Renewed by His Grace',
-    pastor: 'Pastor George Kamalu',
-    series: 'Renewal Season',
-    date: 'February 23, 2026',
-  },
-];
+// 3 most recent Sunday services
+const sermons = [...rawVideos]
+  .filter(v => v.category === 'Sunday Service')
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 3)
+  .map(v => ({
+    month:     v.monthShort,
+    title:     v.title,
+    category:  v.category,
+    date:      v.dateNice,
+    duration:  v.duration,
+    url:       v.url,
+    thumbnail: v.thumbnail,
+  }));
 
 const services = [
   {
@@ -225,18 +217,51 @@ const departments = [
       <div class="sermons-grid">
         {sermons.map((sermon) => (
           <article class="sermon-card">
-            <div class="sermon-month-label">{sermon.month}</div>
-            <div class="sermon-series">{sermon.series}</div>
-            <h3 class="sermon-title">{sermon.title}</h3>
-            <p class="sermon-pastor">{sermon.pastor}</p>
-            <p class="sermon-date">{sermon.date}</p>
-            <a href="/sermons" class="sermon-listen">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/>
-                <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
-              </svg>
-              Listen Now
+            <a
+              href={sermon.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="sermon-thumb-link"
+              aria-label={`Watch ${sermon.title} on YouTube`}
+              tabindex="-1"
+            >
+              <div class="sermon-thumb">
+                <img
+                  src={sermon.thumbnail}
+                  alt={sermon.title}
+                  loading="lazy"
+                  width="320"
+                  height="180"
+                />
+                <div class="sermon-thumb-play" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                </div>
+                {sermon.duration && (
+                  <span class="sermon-thumb-dur">{sermon.duration}</span>
+                )}
+              </div>
             </a>
+            <div class="sermon-body">
+              <div class="sermon-month-label">{sermon.month}</div>
+              <div class="sermon-series">{sermon.category}</div>
+              <h3 class="sermon-title">{sermon.title}</h3>
+              <p class="sermon-pastor">Pastor George Kamalu</p>
+              <p class="sermon-date">{sermon.date}</p>
+              <a
+                href={sermon.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="sermon-listen"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
+                </svg>
+                Watch Now
+              </a>
+            </div>
           </article>
         ))}
       </div>
@@ -810,16 +835,81 @@ const departments = [
     background-color: #172040;
     border: 1px solid rgba(212, 168, 67, 0.15);
     border-radius: var(--radius-card);
-    padding: 2rem 1.75rem;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     transition: border-color var(--transition-base), transform 0.25s ease;
   }
 
   .sermon-card:hover {
     border-color: var(--color-gold);
     transform: translateY(-3px);
+  }
+
+  .sermon-thumb-link {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .sermon-thumb {
+    position: relative;
+    padding-bottom: 56.25%;
+    background: #0a0f1e;
+  }
+
+  .sermon-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  .sermon-card:hover .sermon-thumb img {
+    opacity: 0.85;
+  }
+
+  .sermon-thumb-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--color-white);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .sermon-thumb-play svg {
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+    transform: scale(1.8);
+  }
+
+  .sermon-card:hover .sermon-thumb-play {
+    opacity: 1;
+  }
+
+  .sermon-thumb-dur {
+    position: absolute;
+    bottom: 0.4rem;
+    right: 0.5rem;
+    background: rgba(0,0,0,0.75);
+    color: var(--color-white);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.2rem;
+    letter-spacing: 0.03em;
+  }
+
+  .sermon-body {
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
   }
 
   .sermon-month-label {
