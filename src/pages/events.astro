@@ -161,16 +161,20 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
       <div class="all-events-header">
         <h2 class="all-events-title">Full Calendar — 2026</h2>
         <!-- Category filter tabs -->
-        <div class="event-filters" role="navigation" aria-label="Filter events by category">
+        <div class="event-filters" role="group" aria-label="Filter events by category">
           {categories.map((cat) => (
-            <a href="#" class="filter-tag">{cat}</a>
+            <button
+              type="button"
+              class={`filter-tag${cat === 'All' ? ' filter-tag--active' : ''}`}
+              data-filter={cat}
+            >{cat}</button>
           ))}
         </div>
       </div>
 
-      <div class="events-list">
+      <div class="events-list" id="events-list">
         {upcomingEvents.map((event) => (
-          <article class="event-list-item">
+          <article class="event-list-item" data-category={event.category}>
             <div class="event-list-date">
               <div class="event-date-badge">
                 <span class="event-date-month">
@@ -222,7 +226,7 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
           Get event announcements, reminders, and updates delivered to your inbox.
         </p>
       </div>
-      <form class="events-sub-form" action="#" method="POST" novalidate>
+      <form class="events-sub-form" name="events-subscribe" method="POST" data-netlify="true">
         <input type="email" placeholder="Your email address" aria-label="Email address for event notifications" />
         <button type="submit" class="btn btn-gold">Stay Updated</button>
       </form>
@@ -231,6 +235,27 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
 
   <Footer />
 </Layout>
+
+<script>
+(function () {
+  const filters = document.querySelectorAll<HTMLButtonElement>('.filter-tag');
+  const items   = document.querySelectorAll<HTMLElement>('.event-list-item');
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.filter ?? 'All';
+
+      filters.forEach(b => b.classList.remove('filter-tag--active'));
+      btn.classList.add('filter-tag--active');
+
+      items.forEach((item) => {
+        const match = cat === 'All' || item.dataset.category === cat;
+        item.style.display = match ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>
 
 <style>
   /* Hero */
@@ -409,10 +434,12 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
     padding: 0.375rem 1rem;
     border: 1.5px solid rgba(13, 27, 62, 0.15);
     border-radius: 999px;
+    font-family: var(--font-body);
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--color-navy);
-    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
     transition: all var(--transition-base);
     white-space: nowrap;
   }
@@ -423,7 +450,7 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
     background-color: rgba(212, 168, 67, 0.08);
   }
 
-  .filter-tag:first-child {
+  .filter-tag--active {
     background-color: var(--color-navy);
     color: var(--color-white);
     border-color: var(--color-navy);

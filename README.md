@@ -1,43 +1,54 @@
-# Astro Starter Kit: Minimal
+# Jesus House Jamaica — Website
+
+Official website for Jesus House Jamaica (RCCG Kingston), built with [Astro](https://astro.build).
+
+**Live site:** https://www.jesushousejamaica.org
+
+## Stack
+
+- **Framework:** Astro 5 (static output)
+- **Styling:** Scoped CSS with design tokens (navy / gold / coral)
+- **Animations:** Three.js particle canvas, CSS keyframes
+- **Data:** YouTube live recordings fetched via yt-dlp → `src/data/videos.json`
+
+## Development
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev        # localhost:4321
+npm run build      # production build → dist/
+npm run preview    # preview production build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## YouTube Data
 
-## 🚀 Project Structure
+The sermon archive is powered by `src/data/videos.json` (501+ recordings).
+To update it manually:
 
-Inside of your Astro project, you'll see the following folders and files:
+```sh
+# Fetch the 15 most recent streams and merge into existing data
+python3 scripts/fetch-youtube.py --limit 15 --merge
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+# Full re-fetch (takes several minutes)
+python3 scripts/fetch-youtube.py
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+The GitHub Action (`.github/workflows/fetch-videos.yml`) runs this automatically
+after each service day (Sunday, Monday, Wednesday) and commits the updated JSON.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Project Structure
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```
+src/
+  components/     nav, footer, Three.js animation
+  data/           videos.json (YouTube archive)
+  layouts/        Layout.astro (SEO, OG, JSON-LD)
+  lib/            church.ts (shared church metadata)
+  pages/          19 pages
+public/
+  favicon.ico / favicon.png / apple-touch-icon.png / og-image.png
+scripts/
+  fetch-youtube.py
+.github/
+  workflows/fetch-videos.yml
+```
