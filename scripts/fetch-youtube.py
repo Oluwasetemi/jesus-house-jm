@@ -44,7 +44,7 @@ TITLE_PATTERNS = [
         r"sunday\s+service|thanksgiving\s+service|communion\s+service"
         r"|resurrection\s+sunday|special\s+service|sunday\s+worship"
         r"|calling\s+things|break\s+your|think\s+higher|youth\s+sunday"
-        r"|collaborations", re.I)),
+        r"|collaborations|mother'?s\s+day|father'?s\s+day", re.I)),
     ("Special Service",          re.compile(
         r"christmas|good\s+friday|praise\s+night|easter|vigil|conference"
         r"|anniversary|concert|choir|drama|crossover|burial|night\s+of\s+worship"

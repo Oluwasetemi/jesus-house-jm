@@ -6,7 +6,7 @@ import rawVideos from '../data/videos.json';
 
 const CHANNEL_ID = 'UCO1S3nxtFg0_HXEMuZji5zg';
 const YOUTUBE_CHANNEL = 'https://www.youtube.com/@jesushousekingston/streams';
-const YOUTUBE_LIVE    = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=0&enablejsapi=1&origin=https://jesus-house-jamaica.netlify.app`;
+const YOUTUBE_LIVE    = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=0&enablejsapi=1&origin=${Astro.site}`;
 
 // 6 most recent videos from real data
 const recentSermons = [...rawVideos]
@@ -243,7 +243,6 @@ const onlineMeetings = [
   if (!playerWrap || !offlineState || !iframe) return;
 
   let liveConfirmed = false;
-  let checkTimeout: ReturnType<typeof setTimeout>;
 
   function showLive() {
     if (liveConfirmed) return;
@@ -272,21 +271,6 @@ const onlineMeetings = [
     } catch { /* ignore parse errors */ }
   });
 
-  // After iframe loads, poll the player state as a backup.
-  // The iframe is always rendered (no display:none) so this fires reliably.
-  iframe.addEventListener('load', () => {
-    setTimeout(() => {
-      try {
-        iframe.contentWindow?.postMessage(
-          '{"event":"command","func":"getPlayerState","args":""}',
-          'https://www.youtube.com'
-        );
-      } catch { /* expected — cross-origin */ }
-    }, 2000);
-
-    // After 12 s with no live signal, keep offline state visible
-    checkTimeout = setTimeout(() => { /* offline state already showing */ }, 12000);
-  });
 })();
 </script>
 
@@ -406,22 +390,26 @@ const onlineMeetings = [
 
   .player-wrap {
     position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
     border-radius: 1rem;
     overflow: hidden;
     background: #0a0a0a;
     box-shadow: 0 24px 64px rgba(13, 27, 62, 0.22);
-    margin-bottom: 2.5rem;
-    /* Hidden until live stream confirmed; kept in DOM so IFrame API loads */
+    /* Collapsed in offline mode — iframe still loads and fires IFrame API events */
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s ease;
+    max-height: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    transition: opacity 0.4s ease, max-height 0.4s ease, padding-bottom 0.4s ease, margin-bottom 0.4s ease;
   }
 
   .player-wrap.is-live {
     opacity: 1;
     pointer-events: auto;
+    max-height: 800px;
+    padding-bottom: 56.25%;
+    margin-bottom: 2.5rem;
+    height: 0;
   }
 
   .player-iframe {
