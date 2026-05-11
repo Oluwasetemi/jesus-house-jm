@@ -34,7 +34,7 @@ VIDEOS_URL   = f"https://www.youtube.com/channel/{CHANNEL_ID}/videos"
 # Pass 2: day-of-week fallback (Sun=6, Mon=0, Wed=2, Fri=4 in Python isoweekday)
 
 TITLE_PATTERNS = [
-    ("Monday Morning Prayer",    re.compile(
+    ("Good Morning Jesus",       re.compile(
         r"good\s+morning\s+jesus|monday\s+morning|gmj\b", re.I)),
     ("Wednesday Prayer Meeting", re.compile(
         r"prayer\s+meeting|wednesday\s+prayer|communion\s+service\s+wed"
@@ -55,11 +55,29 @@ TITLE_PATTERNS = [
 ]
 
 DOW_CATEGORY = {
-    0: "Monday Morning Prayer",    # Monday
+    0: "Good Morning Jesus",       # Monday
     2: "Wednesday Prayer Meeting", # Wednesday
     4: "Friday Bible Study",       # Friday
     6: "Sunday Service",           # Sunday
 }
+
+# Regex to extract a date from a video title, e.g. "May 10, 2026" or "APRIL 27, 2026"
+_TITLE_DATE_RE = re.compile(
+    r"\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?"
+    r"|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
+    r"\s+(\d{1,2}),?\s+(\d{4})\b",
+    re.I,
+)
+
+def parse_title_date(title: str) -> datetime | None:
+    """Return a datetime parsed from a date string embedded in the title, or None."""
+    m = _TITLE_DATE_RE.search(title)
+    if not m:
+        return None
+    try:
+        return datetime.strptime(f"{m.group(1)} {m.group(2)} {m.group(3)}", "%B %d %Y")
+    except ValueError:
+        return None
 
 def categorise(title: str, upload_dt: datetime | None) -> str:
     # 1. Try title patterns
@@ -119,29 +137,42 @@ def fetch_videos(url: str, limit: int | None, after: str | None) -> list[dict]:
         video_id    = raw.get("id", "")
         title       = (raw.get("title") or "").strip()
         upload_str  = raw.get("upload_date", "")   # "20260503"
+        release_ts  = raw.get("release_timestamp")  # epoch int, set for live streams
         duration    = raw.get("duration")
         view_count  = raw.get("view_count") or 0
         live_status = raw.get("live_status") or ""
         was_live    = live_status in ("was_live", "is_live", "post_live") or bool(raw.get("was_live"))
 
         # ── Parse date ───────────────────────────────────
+        # Priority: title date (most reliable for their naming) > release_timestamp
+        # (actual broadcast time) > upload_date (may be next day after processing)
         upload_dt: datetime | None = None
         date_iso = date_nice = date_short = ""
         year = month = month_short = ""
         weekday_name = ""
 
-        if upload_str and len(upload_str) == 8:
+        upload_dt = parse_title_date(title)
+
+        if upload_dt is None and release_ts:
             try:
-                upload_dt   = datetime.strptime(upload_str, "%Y%m%d")
-                date_iso    = upload_dt.strftime("%Y-%m-%d")
-                date_nice   = upload_dt.strftime("%B %-d, %Y")
-                date_short  = upload_dt.strftime("%b %-d, %Y")
-                year        = str(upload_dt.year)
-                month       = upload_dt.strftime("%B")
-                month_short = upload_dt.strftime("%b").upper()
-                weekday_name = upload_dt.strftime("%A")
+                upload_dt = datetime.utcfromtimestamp(int(release_ts))
+            except (ValueError, OSError):
+                pass
+
+        if upload_dt is None and upload_str and len(upload_str) == 8:
+            try:
+                upload_dt = datetime.strptime(upload_str, "%Y%m%d")
             except ValueError:
                 pass
+
+        if upload_dt:
+            date_iso    = upload_dt.strftime("%Y-%m-%d")
+            date_nice   = upload_dt.strftime("%B %-d, %Y")
+            date_short  = upload_dt.strftime("%b %-d, %Y")
+            year        = str(upload_dt.year)
+            month       = upload_dt.strftime("%B")
+            month_short = upload_dt.strftime("%b").upper()
+            weekday_name = upload_dt.strftime("%A")
 
         # ── Duration ─────────────────────────────────────
         dur_str = ""
@@ -178,7 +209,7 @@ def fetch_videos(url: str, limit: int | None, after: str | None) -> list[dict]:
 
 DISPLAY_ORDER = [
     "Sunday Service",
-    "Monday Morning Prayer",
+    "Good Morning Jesus",
     "Wednesday Prayer Meeting",
     "Friday Bible Study",
     "Special Service",
@@ -242,7 +273,7 @@ def emit_astro_snippet(videos: list[dict]) -> str:
         "",
         "// Filtered views — use these directly in page templates",
         "const sundayServices    = allVideos.filter(v => v.category === 'Sunday Service');",
-        "const morningPrayers    = allVideos.filter(v => v.category === 'Monday Morning Prayer');",
+        "const morningPrayers    = allVideos.filter(v => v.category === 'Good Morning Jesus');",
         "const wednesdayMeetings = allVideos.filter(v => v.category === 'Wednesday Prayer Meeting');",
         "const fridayStudy       = allVideos.filter(v => v.category === 'Friday Bible Study');",
         "const recentVideos      = allVideos.slice(0, 6);",
