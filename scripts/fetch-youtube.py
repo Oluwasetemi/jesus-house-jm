@@ -37,14 +37,17 @@ TITLE_PATTERNS = [
     ("Monday Morning Prayer",    re.compile(
         r"good\s+morning\s+jesus|monday\s+morning|gmj\b", re.I)),
     ("Wednesday Prayer Meeting", re.compile(
-        r"prayer\s+meeting|wednesday\s+(prayer|bible)|wed(\.?\s+)?bible", re.I)),
+        r"prayer\s+meeting|wednesday\s+prayer|communion\s+service\s+wed"
+        r"|wed(\.?\s+)?prayer", re.I)),
     ("Friday Bible Study",       re.compile(
         r"friday\s+bible|bible\s+study\s+friday|friday\s+study", re.I)),
     ("Sunday Service",           re.compile(
         r"sunday\s+service|thanksgiving\s+service|communion\s+service"
         r"|resurrection\s+sunday|special\s+service|sunday\s+worship"
         r"|calling\s+things|break\s+your|think\s+higher|youth\s+sunday"
-        r"|collaborations|mother'?s\s+day|father'?s\s+day", re.I)),
+        r"|collaborations|mother'?s\s+day|father'?s\s+day"
+        r"|men'?s\s+(sunday|service)|women'?s\s+(sunday|service)"
+        r"|couples\s+(sunday|service)|family\s+sunday", re.I)),
     ("Special Service",          re.compile(
         r"christmas|good\s+friday|praise\s+night|easter|vigil|conference"
         r"|anniversary|concert|choir|drama|crossover|burial|night\s+of\s+worship"

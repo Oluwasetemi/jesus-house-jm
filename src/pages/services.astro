@@ -24,60 +24,60 @@ const regularServices = [
     featured: true,
   },
   {
-    id: 'bible-study',
-    title: 'Wednesday Bible Study',
-    time: 'Every Wednesday · 6:00 PM',
-    location: 'In-Person & Zoom',
-    description: 'A mid-week deep dive into Scripture — verse-by-verse, Spirit-led, and practically applied. Sharpen your understanding of God\'s Word and grow in faith alongside your church family.',
+    id: 'good-morning-jesus',
+    title: 'Good Morning Jesus (GMJ)',
+    time: 'Every Monday · Early Morning',
+    location: 'In-Person & Online',
+    description: 'Kick-start your week with the church family. Good Morning Jesus is our Monday morning prayer gathering — a time of worship, declaration, and seeking God\'s face before the week begins.',
     details: [
-      'Verse-by-verse expository teaching',
-      'Interactive Q&A and group discussion',
-      'Available in-person and via Zoom',
-      'Prayer and intercession time',
-      'Fellowship following the study',
+      'Corporate prayer and declarations',
+      'Worship and praise',
+      'Prayer for the week ahead',
+      'Available in-person and streamed live',
+      'Led by the pastoral and intercessory team',
     ],
     badge: 'Weekly',
     badgeColor: 'gold',
-    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,
+    zoomLink: null,
+    featured: false,
+  },
+  {
+    id: 'prayer-meeting',
+    title: 'Wednesday Prayer Meeting',
+    time: 'Every Wednesday · 6:00 PM',
+    location: 'In-Person & Zoom',
+    description: 'Our midweek gathering for corporate prayer, intercession, and the Word of God. Includes a communion service — a time to reflect, repent, and renew your covenant with God.',
+    details: [
+      'Corporate prayer and intercession',
+      'Communion service included',
+      'Teaching from the Word of God',
+      'Available in-person and via Zoom',
+      'Prayer ministry after service',
+    ],
+    badge: 'Weekly',
+    badgeColor: 'gold',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
     zoomLink: 'zoommtg://zoom.us/join?confno=8761234567',
     featured: false,
   },
   {
-    id: 'night-vigil',
-    title: 'Night Vigil',
-    time: 'Monthly · Check Calendar',
-    location: 'In-Person & Zoom',
-    description: 'An all-night prayer and worship experience — one of the most powerful nights in our church calendar. We intercede for the nations, for our families, and for breakthrough.',
+    id: 'bible-study',
+    title: 'Friday Bible Study',
+    time: 'Every Friday · Online',
+    location: 'Online via Zoom',
+    description: 'A verse-by-verse journey through the Scriptures every Friday — Spirit-led, practically applied, and fully online. Study the Word, ask questions, and grow in faith from wherever you are.',
     details: [
-      'Extended worship and praise',
-      'Midnight prayer and intercession',
-      'Prophetic ministry and prayer stations',
-      'Pre-dawn declaration service',
-      'Available in-person and via Zoom',
+      'Verse-by-verse expository teaching',
+      'Interactive Q&A and group discussion',
+      'Fully online via Zoom',
+      'Prayer and fellowship time',
+      'Recording available after the session',
     ],
-    badge: 'Monthly',
-    badgeColor: 'coral',
-    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`,
+    badge: 'Weekly',
+    badgeColor: 'gold',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
     zoomLink: 'zoommtg://zoom.us/join?confno=8769876543',
-    featured: false,
-  },
-  {
-    id: 'covenant-prayers',
-    title: 'Covenant Prayers',
-    time: 'Early Morning · Regular Schedule',
-    location: 'In-Person',
-    description: 'Our regular early morning prayer meeting — where the intercessors of Jesus House Jamaica gather before dawn to seek the face of God for our church, our nation, and our world.',
-    details: [
-      'Early morning intercession',
-      'Covenant prayer declarations',
-      'Prayer for the church and nation',
-      'Individual prayer support available',
-      'Led by trained intercession team',
-    ],
-    badge: 'Regular',
-    badgeColor: 'navy',
-    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
-    zoomLink: null,
     featured: false,
   },
 ];
@@ -118,7 +118,7 @@ const specialServices = [
 
 <Layout
   title="Services"
-  description="Join us for Sunday worship at 9:00 AM, Wednesday Bible Study at 6:00 PM, Night Vigil, and more at Jesus House Jamaica — RCCG Kingston. In-person and online via Zoom."
+  description="Join us for Sunday worship at 9:00 AM, Good Morning Jesus every Monday, Wednesday Prayer Meeting at 6:00 PM, and Friday Bible Study online at Jesus House Jamaica — RCCG Kingston."
 >
   <Nav heroDark={true} />
 
@@ -153,8 +153,8 @@ const specialServices = [
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         </div>
         <div>
-          <p class="quick-label">Bible Study</p>
-          <p class="quick-value">Wednesday 6:00 PM</p>
+          <p class="quick-label">Prayer Meeting</p>
+          <p class="quick-value">Wednesday · 6:00 PM</p>
         </div>
       </div>
       <div class="quick-item">
@@ -280,18 +280,18 @@ const specialServices = [
               <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
             </svg>
           </div>
-          <h3 class="zoom-card-title">Bible Study</h3>
+          <h3 class="zoom-card-title">Prayer Meeting</h3>
           <p class="zoom-card-time">Wednesday · 6:00 PM Jamaica Time</p>
           <p class="zoom-card-id">Conference ID: 876 123 4567</p>
           <a
             href="zoommtg://zoom.us/join?confno=8761234567"
             class="btn btn-gold"
-            aria-label="Join Wednesday Bible Study on Zoom"
+            aria-label="Join Wednesday Prayer Meeting on Zoom"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
             </svg>
-            Join Bible Study
+            Join Prayer Meeting
           </a>
         </div>
 
@@ -301,18 +301,18 @@ const specialServices = [
               <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
             </svg>
           </div>
-          <h3 class="zoom-card-title">Night Vigil</h3>
-          <p class="zoom-card-time">Monthly · Check calendar for dates</p>
+          <h3 class="zoom-card-title">Friday Bible Study</h3>
+          <p class="zoom-card-time">Every Friday · Online Only</p>
           <p class="zoom-card-id">Conference ID: 876 987 6543</p>
           <a
             href="zoommtg://zoom.us/join?confno=8769876543"
             class="btn btn-outline-white"
-            aria-label="Join Night Vigil on Zoom"
+            aria-label="Join Friday Bible Study on Zoom"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
             </svg>
-            Join Night Vigil
+            Join Bible Study
           </a>
         </div>
       </div>

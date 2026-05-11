@@ -16,35 +16,35 @@ const recentSermons = [...rawVideos]
 
 const onlineMeetings = [
   {
-    name: 'Bible Study',
+    name: 'Good Morning Jesus',
+    day: 'Every Monday',
+    time: 'Early Morning Jamaica Time',
+    zoom: 'zoommtg://zoom.us/join?confno=8763456789',
+    zoomDisplay: '876 345 6789',
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,
+  },
+  {
+    name: 'Prayer Meeting',
     day: 'Every Wednesday',
     time: '6:00 PM Jamaica Time',
     zoom: 'zoommtg://zoom.us/join?confno=8761234567',
     zoomDisplay: '876 123 4567',
-    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
   },
   {
-    name: 'Night Vigil',
-    day: 'Last Friday of Month',
-    time: '10:00 PM Jamaica Time',
+    name: 'Friday Bible Study',
+    day: 'Every Friday',
+    time: 'Online via Zoom',
     zoom: 'zoommtg://zoom.us/join?confno=8769876543',
     zoomDisplay: '876 987 6543',
-    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`,
-  },
-  {
-    name: 'Covenant Prayers',
-    day: 'Monthly — See Calendar',
-    time: '7:00 AM Jamaica Time',
-    zoom: 'zoommtg://zoom.us/join?confno=8763456789',
-    zoomDisplay: '876 345 6789',
-    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
   },
 ];
 ---
 
 <Layout
   title="Watch Live"
-  description="Watch Jesus House Jamaica live on YouTube. Stream Sunday services, Bible Study, and special events online."
+  description="Watch Jesus House Jamaica live on YouTube. Stream Sunday services, Good Morning Jesus (Monday), Wednesday Prayer Meeting, Friday Bible Study, and special events online."
 >
   <Nav heroDark={true} />
 
@@ -80,11 +80,12 @@ const onlineMeetings = [
           </svg>
         </div>
         <h2 class="offline-heading">Not Live Right Now</h2>
-        <p class="offline-sub">We stream Sunday services, Monday morning prayer, and Wednesday Bible Study. Check back at service time or watch a recent message below.</p>
+        <p class="offline-sub">We stream Sunday services, Good Morning Jesus (Monday), Wednesday Prayer Meeting, and Friday Bible Study. Check back at service time or watch a recent message below.</p>
         <div class="service-next">
           <div class="next-item"><strong>Sunday Service</strong><span>9:00 AM Jamaica Time</span></div>
-          <div class="next-item"><strong>Monday Prayer</strong><span>Early Morning</span></div>
-          <div class="next-item"><strong>Wednesday Study</strong><span>6:00 PM Jamaica Time</span></div>
+          <div class="next-item"><strong>Good Morning Jesus</strong><span>Every Monday · Early Morning</span></div>
+          <div class="next-item"><strong>Prayer Meeting</strong><span>Wednesday · 6:00 PM Jamaica Time</span></div>
+          <div class="next-item"><strong>Friday Bible Study</strong><span>Every Friday · Online</span></div>
         </div>
         <a href={YOUTUBE_CHANNEL} target="_blank" rel="noopener noreferrer" class="btn btn-gold">
           View Past Streams ↗
@@ -113,11 +114,15 @@ const onlineMeetings = [
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <strong>Wednesday Bible Study</strong> — 6:00 PM Jamaica Time
+              <strong>Good Morning Jesus</strong> — Every Monday · Early Morning
             </li>
             <li>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <strong>Special Services</strong> — Check calendar for dates
+              <strong>Wednesday Prayer Meeting</strong> — 6:00 PM Jamaica Time
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <strong>Friday Bible Study</strong> — Every Friday · Online
             </li>
           </ul>
         </div>

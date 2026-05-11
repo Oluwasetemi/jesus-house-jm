@@ -26,8 +26,9 @@ export const CHURCH = {
   themeVerse:  'Romans 12:1',
 
   services: {
-    sunday:   'Sundays at 9:00 AM',
-    wednesday:'Wednesdays at 6:00 PM',
-    vigil:    'Last Friday of the Month',
+    sunday:    'Sundays at 9:00 AM',
+    monday:    'Good Morning Jesus — Every Monday (Early Morning)',
+    wednesday: 'Prayer Meeting — Wednesdays at 6:00 PM',
+    friday:    'Bible Study — Every Friday (Online)',
   },
 } as const;
