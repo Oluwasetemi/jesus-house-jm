@@ -173,7 +173,7 @@ const departments = [
     <div class="container">
       <!-- Pull quote -->
       <blockquote class="welcome-pullquote">
-        "We are a community built on faith, love, and the Word of God."
+        We are a community built on faith, love, and the Word of God.
       </blockquote>
 
       <!-- Scripture -->
@@ -514,7 +514,7 @@ const departments = [
   }
 
   .hero-label {
-    animation: fadeInUp 0.6s ease both;
+    animation: fadeInUp 0.45s var(--ease-out) both;
   }
 
   .hero-accent-line {
@@ -523,7 +523,7 @@ const departments = [
     background: linear-gradient(90deg, var(--color-gold), var(--color-coral));
     margin-bottom: 1.5rem;
     border-radius: 2px;
-    animation: fadeInUp 0.6s 0.1s ease both;
+    animation: fadeInUp 0.45s 0.07s var(--ease-out) both;
   }
 
   .hero-headline {
@@ -532,7 +532,7 @@ const departments = [
     line-height: 1.08;
     color: var(--color-white);
     margin-bottom: 1.5rem;
-    animation: fadeInUp 0.7s 0.15s ease both;
+    animation: fadeInUp 0.5s 0.12s var(--ease-out) both;
   }
 
   .headline-normal {
@@ -553,7 +553,7 @@ const departments = [
     max-width: 46ch;
     line-height: 1.7;
     margin-bottom: 2.25rem;
-    animation: fadeInUp 0.7s 0.25s ease both;
+    animation: fadeInUp 0.5s 0.2s var(--ease-out) both;
   }
 
   .hero-ctas {
@@ -561,7 +561,7 @@ const departments = [
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 2.5rem;
-    animation: fadeInUp 0.7s 0.35s ease both;
+    animation: fadeInUp 0.5s 0.28s var(--ease-out) both;
   }
 
   .hero-badge {
@@ -578,7 +578,7 @@ const departments = [
     letter-spacing: 0.12em;
     color: rgba(255, 255, 255, 0.75);
     text-transform: uppercase;
-    animation: fadeInUp 0.7s 0.45s ease both;
+    animation: fadeInUp 0.5s 0.36s var(--ease-out) both;
   }
 
   .badge-dot {
@@ -820,12 +820,14 @@ const departments = [
     border-radius: var(--radius-card);
     padding: 2rem 1.75rem;
     position: relative;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
   }
 
-  .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(13, 27, 62, 0.1);
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13, 27, 62, 0.1);
+    }
   }
 
   .service-card-top-border {
@@ -900,12 +902,18 @@ const departments = [
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: border-color var(--transition-base), transform 0.25s ease;
+    transition: border-color var(--transition-base), transform 0.2s var(--ease-out);
   }
 
-  .sermon-card:hover {
-    border-color: var(--color-gold);
-    transform: translateY(-3px);
+  @media (hover: hover) and (pointer: fine) {
+    .sermon-card:hover {
+      border-color: var(--color-gold);
+      transform: translateY(-3px);
+    }
+
+    .sermon-card:hover .sermon-thumb img {
+      opacity: 0.85;
+    }
   }
 
   .sermon-thumb-link {
@@ -926,10 +934,6 @@ const departments = [
     height: 100%;
     object-fit: cover;
     transition: opacity 0.3s ease;
-  }
-
-  .sermon-card:hover .sermon-thumb img {
-    opacity: 0.85;
   }
 
   .sermon-thumb-play {
@@ -1063,12 +1067,14 @@ const departments = [
     background-color: var(--color-white);
     border-radius: var(--radius-card);
     padding: 2rem 1.75rem;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
   }
 
-  .dept-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(13, 27, 62, 0.08);
+  @media (hover: hover) and (pointer: fine) {
+    .dept-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13, 27, 62, 0.08);
+    }
   }
 
   .dept-icon {
