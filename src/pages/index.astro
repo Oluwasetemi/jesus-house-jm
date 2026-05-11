@@ -400,21 +400,22 @@ const departments = [
         <h3 class="visit-form-title">We'd Love to Meet You</h3>
         <p class="visit-form-sub">Fill in your details and a member of our team will be in touch.</p>
 
-        <form class="visit-form" action="/contact" method="GET" novalidate>
+        <form class="visit-form" name="plan-visit" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
           <div class="form-row">
             <div class="form-group">
               <label for="hero-fname">First Name</label>
-              <input type="text" id="hero-fname" name="first_name" placeholder="Grace" autocomplete="given-name" />
+              <input type="text" id="hero-fname" name="first_name" placeholder="Grace" required autocomplete="given-name" />
             </div>
             <div class="form-group">
               <label for="hero-lname">Last Name</label>
-              <input type="text" id="hero-lname" name="last_name" placeholder="Wilson" autocomplete="family-name" />
+              <input type="text" id="hero-lname" name="last_name" placeholder="Wilson" required autocomplete="family-name" />
             </div>
           </div>
 
           <div class="form-group">
             <label for="hero-email">Email Address</label>
-            <input type="email" id="hero-email" name="email" placeholder="your@email.com" autocomplete="email" />
+            <input type="email" id="hero-email" name="email" placeholder="your@email.com" required autocomplete="email" />
           </div>
 
           <div class="form-group">
