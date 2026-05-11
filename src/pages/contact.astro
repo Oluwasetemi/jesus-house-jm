@@ -176,6 +176,7 @@ const serviceTimes = [
         <p class="contact-form-sub">Our team responds within 1–2 business days.</p>
 
         <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
           <div class="form-row">
             <div class="form-group">
               <label for="cf-fname">First Name <span aria-label="required">*</span></label>
@@ -280,6 +281,7 @@ const serviceTimes = [
       <div class="appointment-form-wrap">
         <h3 class="appt-form-title">Schedule a Meeting</h3>
         <form class="appt-form" name="appointment" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
           <div class="form-group">
             <label for="appt-name">Full Name <span aria-label="required">*</span></label>
             <input type="text" id="appt-name" name="name" placeholder="Grace Wilson" required autocomplete="name" />

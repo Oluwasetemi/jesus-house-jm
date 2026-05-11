@@ -368,6 +368,16 @@ const jsonLd = {
     }
   }
 
+  /* === Netlify honeypot — off-screen so humans can't see it, bots can === */
+  .hidden-field {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   /* === Responsive helpers === */
   @media (max-width: 640px) {
     .hide-mobile {
