@@ -120,12 +120,42 @@ const departments = [
     <!-- Right photo side -->
     <div class="hero-photo-side" aria-label="Worship atmosphere">
       <div class="hero-photo-gradient"></div>
-      <!-- Cross overlay -->
+      <!-- Cross overlay — 3D rotating -->
       <div class="hero-cross-overlay" aria-hidden="true">
-        <svg width="140" height="200" viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="60" y="10" width="20" height="180" rx="2" fill="white" opacity="0.18"/>
-          <rect x="10" y="65" width="120" height="20" rx="2" fill="white" opacity="0.18"/>
-        </svg>
+        <div class="cross-3d-scene">
+          <div class="cross-3d-wrap">
+            <svg class="cross-svg" width="160" height="224" viewBox="0 0 160 224" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="vBeam" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+                  <stop offset="30%"  stop-color="white" stop-opacity="0.7"/>
+                  <stop offset="50%"  stop-color="white" stop-opacity="1"/>
+                  <stop offset="70%"  stop-color="white" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="hBeam" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+                  <stop offset="30%"  stop-color="white" stop-opacity="0.7"/>
+                  <stop offset="50%"  stop-color="white" stop-opacity="1"/>
+                  <stop offset="70%"  stop-color="white" stop-opacity="0.7"/>
+                  <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="crossGlow">
+                  <feGaussianBlur stdDeviation="4" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+              <!-- Glow layer -->
+              <g filter="url(#crossGlow)" opacity="0.5">
+                <rect x="66" y="8"  width="28" height="208" rx="6" fill="white"/>
+                <rect x="8"  y="76" width="144" height="28" rx="6" fill="white"/>
+              </g>
+              <!-- Solid beam layer -->
+              <rect x="66" y="8"  width="28" height="208" rx="6" fill="url(#vBeam)"/>
+              <rect x="8"  y="76" width="144" height="28" rx="6" fill="url(#hBeam)"/>
+            </svg>
+          </div>
+        </div>
       </div>
       <div class="hero-photo-text">
         <span>Kingston, Jamaica</span>
@@ -590,9 +620,40 @@ const departments = [
     );
   }
 
+  /* ── 3D spinning cross ─────────────────────────────── */
   .hero-cross-overlay {
     position: relative;
     z-index: 2;
+  }
+
+  .cross-3d-scene {
+    /* Perspective depth — higher = less extreme foreshortening */
+    perspective: 700px;
+    perspective-origin: 50% 50%;
+  }
+
+  .cross-3d-wrap {
+    transform-style: preserve-3d;
+    animation: cross-spin 9s linear infinite;
+    /* Will-change gives GPU a hint to composite this layer separately */
+    will-change: transform;
+  }
+
+  .cross-svg {
+    display: block;
+    filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.3));
+  }
+
+  @keyframes cross-spin {
+    0%   { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+  }
+
+  /* Pause on reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .cross-3d-wrap {
+      animation: none;
+    }
   }
 
   .hero-photo-text {
