@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const videoCards = [
   {
@@ -19,7 +19,7 @@ const videoCards = [
   {
     title: 'Women\'s Fellowship Sessions',
     description: 'Empowering messages and ministry moments from the Jesus House Women\'s Fellowship.',
-    tag: "Women's Ministry",
+    tag: 'Women\'s Ministry',
     color: '#1e3050',
   },
   {
@@ -84,7 +84,7 @@ const videoCards = [
                 aria-label="Watch 360° Christmas Concert on YouTube"
               >
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
+                  <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
               </a>
             </div>
@@ -100,8 +100,8 @@ const videoCards = [
       <div class="youtube-cta">
         <div class="yt-icon" aria-hidden="true">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="#ff0000" aria-hidden="true">
-            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-            <polygon fill="white" points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02"/>
+            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
+            <polygon fill="white" points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" />
           </svg>
         </div>
         <div class="yt-text">
@@ -132,7 +132,7 @@ const videoCards = [
       </div>
       <a href="/watch-live" class="btn btn-outline-white">
         Watch Live
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
       </a>
     </div>
   </section>
@@ -149,7 +149,7 @@ const videoCards = [
       </div>
 
       <div class="videos-grid">
-        {videoCards.map((card) => (
+        {videoCards.map(card => (
           <a
             href="https://www.youtube.com/@jesushousekingston"
             target="_blank"
@@ -160,7 +160,7 @@ const videoCards = [
             <div class="video-card-thumb" style={`background-color: ${card.color}`} aria-hidden="true">
               <div class="thumb-play" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
+                  <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
               </div>
               <span class="thumb-tag">{card.tag}</span>
@@ -170,7 +170,7 @@ const videoCards = [
               <p class="video-card-desc">{card.description}</p>
               <div class="video-card-link">
                 Watch on YouTube
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
               </div>
             </div>
           </a>
@@ -192,7 +192,7 @@ const videoCards = [
         <div class="zoom-card">
           <div class="zoom-icon" aria-hidden="true">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" />
             </svg>
           </div>
           <div class="zoom-info">
@@ -206,7 +206,7 @@ const videoCards = [
             aria-label="Join Bible Study on Zoom"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" />
             </svg>
             Join Zoom
           </a>
@@ -215,7 +215,7 @@ const videoCards = [
         <div class="zoom-card">
           <div class="zoom-icon" aria-hidden="true">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" />
             </svg>
           </div>
           <div class="zoom-info">
@@ -229,7 +229,7 @@ const videoCards = [
             aria-label="Join Night Vigil on Zoom"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/>
+              <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" />
             </svg>
             Join Zoom
           </a>

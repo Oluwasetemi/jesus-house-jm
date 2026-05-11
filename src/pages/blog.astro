@@ -1,7 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import { partition } from '@setemiojo/utils'
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const categories = [
   { id: 'all', label: 'All Posts' },
@@ -9,7 +10,7 @@ const categories = [
   { id: 'news', label: 'Church News' },
   { id: 'faith', label: 'Faith & Life' },
   { id: 'community', label: 'Community' },
-];
+]
 
 const posts = [
   {
@@ -78,10 +79,9 @@ const posts = [
     readTime: '6 min read',
     featured: false,
   },
-];
+]
 
-const featuredPost = posts.find(p => p.featured)!;
-const gridPosts = posts.filter(p => !p.featured);
+const [[featuredPost], gridPosts] = partition(posts, p => p.featured);
 ---
 
 <Layout
@@ -133,7 +133,7 @@ const gridPosts = posts.filter(p => !p.featured);
             </div>
             <a href="mailto:jesushousekgn@hotmail.com?subject=Blog%20Article%20Request" class="featured-link">
               Request Full Article
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </a>
           </div>
         </div>
@@ -147,7 +147,7 @@ const gridPosts = posts.filter(p => !p.featured);
 
       <!-- Category Filter (CSS-only) -->
       <div class="filter-bar" role="navigation" aria-label="Filter blog posts by category">
-        {categories.map((cat) => (
+        {categories.map(cat => (
           <a
             href={cat.id === 'all' ? '#archive-grid' : `#cat-${cat.id}`}
             class={`filter-btn${cat.id === 'all' ? ' filter-btn--active' : ''}`}
@@ -159,7 +159,7 @@ const gridPosts = posts.filter(p => !p.featured);
 
       <!-- Posts Grid -->
       <div class="archive-grid" id="archive-grid">
-        {gridPosts.map((post) => (
+        {gridPosts.map(post => (
           <article class="post-card" id={`cat-${post.category}`}>
             <div class="post-card-top">
               <div class="post-date">
@@ -178,7 +178,7 @@ const gridPosts = posts.filter(p => !p.featured);
             </div>
             <a href="mailto:jesushousekgn@hotmail.com?subject=Article%20Request" class="post-link" aria-label={`Request article: ${post.title}`}>
               Request Article
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </a>
           </article>
         ))}
@@ -191,7 +191,7 @@ const gridPosts = posts.filter(p => !p.featured);
     <div class="container subscribe-inner">
       <div class="subscribe-icon" aria-hidden="true">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
         </svg>
       </div>
       <div class="subscribe-text">

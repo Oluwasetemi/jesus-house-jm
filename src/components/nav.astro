@@ -1,35 +1,35 @@
 ---
 interface Props {
-  heroDark?: boolean;
+  heroDark?: boolean
 }
-const { heroDark = true } = Astro.props;
-const currentPath = Astro.url.pathname;
+const { heroDark = true } = Astro.props
+const currentPath = Astro.url.pathname
 
 const aboutSubNav = [
-  { href: '/our-pastors',        label: 'Our Pastors' },
-  { href: '/our-beliefs',        label: 'Our Beliefs' },
-  { href: '/our-values',         label: 'Our Values' },
-  { href: '/our-mission',        label: 'Our Mission' },
-  { href: '/departments',        label: 'Departments' },
-  { href: '/our-confession',     label: 'Our Confession' },
-  { href: '/board-of-trustees',  label: 'Board of Trustees' },
-  { href: '/history-of-rccg',    label: 'History of RCCG' },
-  { href: '/general-overseers',  label: 'General Overseers' },
-];
+  { href: '/our-pastors', label: 'Our Pastors' },
+  { href: '/our-beliefs', label: 'Our Beliefs' },
+  { href: '/our-values', label: 'Our Values' },
+  { href: '/our-mission', label: 'Our Mission' },
+  { href: '/departments', label: 'Departments' },
+  { href: '/our-confession', label: 'Our Confession' },
+  { href: '/board-of-trustees', label: 'Board of Trustees' },
+  { href: '/history-of-rccg', label: 'History of RCCG' },
+  { href: '/general-overseers', label: 'General Overseers' },
+]
 
 const multimediaSubNav = [
-  { href: '/watch-live',        label: 'Watch Live',               badge: 'LIVE' },
-  { href: '/sermons',           label: 'Sermons Archive',          badge: '' },
-  { href: '/youth-conference',  label: 'Youth Conference 2023',    badge: '' },
-  { href: '/multimedia',        label: '360° Christmas Concert',   badge: '' },
-  { href: '/blog',              label: 'Blog',                     badge: '' },
-];
+  { href: '/watch-live', label: 'Watch Live', badge: 'LIVE' },
+  { href: '/sermons', label: 'Sermons Archive', badge: '' },
+  { href: '/youth-conference', label: 'Youth Conference 2023', badge: '' },
+  { href: '/multimedia', label: '360° Christmas Concert', badge: '' },
+  { href: '/blog', label: 'Blog', badge: '' },
+]
 
-const isAboutActive = aboutSubNav.some(l => currentPath === l.href || currentPath.startsWith(l.href + '/'));
-const isMultimediaActive = multimediaSubNav.some(l => currentPath === l.href || currentPath.startsWith(l.href + '/'));
+const isAboutActive = aboutSubNav.some(l => currentPath === l.href || currentPath.startsWith(`${l.href}/`))
+const isMultimediaActive = multimediaSubNav.some(l => currentPath === l.href || currentPath.startsWith(`${l.href}/`))
 
 function isActive(href: string) {
-  return currentPath === href || (href !== '/' && currentPath.startsWith(href + '/'));
+  return currentPath === href || (href !== '/' && currentPath.startsWith(`${href}/`))
 }
 ---
 
@@ -61,7 +61,7 @@ function isActive(href: string) {
         <button class={`nav-link nav-link-btn${isAboutActive ? ' nav-link--active' : ''}`} aria-haspopup="true" aria-expanded="false" id="about-btn">
           About Us
           <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
         <div class="dropdown-menu" role="menu" aria-labelledby="about-btn">
@@ -80,7 +80,7 @@ function isActive(href: string) {
         <button class={`nav-link nav-link-btn${isMultimediaActive ? ' nav-link--active' : ''}`} aria-haspopup="true" aria-expanded="false" id="media-btn">
           Media
           <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
         <div class="dropdown-menu" role="menu" aria-labelledby="media-btn">
@@ -136,7 +136,7 @@ function isActive(href: string) {
       <summary class="mobile-link mobile-link-summary">
         About Us
         <svg class="chevron" width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </summary>
       <div class="mobile-sub">
@@ -151,7 +151,7 @@ function isActive(href: string) {
       <summary class="mobile-link mobile-link-summary">
         Media
         <svg class="chevron" width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </summary>
       <div class="mobile-sub">
@@ -179,7 +179,7 @@ function isActive(href: string) {
         class="mobile-zoom-btn"
         title="Join Prayer Meeting on Zoom"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" /></svg>
         Prayer Meeting · Wed 6:00 PM
       </a>
       <a
@@ -187,7 +187,7 @@ function isActive(href: string) {
         class="mobile-zoom-btn"
         title="Join Friday Bible Study on Zoom"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" /></svg>
         Bible Study · Every Friday
       </a>
     </div>
@@ -200,73 +200,74 @@ function isActive(href: string) {
 <div class={`nav-spacer${heroDark ? ' nav-spacer--dark' : ''}`} aria-hidden="true"></div>
 
 <script>
-  const nav      = document.getElementById('site-nav')!;
-  const hamburger = document.getElementById('hamburger')!;
-  const mobileMenu = document.getElementById('mobile-menu')!;
-  const isForced  = nav.classList.contains('nav--force-light');
+const nav = document.getElementById('site-nav')!
+const hamburger = document.getElementById('hamburger')!
+const mobileMenu = document.getElementById('mobile-menu')!
+const isForced = nav.classList.contains('nav--force-light')
 
-  /* ── Scroll behaviour ────────────────────────────── */
-  function handleScroll() {
-    if (isForced) return; // keep white nav on light-hero pages
-    if (window.scrollY > 60) {
-      nav.classList.add('nav--scrolled');
-    } else {
-      nav.classList.remove('nav--scrolled');
-    }
+/* ── Scroll behaviour ────────────────────────────── */
+function handleScroll() {
+  if (isForced)
+    return // keep white nav on light-hero pages
+  if (window.scrollY > 60) {
+    nav.classList.add('nav--scrolled')
   }
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll();
+  else {
+    nav.classList.remove('nav--scrolled')
+  }
+}
+window.addEventListener('scroll', handleScroll, { passive: true })
+handleScroll()
 
-  /* ── Hamburger toggle ────────────────────────────── */
-  hamburger.addEventListener('click', () => {
-    const open = hamburger.getAttribute('aria-expanded') === 'true';
-    hamburger.setAttribute('aria-expanded', String(!open));
-    hamburger.classList.toggle('hamburger--open');
-    mobileMenu.classList.toggle('mobile-menu--open');
-    document.body.classList.toggle('body-menu-open');
-    hamburger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
-  });
+/* ── Hamburger toggle ────────────────────────────── */
+hamburger.addEventListener('click', () => {
+  const open = hamburger.getAttribute('aria-expanded') === 'true'
+  hamburger.setAttribute('aria-expanded', String(!open))
+  hamburger.classList.toggle('hamburger--open')
+  mobileMenu.classList.toggle('mobile-menu--open')
+  document.body.classList.toggle('body-menu-open')
+  hamburger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu')
+})
 
-  // Close mobile menu on link click
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.setAttribute('aria-label', 'Open menu');
-      hamburger.classList.remove('hamburger--open');
-      mobileMenu.classList.remove('mobile-menu--open');
-      document.body.classList.remove('body-menu-open');
-    });
-  });
+// Close mobile menu on link click
+mobileMenu.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', () => {
+    hamburger.setAttribute('aria-expanded', 'false')
+    hamburger.setAttribute('aria-label', 'Open menu')
+    hamburger.classList.remove('hamburger--open')
+    mobileMenu.classList.remove('mobile-menu--open')
+    document.body.classList.remove('body-menu-open')
+  })
+})
 
-  /* ── Desktop dropdown keyboard support ───────────── */
-  document.querySelectorAll<HTMLElement>('.dropdown').forEach(dropdown => {
-    const btn = dropdown.querySelector<HTMLElement>('[aria-haspopup]');
-    const menu = dropdown.querySelector<HTMLElement>('.dropdown-menu');
+/* ── Desktop dropdown keyboard support ───────────── */
+document.querySelectorAll<HTMLElement>('.dropdown').forEach((dropdown) => {
+  const btn = dropdown.querySelector<HTMLElement>('[aria-haspopup]')
 
-    btn?.addEventListener('click', () => {
-      const isOpen = btn.getAttribute('aria-expanded') === 'true';
-      // Close all others
-      document.querySelectorAll('[aria-haspopup]').forEach(b => {
-        b.setAttribute('aria-expanded', 'false');
-      });
-      btn.setAttribute('aria-expanded', String(!isOpen));
-    });
+  btn?.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true'
+    // Close all others
+    document.querySelectorAll('[aria-haspopup]').forEach((b) => {
+      b.setAttribute('aria-expanded', 'false')
+    })
+    btn.setAttribute('aria-expanded', String(!isOpen))
+  })
 
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target as Node)) {
-        btn?.setAttribute('aria-expanded', 'false');
-      }
-    });
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target as Node)) {
+      btn?.setAttribute('aria-expanded', 'false')
+    }
+  })
 
-    // Escape closes dropdown
-    dropdown.addEventListener('keydown', (e) => {
-      if ((e as KeyboardEvent).key === 'Escape') {
-        btn?.setAttribute('aria-expanded', 'false');
-        btn?.focus();
-      }
-    });
-  });
+  // Escape closes dropdown
+  dropdown.addEventListener('keydown', (e) => {
+    if ((e as KeyboardEvent).key === 'Escape') {
+      btn?.setAttribute('aria-expanded', 'false')
+      btn?.focus()
+    }
+  })
+})
 </script>
 
 <style>

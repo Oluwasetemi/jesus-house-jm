@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const departments = [
   {
@@ -15,7 +15,7 @@ const departments = [
     icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
   },
   {
-    name: "Women's Fellowship",
+    name: 'Women\'s Fellowship',
     tagline: 'Rooted, empowered, and beautiful.',
     leader: 'Pastor Deborah Kamalu',
     meets: 'Second Saturday Monthly · 10:00 AM',
@@ -25,7 +25,7 @@ const departments = [
     icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M12 16v4M10 20h4"/></svg>`,
   },
   {
-    name: "Men's Ministry",
+    name: 'Men\'s Ministry',
     tagline: 'Men of God. Men of character.',
     leader: 'Elder Samuel Barrett',
     meets: 'First Saturday Monthly · 7:00 AM',
@@ -35,7 +35,7 @@ const departments = [
     icon: `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><line x1="19" y1="8" x2="23" y2="4"/><polyline points="20 4 23 4 23 7"/></svg>`,
   },
   {
-    name: "Children's Church",
+    name: 'Children\'s Church',
     tagline: 'Little hearts, big faith.',
     leader: 'Deaconess Olivia Reynolds',
     meets: 'Sundays · 9:00 AM (concurrent)',
@@ -120,15 +120,15 @@ const departments = [
             <div class="dept-meta">
               <div class="dept-meta-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
                 </svg>
                 <span>{dept.leader}</span>
               </div>
               <div class="dept-meta-item">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12 6 12 12 16 14"/>
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
                 </svg>
                 <span>{dept.meets}</span>
               </div>
@@ -137,10 +137,10 @@ const departments = [
             <div class="dept-highlights">
               <p class="dept-highlights-label">Highlights</p>
               <ul class="dept-highlights-list">
-                {dept.highlights.map((h) => (
+                {dept.highlights.map(h => (
                   <li>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                      <polyline points="20 6 9 17 4 12"/>
+                      <polyline points="20 6 9 17 4 12" />
                     </svg>
                     {h}
                   </li>
@@ -150,7 +150,7 @@ const departments = [
             <a href="/contact" class="btn btn-gold">
               Get Involved
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
           </div>

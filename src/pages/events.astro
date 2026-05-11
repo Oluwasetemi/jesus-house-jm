@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const upcomingEvents = [
   {
@@ -25,7 +25,7 @@ const upcomingEvents = [
     featured: false,
   },
   {
-    name: "Children's Day Celebration",
+    name: 'Children\'s Day Celebration',
     date: 'Sunday, June 1, 2026',
     time: '9:00 AM – 12:00 PM',
     location: 'Main Sanctuary & Fellowship Hall',
@@ -55,11 +55,11 @@ const upcomingEvents = [
     featured: true,
   },
   {
-    name: "Men's Ministry Annual Retreat",
+    name: 'Men\'s Ministry Annual Retreat',
     date: 'August 22–24, 2026',
     time: 'Multi-day',
     location: 'Blue Mountains Retreat Centre, Jamaica',
-    category: "Men's Ministry",
+    category: 'Men\'s Ministry',
     categoryColor: '#0D1B3E',
     description: 'A transformative weekend for the men of Jesus House Jamaica. Accountability, teaching, nature, and brotherhood in the stunning Blue Mountains of Jamaica.',
     featured: false,
@@ -84,9 +84,9 @@ const upcomingEvents = [
     description: 'See in the New Year in the presence of God. Our Watchnight service is one of the most powerful gatherings of the year — worship, testimony, and crossing into January in prayer.',
     featured: true,
   },
-];
+]
 
-const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Ministry", 'Special Service'];
+const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', 'Men\'s Ministry', 'Special Service'];
 ---
 
 <Layout
@@ -116,7 +116,7 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
       <h2 class="featured-events-title">Featured Events</h2>
 
       <div class="featured-grid">
-        {upcomingEvents.filter(e => e.featured).map((event) => (
+        {upcomingEvents.filter(e => e.featured).map(event => (
           <article class="featured-event-card">
             <div class="featured-event-badge" style={`background-color: ${event.categoryColor}`}>
               {event.category}
@@ -126,24 +126,24 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
             <div class="featured-event-details">
               <div class="event-detail">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/>
-                  <line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="3" y1="10" x2="21" y2="10"/>
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
                 </svg>
                 <span>{event.date}</span>
               </div>
               <div class="event-detail">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12 6 12 12 16 14"/>
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
                 </svg>
                 <span>{event.time}</span>
               </div>
               <div class="event-detail">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                  <circle cx="12" cy="10" r="3"/>
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span>{event.location}</span>
               </div>
@@ -162,7 +162,7 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
         <h2 class="all-events-title">Full Calendar — 2026</h2>
         <!-- Category filter tabs -->
         <div class="event-filters" role="group" aria-label="Filter events by category">
-          {categories.map((cat) => (
+          {categories.map(cat => (
             <button
               type="button"
               class={`filter-tag${cat === 'All' ? ' filter-tag--active' : ''}`}
@@ -173,7 +173,7 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
       </div>
 
       <div class="events-list" id="events-list">
-        {upcomingEvents.map((event) => (
+        {upcomingEvents.map(event => (
           <article class="event-list-item" data-category={event.category}>
             <div class="event-list-date">
               <div class="event-date-badge">
@@ -196,13 +196,13 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
               <div class="event-list-meta">
                 <span class="event-list-time">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
                   </svg>
                   {event.time}
                 </span>
                 <span class="event-list-location">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
                   </svg>
                   {event.location}
                 </span>
@@ -239,23 +239,23 @@ const categories = ['All', 'Prayer', 'Youth', 'Family', 'Fasting', "Men's Minist
 
 <script>
 (function () {
-  const filters = document.querySelectorAll<HTMLButtonElement>('.filter-tag');
-  const items   = document.querySelectorAll<HTMLElement>('.event-list-item');
+  const filters = document.querySelectorAll<HTMLButtonElement>('.filter-tag')
+  const items = document.querySelectorAll<HTMLElement>('.event-list-item')
 
   filters.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const cat = btn.dataset.filter ?? 'All';
+      const cat = btn.dataset.filter ?? 'All'
 
-      filters.forEach(b => b.classList.remove('filter-tag--active'));
-      btn.classList.add('filter-tag--active');
+      filters.forEach(b => b.classList.remove('filter-tag--active'))
+      btn.classList.add('filter-tag--active')
 
       items.forEach((item) => {
-        const match = cat === 'All' || item.dataset.category === cat;
-        item.style.display = match ? '' : 'none';
-      });
-    });
-  });
-})();
+        const match = cat === 'All' || item.dataset.category === cat
+        item.style.display = match ? '' : 'none'
+      })
+    })
+  })
+})()
 </script>
 
 <style>

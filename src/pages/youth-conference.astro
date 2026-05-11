@@ -1,7 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import { range } from '@setemiojo/utils'
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const highlights = [
   {
@@ -34,7 +35,7 @@ const highlights = [
     desc: 'Dance, spoken word, drama, and visual art — the conference celebrated faith expressed through every creative medium.',
     color: 'from-coral',
   },
-];
+]
 
 const galleryItems = [
   { label: 'Opening Night Worship', hue: '220', sat: '45%', light: '22%' },
@@ -59,17 +60,17 @@ const galleryItems = [
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-particles" aria-hidden="true">
-      {Array.from({length: 12}).map((_, i) => (
+      {range(12).map(i => (
         <div class="particle" style={`left: ${(i * 8) + 4}%; animation-delay: ${i * 0.3}s; animation-duration: ${3 + (i % 4) * 0.5}s`} aria-hidden="true"></div>
       ))}
     </div>
     <div class="container hero-inner">
       <div class="hero-badge" aria-label="Youth Event">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
         Youth Conference 2023
       </div>
       <h1 class="hero-title">
-        Set Apart.<br/>
+        Set Apart.<br />
         <em>On Fire.</em>
       </h1>
       <p class="hero-sub">
@@ -125,7 +126,7 @@ const galleryItems = [
       <div class="about-details">
         <div class="detail-card">
           <div class="detail-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
           </div>
           <div>
             <p class="detail-label">Dates</p>
@@ -134,7 +135,7 @@ const galleryItems = [
         </div>
         <div class="detail-card">
           <div class="detail-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
           </div>
           <div>
             <p class="detail-label">Venue</p>
@@ -143,7 +144,7 @@ const galleryItems = [
         </div>
         <div class="detail-card">
           <div class="detail-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
           </div>
           <div>
             <p class="detail-label">Attendees</p>
@@ -152,7 +153,7 @@ const galleryItems = [
         </div>
         <div class="detail-card">
           <div class="detail-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
           </div>
           <div>
             <p class="detail-label">Age Range</p>
@@ -172,7 +173,7 @@ const galleryItems = [
       </div>
 
       <div class="highlights-grid">
-        {highlights.map((item) => (
+        {highlights.map(item => (
           <div class="highlight-card">
             <div class={`highlight-accent highlight-accent--${item.color}`} aria-hidden="true"></div>
             <h3 class="highlight-title">{item.title}</h3>
@@ -219,15 +220,15 @@ const galleryItems = [
         </p>
         <div class="register-info">
           <div class="reg-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
             Dates to be announced
           </div>
           <div class="reg-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
             Jesus House Jamaica, Kingston
           </div>
           <div class="reg-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
             For ages 14–35
           </div>
         </div>
@@ -273,7 +274,7 @@ const galleryItems = [
 
         <button type="submit" class="btn btn-gold form-submit">
           Register Interest
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
         </button>
       </form>
     </div>

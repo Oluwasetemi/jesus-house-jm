@@ -1,36 +1,36 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
-import rawVideos from '../data/videos.json';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import rawVideos from '../data/videos.json'
+import Layout from '../layouts/Layout.astro'
 
-const YOUTUBE_STREAMS = 'https://www.youtube.com/@jesushousekingston/streams';
+const YOUTUBE_STREAMS = 'https://www.youtube.com/@jesushousekingston/streams'
 
 // Newest first
-const allVideos = [...rawVideos].sort((a, b) => b.date.localeCompare(a.date));
+const allVideos = [...rawVideos].sort((a, b) => b.date.localeCompare(a.date))
 
 // Featured = most recent Sunday Service
-const featuredVideo = allVideos.find(v => v.category === 'Sunday Service') ?? allVideos[0];
+const featuredVideo = allVideos.find(v => v.category === 'Sunday Service') ?? allVideos[0]
 
 // Group by "YYYY-Month"
 interface MonthGroup {
-  month: string;
-  monthShort: string;
-  year: string;
-  id: string;
-  videos: typeof allVideos;
+  month: string
+  monthShort: string
+  year: string
+  id: string
+  videos: typeof allVideos
 }
-const monthMap = new Map<string, MonthGroup>();
+const monthMap = new Map<string, MonthGroup>()
 for (const v of allVideos) {
-  const key = `${v.year}-${v.month}`;
+  const key = `${v.year}-${v.month}`
   if (!monthMap.has(key)) {
-    monthMap.set(key, { month: v.month, monthShort: v.monthShort, year: v.year, id: key.toLowerCase().replace(/\s+/g, '-'), videos: [] });
+    monthMap.set(key, { month: v.month, monthShort: v.monthShort, year: v.year, id: key.toLowerCase().replace(/\s+/g, '-'), videos: [] })
   }
-  monthMap.get(key)!.videos.push(v);
+  monthMap.get(key)!.videos.push(v)
 }
 
 // Show 8 most recent months; rest via YouTube link
-const MAX_MONTHS = 8;
+const MAX_MONTHS = 8
 const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
 ---
 
@@ -74,7 +74,7 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
             aria-label={`Watch ${featuredVideo.title} on YouTube`}
           >
             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <polygon points="5 3 19 12 5 21 5 3"/>
+              <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
           </a>
         </div>
@@ -97,13 +97,13 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
               class="btn btn-gold"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <polygon points="5 3 19 12 5 21 5 3"/>
+                <polygon points="5 3 19 12 5 21 5 3" />
               </svg>
               Watch on YouTube
             </a>
             <a href="/watch-live" class="btn btn-outline-navy">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>
+                <circle cx="12" cy="12" r="10" /><polygon points="10 8 16 12 10 16 10 8" />
               </svg>
               Watch Live
             </a>
@@ -124,7 +124,7 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
       <!-- Month navigation tabs -->
       <div class="tabs-container">
         <div class="tabs-scroll" role="tablist" aria-label="Filter sermons by month">
-          {monthGroups.map((g) => (
+          {monthGroups.map(g => (
             <a href={`#month-${g.id}`} class="tab-btn" role="tab">
               {g.month} {g.year}
             </a>
@@ -143,7 +143,7 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
 
       <!-- Sermon Archive Grid -->
       <div class="archive-grid">
-        {monthGroups.map((group) => (
+        {monthGroups.map(group => (
           <div class="month-group" id={`month-${group.id}`}>
             <div class="month-header">
               <div class="month-label">
@@ -157,11 +157,11 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
             </div>
 
             <div class="sermon-list">
-              {group.videos.map((video) => (
+              {group.videos.map(video => (
                 <div class="sermon-row">
                   <div class="sermon-type" aria-label="Video">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                      <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                      <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
                     </svg>
                   </div>
                   <div class="sermon-row-info">
@@ -179,7 +179,7 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
                     aria-label={`Watch ${video.title} on YouTube`}
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <polygon points="5 3 19 12 5 21 5 3"/>
+                      <polygon points="5 3 19 12 5 21 5 3" />
                     </svg>
                   </a>
                 </div>
@@ -196,8 +196,8 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
     <div class="container subscribe-inner">
       <div class="subscribe-icon" aria-hidden="true">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
-          <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1" /><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+          <line x1="6" y1="1" x2="6" y2="4" /><line x1="10" y1="1" x2="10" y2="4" /><line x1="14" y1="1" x2="14" y2="4" />
         </svg>
       </div>
       <div class="subscribe-text">

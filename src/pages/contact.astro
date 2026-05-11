@@ -1,22 +1,22 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const departments = [
   'General Enquiry',
   'Pastoral Counseling',
   'Prayer Request',
   'Youth Ministry',
-  "Women's Fellowship",
-  "Men's Ministry",
-  "Children's Church",
+  'Women\'s Fellowship',
+  'Men\'s Ministry',
+  'Children\'s Church',
   'Media & Worship',
   'Events & Conferences',
   'Membership',
   'Tithes & Giving',
   'Technical / Website',
-];
+]
 
 const serviceTimes = [
   { name: 'Sunday Service', time: '9:00 AM', note: 'Main auditorium — all ages welcome' },
@@ -52,7 +52,7 @@ const serviceTimes = [
       <a href="tel:+18769202260" class="quick-card">
         <div class="quick-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.94-.93a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.94-.93a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
           </svg>
         </div>
         <div>
@@ -64,8 +64,8 @@ const serviceTimes = [
       <a href="mailto:jesushousekgn@hotmail.com" class="quick-card">
         <div class="quick-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
           </svg>
         </div>
         <div>
@@ -77,8 +77,8 @@ const serviceTimes = [
       <a href="https://maps.google.com/?q=3+McGregor+Square,+corner+of+Beechwood+Avenue,+off+Halfway+Tree,+Kingston+5,+Jamaica" target="_blank" rel="noopener noreferrer" class="quick-card">
         <div class="quick-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-            <circle cx="12" cy="10" r="3"/>
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
           </svg>
         </div>
         <div>
@@ -90,8 +90,8 @@ const serviceTimes = [
       <div class="quick-card">
         <div class="quick-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
           </svg>
         </div>
         <div>
@@ -121,8 +121,8 @@ const serviceTimes = [
           <div class="map-pin-overlay" aria-hidden="true">
             <div class="map-pin">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="#D4A843"/>
-                <circle cx="12" cy="10" r="3" fill="#0D1B3E"/>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="#D4A843" />
+                <circle cx="12" cy="10" r="3" fill="#0D1B3E" />
               </svg>
               <div class="map-pin-label">Jesus House Jamaica</div>
             </div>
@@ -134,20 +134,20 @@ const serviceTimes = [
         <div class="contact-address">
           <div class="address-row">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-              <circle cx="12" cy="10" r="3"/>
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
             </svg>
             <div>
               <strong>Address</strong>
               <a href="https://maps.google.com/?q=3+McGregor+Square,+corner+of+Beechwood+Avenue,+off+Halfway+Tree,+Kingston+5,+Jamaica" target="_blank" rel="noopener noreferrer" class="addr-link">
-                3 McGregor Square, corner of Beechwood Avenue,<br/>off Halfway Tree, Kingston 5, Jamaica
+                3 McGregor Square, corner of Beechwood Avenue,<br />off Halfway Tree, Kingston 5, Jamaica
               </a>
             </div>
           </div>
 
           <div class="address-row">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.94-.93a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38a2 2 0 0 1 1.99-2.18H6.6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.94-.93a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
             <div>
               <strong>Phone</strong>
@@ -157,8 +157,8 @@ const serviceTimes = [
 
           <div class="address-row">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
             </svg>
             <div>
               <strong>Email</strong>
@@ -202,7 +202,7 @@ const serviceTimes = [
             <label for="cf-dept">Department / Topic <span aria-label="required">*</span></label>
             <select id="cf-dept" name="department" required>
               <option value="">— Select a Department —</option>
-              {departments.map((dept) => (
+              {departments.map(dept => (
                 <option value={dept.toLowerCase().replace(/\s+/g, '-')}>{dept}</option>
               ))}
             </select>
@@ -216,7 +216,7 @@ const serviceTimes = [
           <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;">
             Send Message
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
         </form>
@@ -232,7 +232,7 @@ const serviceTimes = [
         <h2 class="section-heading">Service Times</h2>
       </div>
       <div class="times-grid">
-        {serviceTimes.map((s) => (
+        {serviceTimes.map(s => (
           <div class="time-card">
             <div class="time-card-left">
               <div class="time-dot" aria-hidden="true"></div>
@@ -260,19 +260,19 @@ const serviceTimes = [
         </p>
         <ul class="appointment-list">
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
             Spiritual counseling and mentorship
           </li>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
             Pre-marital counseling
           </li>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
             Grief and crisis support
           </li>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
             New members consultation
           </li>
         </ul>
@@ -333,8 +333,8 @@ const serviceTimes = [
           <button type="submit" class="btn btn-coral" style="width:100%; justify-content:center;">
             Request Appointment
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
             </svg>
           </button>
         </form>

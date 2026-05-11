@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const leadership = [
   {
@@ -22,12 +22,12 @@ const leadership = [
     bio: 'With a background in youth psychology and theology, Pastor David leads a vibrant youth ministry that has seen hundreds of young people come to faith. He oversees the annual Youth Conference and campus ministry outreach.',
     initials: 'DM',
   },
-];
+]
 
 const overseers = [
   { name: 'Pastor G.O. Adeyemi', title: 'General Overseer, RCCG', note: 'Under whose leadership the global RCCG network advances.' },
   { name: 'Pastor Rotimi Williams', title: 'Regional Overseer, RCCG Caribbean', note: 'Providing apostolic oversight to all RCCG parishes in the Caribbean region.' },
-];
+]
 
 const trustees = [
   'Elder Samuel Barrett',
@@ -35,7 +35,7 @@ const trustees = [
   'Elder Marcus Thompson',
   'Deacon Janet Clarke',
   'Elder Paul Watson',
-];
+]
 
 const values = [
   { title: 'Faith', desc: 'We anchor every decision, ministry, and vision in the unchanging Word of God.' },
@@ -44,7 +44,7 @@ const values = [
   { title: 'Excellence', desc: 'We offer God and our community our very best — in character, conduct, and craft.' },
   { title: 'Transformation', desc: 'We believe the Gospel changes lives — and we carry that message with urgency.' },
   { title: 'Integrity', desc: 'We walk in transparency, accountability, and the character of Christ in all things.' },
-];
+]
 
 const beliefs = [
   { article: '01', title: 'The Holy Scriptures', text: 'We believe the Bible is the inspired, infallible, and authoritative Word of God — the supreme standard for faith and life.' },
@@ -67,7 +67,7 @@ const beliefs = [
     <div class="about-hero-bg" aria-hidden="true"></div>
     <div class="container about-hero-inner">
       <span class="section-label">Our Story</span>
-      <h1 class="about-hero-title">Built on Covenant,<br/>Rooted in Love</h1>
+      <h1 class="about-hero-title">Built on Covenant,<br />Rooted in Love</h1>
       <p class="about-hero-sub">
         From a small gathering in Kingston to a thriving parish touching thousands of lives —
         this is the story of Jesus House Jamaica.
@@ -136,7 +136,7 @@ const beliefs = [
       <div class="mvv-top">
         <div class="mvv-block">
           <div class="mvv-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
           </div>
           <h2 class="mvv-title">Our Mission</h2>
           <p class="mvv-text">
@@ -147,7 +147,7 @@ const beliefs = [
 
         <div class="mvv-block mvv-block--accent">
           <div class="mvv-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
           </div>
           <h2 class="mvv-title">Our Vision</h2>
           <p class="mvv-text">
@@ -162,7 +162,7 @@ const beliefs = [
         <span class="section-label" style="display:block; text-align:center; margin-bottom:1rem;">Core Values</span>
         <h2 class="values-heading">What We Stand For</h2>
         <div class="values-grid">
-          {values.map((val) => (
+          {values.map(val => (
             <div class="value-card">
               <div class="value-dot" aria-hidden="true"></div>
               <h3 class="value-title">{val.title}</h3>
@@ -183,7 +183,7 @@ const beliefs = [
       </div>
 
       <div class="leadership-grid">
-        {leadership.map((leader) => (
+        {leadership.map(leader => (
           <div class="leader-card">
             <div class="leader-avatar" aria-hidden="true">
               <span>{leader.initials}</span>
@@ -199,7 +199,7 @@ const beliefs = [
       <div class="overseers-block">
         <h3 class="overseers-title">General Overseers</h3>
         <div class="overseers-grid">
-          {overseers.map((o) => (
+          {overseers.map(o => (
             <div class="overseer-card">
               <p class="overseer-name">{o.name}</p>
               <p class="overseer-title-text">{o.title}</p>
@@ -213,7 +213,7 @@ const beliefs = [
       <div class="trustees-block">
         <h3 class="trustees-title">Board of Trustees</h3>
         <div class="trustees-list">
-          {trustees.map((trustee) => (
+          {trustees.map(trustee => (
             <div class="trustee-item">
               <div class="trustee-dot" aria-hidden="true"></div>
               <span>{trustee}</span>
@@ -236,7 +236,7 @@ const beliefs = [
       </div>
 
       <div class="beliefs-grid">
-        {beliefs.map((belief) => (
+        {beliefs.map(belief => (
           <div class="belief-card">
             <span class="belief-article">{belief.article}</span>
             <h3 class="belief-title">{belief.title}</h3>

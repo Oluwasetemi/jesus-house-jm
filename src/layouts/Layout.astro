@@ -1,17 +1,17 @@
 ---
 interface Props {
-  title: string;
-  description: string;
+  title: string
+  description: string
   /** Absolute URL for og:image / twitter:image. Defaults to church logo. */
-  ogImage?: string;
+  ogImage?: string
   /** Canonical URL for this page. Defaults to current request URL. */
-  canonicalUrl?: string;
+  canonicalUrl?: string
   /** Open Graph type — 'website' for most pages, 'article' for blog posts */
-  ogType?: 'website' | 'article';
+  ogType?: 'website' | 'article'
   /** Article published date (ISO 8601) — only used when ogType='article' */
-  articlePublishedTime?: string;
+  articlePublishedTime?: string
   /** Robots directive — defaults to 'index, follow' */
-  robots?: string;
+  robots?: string
 }
 
 const {
@@ -21,59 +21,59 @@ const {
   ogType = 'website',
   articlePublishedTime,
   robots = 'index, follow',
-} = Astro.props;
+} = Astro.props
 
-const SITE_URL = 'https://jesus-house-jamaica.netlify.app';
-const canonicalUrl = Astro.props.canonicalUrl ?? `${SITE_URL}${Astro.url.pathname}`;
-const fullTitle = title === 'Home' ? 'Jesus House Jamaica | RCCG Kingston' : `${title} | Jesus House Jamaica`;
+const SITE_URL = 'https://jesus-house-jamaica.netlify.app'
+const canonicalUrl = Astro.props.canonicalUrl ?? `${SITE_URL}${Astro.url.pathname}`
+const fullTitle = title === 'Home' ? 'Jesus House Jamaica | RCCG Kingston' : `${title} | Jesus House Jamaica`
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': ['Church', 'LocalBusiness'],
-  name: 'Jesus House Jamaica',
-  alternateName: 'RCCG Jesus House Kingston',
-  description: 'A member of the Redeemed Christian Church of God (RCCG), rooted in the heart of Kingston, Jamaica. Empowering men and women for godly living.',
-  url: SITE_URL,
-  logo: ogImage,
-  image: ogImage,
-  telephone: '+18769202260',
-  email: 'jesushousekgn@hotmail.com',
-  address: {
+  'name': 'Jesus House Jamaica',
+  'alternateName': 'RCCG Jesus House Kingston',
+  'description': 'A member of the Redeemed Christian Church of God (RCCG), rooted in the heart of Kingston, Jamaica. Empowering men and women for godly living.',
+  'url': SITE_URL,
+  'logo': ogImage,
+  'image': ogImage,
+  'telephone': '+18769202260',
+  'email': 'jesushousekgn@hotmail.com',
+  'address': {
     '@type': 'PostalAddress',
-    streetAddress: '3 McGregor Square, corner of Beechwood Avenue, off Halfway Tree',
-    addressLocality: 'Kingston',
-    addressRegion: 'Kingston 5',
-    addressCountry: 'JM',
+    'streetAddress': '3 McGregor Square, corner of Beechwood Avenue, off Halfway Tree',
+    'addressLocality': 'Kingston',
+    'addressRegion': 'Kingston 5',
+    'addressCountry': 'JM',
   },
-  geo: {
+  'geo': {
     '@type': 'GeoCoordinates',
-    latitude: '18.0179',
-    longitude: '-76.7930',
+    'latitude': '18.0179',
+    'longitude': '-76.7930',
   },
-  openingHoursSpecification: [
+  'openingHoursSpecification': [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Sunday',
-      opens: '09:00',
-      closes: '12:00',
-      description: 'Sunday Service',
+      'dayOfWeek': 'Sunday',
+      'opens': '09:00',
+      'closes': '12:00',
+      'description': 'Sunday Service',
     },
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Wednesday',
-      opens: '18:00',
-      closes: '20:00',
-      description: 'Bible Study',
+      'dayOfWeek': 'Wednesday',
+      'opens': '18:00',
+      'closes': '20:00',
+      'description': 'Bible Study',
     },
   ],
-  sameAs: [
+  'sameAs': [
     'https://www.facebook.com/rccg.jesushouse.kingston',
     'https://www.instagram.com/rccgjesushousekgnjamaica',
     'https://www.youtube.com/channel/UCO1S3nxtFg0_HXEMuZji5zg',
     'https://twitter.com/rccgjhkingston',
   ],
-  denomination: 'Redeemed Christian Church of God',
-  slogan: 'Empowering men and women for godly living',
+  'denomination': 'Redeemed Christian Church of God',
+  'slogan': 'Empowering men and women for godly living',
 };
 ---
 

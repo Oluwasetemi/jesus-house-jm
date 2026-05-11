@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const rccgTimeline = [
   {
@@ -47,7 +47,7 @@ const rccgTimeline = [
     text: 'RCCG officially confirmed its presence in 198 nations, fulfilling a key dimension of its vision to "make heaven and take as many people as possible with us." The church is now one of the fastest-growing denominations in the world.',
     highlight: true,
   },
-];
+]
 
 const jhTimeline = [
   {
@@ -151,7 +151,7 @@ const jhTimeline = [
       </div>
 
       <div class="timeline">
-        {rccgTimeline.map((item, idx) => (
+        {rccgTimeline.map(item => (
           <div class={`timeline-item${item.highlight ? ' timeline-item--highlight' : ''}`}>
             <div class="timeline-dot" aria-hidden="true">
               {item.highlight && (

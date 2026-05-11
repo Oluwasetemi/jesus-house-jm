@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/nav.astro';
-import Footer from '../components/footer.astro';
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+import Layout from '../layouts/Layout.astro'
 
 const trustees = [
   {
@@ -52,7 +52,7 @@ const trustees = [
     initials: 'YM',
     bio: 'Deacon Morrison champions the welfare and pastoral care needs of the congregation, ensuring that no member faces difficulty without the church\'s support.',
   },
-];
+]
 
 const responsibilities = [
   {
@@ -117,7 +117,7 @@ const responsibilities = [
       </div>
 
       <div class="responsibilities-grid">
-        {responsibilities.map((item) => (
+        {responsibilities.map(item => (
           <div class="responsibility-card">
             <div class="resp-icon" aria-hidden="true" set:html={item.icon} />
             <h3 class="resp-title">{item.title}</h3>
@@ -140,7 +140,7 @@ const responsibilities = [
       </div>
 
       <div class="members-grid">
-        {trustees.map((trustee) => (
+        {trustees.map(trustee => (
           <article class="trustee-card">
             <div class="trustee-avatar" aria-hidden="true">
               <span>{trustee.initials}</span>
@@ -168,15 +168,15 @@ const responsibilities = [
         </p>
         <div class="board-cta-details">
           <div class="detail-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
             jesushousekgn@hotmail.com
           </div>
           <div class="detail-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
             <a href="tel:+18769202260">+1 876 920 2260</a>
           </div>
           <div class="detail-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
             <a href="https://maps.google.com/?q=3+McGregor+Square,+corner+of+Beechwood+Avenue,+off+Halfway+Tree,+Kingston+5,+Jamaica" target="_blank" rel="noopener noreferrer">3 McGregor Square, Halfway Tree, Kingston 5, Jamaica</a>
           </div>
         </div>
