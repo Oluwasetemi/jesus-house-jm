@@ -20,11 +20,12 @@ export default async (_req: Request, _ctx: Context) => {
       = html.includes('"isLive":true')
       || html.includes('"isLiveNow":true')
 
-    // Extract the live video ID so the embed can link to the exact stream
+    // Extract the live video ID from the canonical <link> tag — this points
+    // to the actual live video, not a related/recommended video
     let videoId: string | null = null
-    const match = html.match(/"videoId":"([a-zA-Z0-9_-]{11})"/)
-    if (match)
-      videoId = match[1]
+    const canonical = html.match(/<link rel="canonical" href="https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})"/)
+    if (canonical)
+      videoId = canonical[1]
 
     return Response.json(
       { isLive, videoId },
