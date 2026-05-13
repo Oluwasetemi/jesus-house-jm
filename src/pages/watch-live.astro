@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro'
 
 const CHANNEL_ID = 'UCO1S3nxtFg0_HXEMuZji5zg'
 const YOUTUBE_CHANNEL = 'https://www.youtube.com/@jesushousekingston/streams'
-const YOUTUBE_LIVE = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=0&enablejsapi=1&origin=${Astro.site}`
+const YOUTUBE_LIVE = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=1&mute=1&enablejsapi=1&origin=${Astro.site}`
 
 // 6 most recent videos from real data
 const recentSermons = [...rawVideos]
@@ -93,6 +93,7 @@ const onlineMeetings = [
       </div>
 
       <!-- Player: always loaded (opacity hidden) so IFrame API can initialise -->
+      <!-- mute=1 enables browser autoplay for live detection; user can unmute via player controls -->
       <div class="player-wrap" id="player-wrap">
         <iframe
           id="live-iframe"
@@ -254,7 +255,6 @@ const onlineMeetings = [
     if (liveConfirmed)
       return
     liveConfirmed = true
-    clearTimeout(checkTimeout)
     // Reveal player, hide offline overlay
     playerWrap.classList.add('is-live')
     offlineState.style.display = 'none'
@@ -491,14 +491,20 @@ const onlineMeetings = [
     border-radius: 0.5rem;
     text-decoration: none;
     border: none;
-    transition: all 0.2s ease;
+    transition: background-color 0.18s var(--ease-out), transform 0.15s var(--ease-out), box-shadow 0.18s var(--ease-out);
   }
 
-  .btn-youtube:hover {
-    background-color: #CC0000;
-    color: white;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+  .btn-youtube:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-youtube:hover {
+      background-color: #CC0000;
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+    }
   }
 
   .channel-note {
@@ -607,7 +613,7 @@ const onlineMeetings = [
     font-weight: 700;
     border-radius: 0.5rem;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: background-color 0.18s var(--ease-out), color 0.18s var(--ease-out), transform 0.15s var(--ease-out);
     margin-top: auto;
   }
 
@@ -758,6 +764,12 @@ const onlineMeetings = [
     .sermons-cta .btn {
       width: 100%;
       justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-pulse {
+      animation: none;
     }
   }
 </style>
