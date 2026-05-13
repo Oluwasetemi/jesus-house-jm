@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro'
 
 const CHANNEL_ID = 'UCO1S3nxtFg0_HXEMuZji5zg'
 const YOUTUBE_CHANNEL = 'https://www.youtube.com/@jesushousekingston/streams'
-const YOUTUBE_LIVE = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=1&mute=1&enablejsapi=1&origin=${Astro.site}`
+const YOUTUBE_LIVE = `https://www.youtube.com/embed/live_stream?channel=${CHANNEL_ID}&autoplay=1&enablejsapi=1&origin=${Astro.site}`
 
 // 6 most recent videos from real data
 const recentSermons = [...rawVideos]
@@ -237,7 +237,7 @@ const onlineMeetings = [
   <Footer />
 </Layout>
 
-<!-- Live stream detector: reveals player when channel is actually live -->
+<!-- Live stream detector: polls /api/check-live (Netlify function) every 30s -->
 <script>
 (function () {
   const playerWrap = document.getElementById('player-wrap') as HTMLElement | null
@@ -251,11 +251,16 @@ const onlineMeetings = [
 
   let liveConfirmed = false
 
-  function showLive() {
+  function showLive(videoId?: string | null) {
     if (liveConfirmed)
       return
     liveConfirmed = true
-    // Reveal player, hide offline overlay
+
+    // Swap to the specific live video URL if available (more reliable than live_stream)
+    if (videoId && iframe) {
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&origin=${location.origin}`
+    }
+
     playerWrap.classList.add('is-live')
     offlineState.style.display = 'none'
     if (liveBadge)
@@ -264,24 +269,25 @@ const onlineMeetings = [
       offlineBadge.style.display = 'none'
   }
 
-  // YouTube IFrame API fires postMessage events automatically.
-  // onStateChange: {"event":"onStateChange","info": <number>}
-  //   info = 1 (playing) or 3 (buffering) means the live stream is active.
-  // infoDelivery: {"event":"infoDelivery","info":{"playerState":<number>,...}}
-  window.addEventListener('message', (e: MessageEvent) => {
-    if (!e.origin.includes('youtube.com'))
-      return
+  async function checkLive() {
     try {
-      const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
-      // onStateChange delivers info as a bare number; infoDelivery nests it
-      const state: unknown = typeof data?.info === 'number'
-        ? data.info
-        : data?.info?.playerState
-      if (state === 1 || state === 3)
-        showLive()
+      const res = await fetch('/api/check-live')
+      const { isLive, videoId } = await res.json() as { isLive: boolean, videoId: string | null }
+      if (isLive)
+        showLive(videoId)
     }
-    catch { /* ignore parse errors */ }
-  })
+    catch { /* network error — try again next interval */ }
+  }
+
+  // Check immediately on load, then every 30 seconds until live is confirmed
+  checkLive()
+  const timer = setInterval(() => {
+    if (liveConfirmed) {
+      clearInterval(timer)
+      return
+    }
+    checkLive()
+  }, 30_000)
 })()
 </script>
 
