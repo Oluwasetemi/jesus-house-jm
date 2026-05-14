@@ -9,19 +9,30 @@ The channel uses two tabs:
 This script targets /streams (the live recordings), which is what the website
 displays in the sermons archive and watch-live pages.
 
+Two fetch modes:
+  yt-dlp (default) — no API key required; scrapes the channel streams page
+  YouTube API      — set YOUTUBE_API_KEY env var or pass --api-key; more
+                     reliable, faster, no bot-detection issues
+
 Usage:
-    python3 scripts/fetch-youtube.py                        # all streams
+    python3 scripts/fetch-youtube.py                        # all streams (yt-dlp)
     python3 scripts/fetch-youtube.py --limit 50             # most recent 50
     python3 scripts/fetch-youtube.py --after 20250101       # since Jan 2025
     python3 scripts/fetch-youtube.py --videos               # edited uploads tab
     python3 scripts/fetch-youtube.py --out src/data/videos.json --astro
+    python3 scripts/fetch-youtube.py --api-key AIza...      # use YouTube Data API
+    YOUTUBE_API_KEY=AIza... python3 scripts/fetch-youtube.py  # via env var
 """
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
+import urllib.error
+import urllib.parse
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 
@@ -94,6 +105,166 @@ def categorise(title: str, upload_dt: datetime | None) -> str:
     return "Other"
 
 
+# ── Shared helpers ────────────────────────────────────────────────────────────
+
+def _make_entry(video_id: str, title: str, upload_dt: datetime | None,
+                duration_secs: int | None, view_count: int,
+                was_live: bool, live_status: str) -> dict:
+    """Build the standard videos.json entry dict from parsed fields."""
+    date_iso = date_nice = date_short = ""
+    year = month = month_short = weekday_name = ""
+
+    if upload_dt:
+        date_iso     = upload_dt.strftime("%Y-%m-%d")
+        date_nice    = upload_dt.strftime("%B %-d, %Y")
+        date_short   = upload_dt.strftime("%b %-d, %Y")
+        year         = str(upload_dt.year)
+        month        = upload_dt.strftime("%B")
+        month_short  = upload_dt.strftime("%b").upper()
+        weekday_name = upload_dt.strftime("%A")
+
+    dur_str = ""
+    if duration_secs is not None:
+        h, rem = divmod(int(duration_secs), 3600)
+        m, s   = divmod(rem, 60)
+        dur_str = f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+
+    category = categorise(title, upload_dt)
+
+    return {
+        "id":         video_id,
+        "title":      title,
+        "category":   category,
+        "date":       date_iso,
+        "dateNice":   date_nice,
+        "dateShort":  date_short,
+        "year":       year,
+        "month":      month,
+        "monthShort": month_short,
+        "weekday":    weekday_name,
+        "duration":   dur_str,
+        "views":      view_count,
+        "wasLive":    was_live,
+        "liveStatus": live_status,
+        "url":        f"https://www.youtube.com/watch?v={video_id}",
+        "thumbnail":  f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
+    }
+
+
+def _iso8601_to_seconds(duration: str) -> int | None:
+    """Convert ISO 8601 duration (PT1H59M31S) to total seconds."""
+    m = re.fullmatch(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", duration or "")
+    if not m:
+        return None
+    h, mn, s = (int(x or 0) for x in m.groups())
+    return h * 3600 + mn * 60 + s
+
+
+# ── YouTube Data API v3 fetch ─────────────────────────────────────────────────
+
+YT_API_BASE = "https://www.googleapis.com/youtube/v3"
+
+
+def _yt_api(endpoint: str, params: dict) -> dict:
+    url = f"{YT_API_BASE}/{endpoint}?{urllib.parse.urlencode(params)}"
+    with urllib.request.urlopen(url, timeout=15) as resp:
+        return json.loads(resp.read())
+
+
+def fetch_videos_api(api_key: str, limit: int | None, after: str | None,
+                     live_only: bool = True) -> list[dict]:
+    """Fetch completed live streams using the YouTube Data API v3.
+
+    Costs: search.list = 100 quota units, videos.list = 1 unit per batch.
+    Daily free quota: 10,000 units → up to ~99 search calls per day.
+    """
+    print(f"▶ Fetching via YouTube Data API (channel: {CHANNEL_ID})", file=sys.stderr)
+
+    # ── 1. Collect video IDs via search.list ──────────────────────────────────
+    video_ids: list[str] = []
+    page_token: str | None = None
+    max_results = min(limit or 50, 50)  # API cap per page is 50
+
+    after_dt = datetime.strptime(after, "%Y%m%d") if after else None
+
+    while True:
+        params: dict = {
+            "part":       "id",
+            "channelId":  CHANNEL_ID,
+            "type":       "video",
+            "order":      "date",
+            "maxResults": max_results,
+            "key":        api_key,
+        }
+        if live_only:
+            params["eventType"] = "completed"
+        if page_token:
+            params["pageToken"] = page_token
+
+        data = _yt_api("search", params)
+        for item in data.get("items", []):
+            video_ids.append(item["id"]["videoId"])
+
+        page_token = data.get("nextPageToken")
+        if not page_token or (limit and len(video_ids) >= limit):
+            break
+
+    if limit:
+        video_ids = video_ids[:limit]
+
+    if not video_ids:
+        print("  No videos found.", file=sys.stderr)
+        return []
+
+    print(f"  Found {len(video_ids)} video IDs — fetching details…", file=sys.stderr)
+
+    # ── 2. Fetch full metadata via videos.list (batch in groups of 50) ────────
+    videos: list[dict] = []
+    for i in range(0, len(video_ids), 50):
+        batch = video_ids[i:i + 50]
+        data = _yt_api("videos", {
+            "part":  "snippet,contentDetails,statistics,liveStreamingDetails",
+            "id":    ",".join(batch),
+            "key":   api_key,
+        })
+
+        for item in data.get("items", []):
+            vid_id    = item["id"]
+            snippet   = item.get("snippet", {})
+            content   = item.get("contentDetails", {})
+            stats     = item.get("statistics", {})
+            live_det  = item.get("liveStreamingDetails", {})
+
+            title      = snippet.get("title", "").strip()
+            view_count = int(stats.get("viewCount") or 0)
+            was_live   = bool(live_det)
+            live_stat  = "was_live" if was_live else "not_live"
+
+            # Duration: ISO 8601 → seconds
+            duration_secs = _iso8601_to_seconds(content.get("duration", ""))
+
+            # Date: title date > actualStartTime > publishedAt
+            upload_dt = parse_title_date(title)
+
+            if upload_dt is None:
+                start_str = live_det.get("actualStartTime") or snippet.get("publishedAt", "")
+                if start_str:
+                    try:
+                        upload_dt = datetime.strptime(start_str[:10], "%Y-%m-%d")
+                    except ValueError:
+                        pass
+
+            if after_dt and upload_dt and upload_dt < after_dt:
+                continue
+
+            videos.append(_make_entry(
+                vid_id, title, upload_dt, duration_secs,
+                view_count, was_live, live_stat,
+            ))
+
+    return videos
+
+
 # ── yt-dlp fetch ─────────────────────────────────────────────────────────────
 
 def fetch_videos(url: str, limit: int | None, after: str | None) -> list[dict]:
@@ -143,14 +314,7 @@ def fetch_videos(url: str, limit: int | None, after: str | None) -> list[dict]:
         live_status = raw.get("live_status") or ""
         was_live    = live_status in ("was_live", "is_live", "post_live") or bool(raw.get("was_live"))
 
-        # ── Parse date ───────────────────────────────────
-        # Priority: title date (most reliable for their naming) > release_timestamp
-        # (actual broadcast time) > upload_date (may be next day after processing)
-        upload_dt: datetime | None = None
-        date_iso = date_nice = date_short = ""
-        year = month = month_short = ""
-        weekday_name = ""
-
+        # Priority: title date > release_timestamp > upload_date (may be +1 day)
         upload_dt = parse_title_date(title)
 
         if upload_dt is None and release_ts:
@@ -165,42 +329,9 @@ def fetch_videos(url: str, limit: int | None, after: str | None) -> list[dict]:
             except ValueError:
                 pass
 
-        if upload_dt:
-            date_iso    = upload_dt.strftime("%Y-%m-%d")
-            date_nice   = upload_dt.strftime("%B %-d, %Y")
-            date_short  = upload_dt.strftime("%b %-d, %Y")
-            year        = str(upload_dt.year)
-            month       = upload_dt.strftime("%B")
-            month_short = upload_dt.strftime("%b").upper()
-            weekday_name = upload_dt.strftime("%A")
-
-        # ── Duration ─────────────────────────────────────
-        dur_str = ""
-        if duration:
-            h, rem = divmod(int(duration), 3600)
-            m, s   = divmod(rem, 60)
-            dur_str = f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
-
-        category = categorise(title, upload_dt)
-
-        videos.append({
-            "id":           video_id,
-            "title":        title,
-            "category":     category,
-            "date":         date_iso,
-            "dateNice":     date_nice,
-            "dateShort":    date_short,
-            "year":         year,
-            "month":        month,
-            "monthShort":   month_short,
-            "weekday":      weekday_name,
-            "duration":     dur_str,
-            "views":        view_count,
-            "wasLive":      was_live,
-            "liveStatus":   live_status,
-            "url":          f"https://www.youtube.com/watch?v={video_id}",
-            "thumbnail":    f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
-        })
+        duration_secs = int(duration) if duration else None
+        videos.append(_make_entry(video_id, title, upload_dt, duration_secs,
+                                  view_count, was_live, live_status))
 
     return videos
 
@@ -294,15 +425,17 @@ def merge_videos(existing: list[dict], fresh: list[dict]) -> list[dict]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Fetch Jesus House Kingston YouTube live recordings via yt-dlp",
+        description="Fetch Jesus House Kingston YouTube live recordings",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python3 scripts/fetch-youtube.py --limit 20          # quick test
-  python3 scripts/fetch-youtube.py --after 20250101    # all of 2025+
-  python3 scripts/fetch-youtube.py --astro             # also write .ts file
-  python3 scripts/fetch-youtube.py --videos --limit 20 # edited uploads tab
-  python3 scripts/fetch-youtube.py --limit 10 --merge  # update with 10 newest
+  python3 scripts/fetch-youtube.py --limit 20              # yt-dlp, quick test
+  python3 scripts/fetch-youtube.py --after 20250101        # all of 2025+
+  python3 scripts/fetch-youtube.py --astro                 # also write .ts file
+  python3 scripts/fetch-youtube.py --videos --limit 20     # edited uploads tab
+  python3 scripts/fetch-youtube.py --limit 10 --merge      # incremental update
+  python3 scripts/fetch-youtube.py --api-key AIza... --limit 15  # YouTube API
+  YOUTUBE_API_KEY=AIza... python3 scripts/fetch-youtube.py       # via env var
         """,
     )
     parser.add_argument("--limit",   type=int,  default=None, metavar="N",
@@ -314,13 +447,20 @@ Examples:
     parser.add_argument("--astro",   action="store_true",
         help="Also write a .ts data file for use in Astro pages")
     parser.add_argument("--videos",  action="store_true",
-        help="Fetch the /videos tab instead of /streams (live recordings)")
+        help="Fetch the /videos tab instead of /streams (yt-dlp mode only)")
     parser.add_argument("--merge",   action="store_true",
         help="Merge fetched videos into existing JSON (safe incremental update)")
+    parser.add_argument("--api-key", type=str,  default=None, metavar="KEY",
+        help="YouTube Data API v3 key (overrides YOUTUBE_API_KEY env var)")
     args = parser.parse_args()
 
-    url = VIDEOS_URL if args.videos else STREAMS_URL
-    fresh = fetch_videos(url, args.limit, args.after)
+    api_key = args.api_key or os.environ.get("YOUTUBE_API_KEY")
+
+    if api_key:
+        fresh = fetch_videos_api(api_key, args.limit, args.after)
+    else:
+        url = VIDEOS_URL if args.videos else STREAMS_URL
+        fresh = fetch_videos(url, args.limit, args.after)
 
     # ── Merge with existing data if requested ─────────────
     if args.merge:
