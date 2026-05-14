@@ -5,12 +5,13 @@
   "packageManager": "bun@1.3.13",
   "description": "Official website for Jesus House Jamaica — RCCG Kingston",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently -n astro,fns -c cyan,yellow \"astro dev\" \"ntl functions:serve --port 9999\"",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test:check-live": "bun run scripts/test-check-live.ts"
   },
   "dependencies": {
     "astro": "^5.17.1"
@@ -19,6 +20,7 @@
     "@setemiojo/eslint-config": "^8.2.2",
     "@setemiojo/utils": "^0.0.6",
     "astro-eslint-parser": "^1.4.0",
+    "concurrently": "^9.2.1",
     "eslint": "^10.3.0",
     "eslint-plugin-astro": "^1.7.0"
   }
