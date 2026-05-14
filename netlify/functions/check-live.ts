@@ -22,7 +22,7 @@ export default async (_req: Request, _ctx: Context) => {
     const isLive = html.includes('"isLive":true') || html.includes('"isLiveNow":true')
 
     // RSS always returns the channel's most recent video ID reliably
-    const rssMatch = xml.match(/<yt:videoId>([a-zA-Z0-9_-]{11})<\/yt:videoId>/)
+    const rssMatch = xml.match(/<yt:videoId>([\w-]{11})<\/yt:videoId>/)
     const videoId = rssMatch ? rssMatch[1] : null
 
     return Response.json(

@@ -253,14 +253,20 @@ const serviceTimes = [
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     color: rgba(255, 255, 255, 0.7);
-    transition: all var(--transition-base);
+    transition: border-color var(--transition-base), color var(--transition-base), background-color var(--transition-base), transform 0.15s var(--ease-out);
     flex-shrink: 0;
   }
 
-  .social-link:hover {
-    border-color: var(--color-gold);
-    color: var(--color-gold);
-    background-color: rgba(212, 168, 67, 0.1);
+  .social-link:active {
+    transform: scale(0.93);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .social-link:hover {
+      border-color: var(--color-gold);
+      color: var(--color-gold);
+      background-color: rgba(212, 168, 67, 0.1);
+    }
   }
 
   /* Columns */
@@ -447,6 +453,12 @@ const serviceTimes = [
 
     .address-line {
       font-size: 0.9rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-gold-line {
+      animation: none;
     }
   }
 </style>

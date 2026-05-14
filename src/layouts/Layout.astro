@@ -155,7 +155,10 @@ const jsonLd = {
     --section-padding: clamp(4rem, 8vw, 7rem);
     --container-px: clamp(1.25rem, 4vw, 2.5rem);
 
-    --transition-base: 0.25s ease;
+    --transition-base: 0.2s ease-out;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
     --radius-card: 0.75rem;
   }
 
@@ -261,8 +264,17 @@ const jsonLd = {
     letter-spacing: 0.04em;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: all var(--transition-base);
+    transition:
+      background-color 0.2s ease-out,
+      border-color 0.2s ease-out,
+      color 0.2s ease-out,
+      transform 0.15s ease-out,
+      box-shadow 0.2s ease-out;
     white-space: nowrap;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
   }
 
   .btn-gold {
@@ -271,10 +283,22 @@ const jsonLd = {
     border-color: var(--color-gold);
   }
 
-  .btn-gold:hover {
-    background-color: #c4952e;
-    border-color: #c4952e;
-    color: var(--color-navy);
+  @media (hover: hover) and (pointer: fine) {
+    .btn-gold:hover {
+      background-color: #c4952e;
+      border-color: #c4952e;
+      color: var(--color-navy);
+    }
+
+    .btn-outline-white:hover {
+      background-color: var(--color-white);
+      color: var(--color-navy);
+    }
+
+    .btn-outline-navy:hover {
+      background-color: var(--color-navy);
+      color: var(--color-white);
+    }
   }
 
   .btn-outline-white {
@@ -283,20 +307,10 @@ const jsonLd = {
     border-color: var(--color-white);
   }
 
-  .btn-outline-white:hover {
-    background-color: var(--color-white);
-    color: var(--color-navy);
-  }
-
   .btn-outline-navy {
     background-color: transparent;
     color: var(--color-navy);
     border-color: var(--color-navy);
-  }
-
-  .btn-outline-navy:hover {
-    background-color: var(--color-navy);
-    color: var(--color-white);
   }
 
   /* === Cross Motif Decoration === */

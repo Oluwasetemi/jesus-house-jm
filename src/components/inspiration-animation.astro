@@ -336,16 +336,27 @@
     letter-spacing: 0.06em;
     color: var(--color-gold);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition:
+      background-color 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out),
+      box-shadow 0.2s var(--ease-out),
+      transform 0.15s var(--ease-out);
     animation: fadeInUp 1.2s 0.6s ease both;
     backdrop-filter: blur(4px);
   }
 
-  .inspiration-cta:hover {
-    background-color: var(--color-gold);
-    color: #0a0b1a;
-    border-color: var(--color-gold);
-    box-shadow: 0 0 32px rgba(212, 168, 67, 0.4);
+  .inspiration-cta:active {
+    transform: scale(0.97);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .inspiration-cta:hover {
+      background-color: var(--color-gold);
+      color: #0a0b1a;
+      border-color: var(--color-gold);
+      box-shadow: 0 0 32px rgba(212, 168, 67, 0.4);
+    }
   }
 
   @keyframes fadeInUp {

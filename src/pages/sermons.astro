@@ -308,15 +308,21 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
     align-items: center;
     justify-content: center;
     color: var(--color-navy);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
     animation: pulse-glow 2.5s ease infinite;
     flex-shrink: 0;
     box-shadow: 0 0 0 6px rgba(0,0,0,0.35);
   }
 
-  .play-btn:hover {
-    transform: scale(1.08);
-    color: var(--color-navy);
+  @media (hover: hover) and (pointer: fine) {
+    .play-btn:hover {
+      transform: scale(1.04);
+      color: var(--color-navy);
+    }
+  }
+
+  .play-btn:active {
+    transform: scale(0.96);
   }
 
   .featured-info {
@@ -596,13 +602,19 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
     align-items: center;
     justify-content: center;
     color: var(--color-navy);
-    transition: transform 0.2s ease, background-color var(--transition-base);
+    transition: transform 0.15s var(--ease-out), background-color var(--transition-base), color var(--transition-base);
   }
 
-  .sermon-row-listen:hover {
-    transform: scale(1.1);
-    background-color: var(--color-coral);
-    color: var(--color-white);
+  @media (hover: hover) and (pointer: fine) {
+    .sermon-row-listen:hover {
+      transform: scale(1.05);
+      background-color: var(--color-coral);
+      color: var(--color-white);
+    }
+  }
+
+  .sermon-row-listen:active {
+    transform: scale(0.95);
   }
 
   /* Subscribe */
@@ -734,6 +746,12 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
 
     .tab-btn--yt {
       margin-left: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .play-btn {
+      animation: none;
     }
   }
 </style>
