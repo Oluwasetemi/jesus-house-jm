@@ -256,9 +256,13 @@ const onlineMeetings = [
       return
     liveConfirmed = true
 
-    // Swap to the specific live video URL if available (more reliable than live_stream)
-    if (videoId && iframe) {
-      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&origin=${location.origin}`
+    // Load the specific live video by ID — YouTube defaults to the live edge (current moment)
+    // for an active live stream. The generic live_stream URL is the fallback.
+    if (iframe) {
+      const base = videoId
+        ? `https://www.youtube.com/embed/${videoId}`
+        : `https://www.youtube.com/embed/live_stream?channel=UCO1S3nxtFg0_HXEMuZji5zg`
+      iframe.src = `${base}?autoplay=1&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`
     }
 
     playerWrap.classList.add('is-live')

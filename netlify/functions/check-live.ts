@@ -1,31 +1,30 @@
 import type { Context } from '@netlify/functions'
 
-const CHANNEL_ID = 'UCO1S3nxtFg0_HXEMuZji5zg'
+const LIVE_URL = 'https://www.youtube.com/@jesushousekingston/live'
 
 export default async (_req: Request, _ctx: Context) => {
   try {
-    const res = await fetch(
-      `https://www.youtube.com/channel/${CHANNEL_ID}/live`,
-      {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-          'Accept-Language': 'en-US,en;q=0.9',
-        },
+    const res = await fetch(LIVE_URL, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept-Language': 'en-US,en;q=0.9',
       },
-    )
+    })
 
     const html = await res.text()
 
-    const isLive
-      = html.includes('"isLive":true')
-      || html.includes('"isLiveNow":true')
+    const isLive = html.includes('"isLive":true') || html.includes('"isLiveNow":true')
 
-    // Extract the live video ID from the canonical <link> tag — this points
-    // to the actual live video, not a related/recommended video
+    // ytInitialPlayerResponse.videoDetails is the authoritative source for the live video ID
     let videoId: string | null = null
-    const canonical = html.match(/<link rel="canonical" href="https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})"/)
-    if (canonical)
-      videoId = canonical[1]
+    const playerResponse = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\});\s*(?:var |<\/script)/)
+    if (playerResponse) {
+      try {
+        const data = JSON.parse(playerResponse[1]) as { videoDetails?: { videoId?: string } }
+        videoId = data.videoDetails?.videoId ?? null
+      }
+      catch { /* malformed JSON — fall through */ }
+    }
 
     return Response.json(
       { isLive, videoId },
