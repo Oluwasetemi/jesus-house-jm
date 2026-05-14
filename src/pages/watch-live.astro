@@ -239,6 +239,20 @@ const onlineMeetings = [
 
 <!-- Live stream detector: polls /api/check-live (Netlify function) every 30s -->
 <script>
+// Minimal types for the YouTube IFrame API
+interface YTPlayer {
+  getDuration(): number
+  seekTo(seconds: number, allowSeekAhead: boolean): void
+  playVideo(): void
+}
+interface YTPlayerEvent { target: YTPlayer }
+declare global {
+  interface Window {
+    YT?: { Player: new (id: string, opts: object) => YTPlayer }
+    onYouTubeIframeAPIReady?: () => void
+  }
+}
+
 (function () {
   const playerWrap = document.getElementById('player-wrap') as HTMLElement | null
   const offlineState = document.getElementById('offline-state') as HTMLElement | null
@@ -251,19 +265,58 @@ const onlineMeetings = [
 
   let liveConfirmed = false
 
+  // Queue of callbacks waiting for window.YT to be ready
+  const ytReadyCallbacks: Array<() => void> = []
+  let ytLoaded = false
+
+  function onYTReady(cb: () => void) {
+    if (ytLoaded && window.YT?.Player) {
+      cb()
+      return
+    }
+    ytReadyCallbacks.push(cb)
+    if (!document.querySelector('script[src*="iframe_api"]')) {
+      const s = document.createElement('script')
+      s.src = 'https://www.youtube.com/iframe_api'
+      document.head.appendChild(s)
+    }
+  }
+
+  // Called by YouTube once the IFrame API script finishes loading
+  window.onYouTubeIframeAPIReady = () => {
+    ytLoaded = true
+    ytReadyCallbacks.splice(0).forEach(cb => cb())
+  }
+
+  function seekToLiveEdge() {
+    // YT.Player wraps the existing iframe (enablejsapi=1 already in src).
+    // onReady fires once the player has buffered enough to report its duration.
+    onYTReady(() => {
+      new window.YT!.Player('live-iframe', {
+        events: {
+          onReady(e: YTPlayerEvent) {
+            const duration = e.target.getDuration()
+            // duration > 0 means the player has a DVR window; seek to its end = live edge
+            if (duration > 0)
+              e.target.seekTo(duration, true)
+            e.target.playVideo()
+          },
+        },
+      })
+    })
+  }
+
   function showLive(videoId?: string | null) {
     if (liveConfirmed)
       return
     liveConfirmed = true
 
-    // Load the specific live video by ID — YouTube defaults to the live edge (current moment)
-    // for an active live stream. The generic live_stream URL is the fallback.
-    if (iframe) {
-      const base = videoId
-        ? `https://www.youtube.com/embed/${videoId}`
-        : `https://www.youtube.com/embed/live_stream?channel=UCO1S3nxtFg0_HXEMuZji5zg`
-      iframe.src = `${base}?autoplay=1&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`
-    }
+    // Set the iframe src to the specific video ID so YT API can control it.
+    // The live_stream channel URL is the fallback when no video ID is available.
+    const base = videoId
+      ? `https://www.youtube.com/embed/${videoId}`
+      : `https://www.youtube.com/embed/live_stream?channel=UCO1S3nxtFg0_HXEMuZji5zg`
+    iframe.src = `${base}?autoplay=1&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`
 
     playerWrap.classList.add('is-live')
     offlineState.style.display = 'none'
@@ -271,6 +324,10 @@ const onlineMeetings = [
       liveBadge.style.display = 'inline-flex'
     if (offlineBadge)
       offlineBadge.style.display = 'none'
+
+    // Seek to the live edge once the player reports its DVR duration
+    if (videoId)
+      seekToLiveEdge()
   }
 
   async function checkLive() {
