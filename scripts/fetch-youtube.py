@@ -292,9 +292,16 @@ def fetch_videos(url: str, limit: int | None, after: str | None) -> list[dict]:
 
     result = subprocess.run(cmd, capture_output=True, text=True)
 
+    if result.stderr.strip():
+        print("yt-dlp stderr:\n" + result.stderr[:2000], file=sys.stderr)
+
     if result.returncode not in (0, 1):
-        print("yt-dlp stderr:", result.stderr[:1000], file=sys.stderr)
         sys.exit(1)
+
+    if not result.stdout.strip():
+        print("  ⚠️  yt-dlp returned no output — YouTube may be blocking this IP.", file=sys.stderr)
+        print("     Consider setting YOUTUBE_API_KEY to bypass bot detection.", file=sys.stderr)
+        return []
 
     videos = []
     for line in result.stdout.strip().splitlines():
