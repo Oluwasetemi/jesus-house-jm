@@ -109,7 +109,8 @@ def categorise(title: str, upload_dt: datetime | None) -> str:
 
 def _make_entry(video_id: str, title: str, upload_dt: datetime | None,
                 duration_secs: int | None, view_count: int,
-                was_live: bool, live_status: str) -> dict:
+                was_live: bool, live_status: str,
+                description: str = "") -> dict:
     """Build the standard videos.json entry dict from parsed fields."""
     date_iso = date_nice = date_short = ""
     year = month = month_short = weekday_name = ""
@@ -132,22 +133,23 @@ def _make_entry(video_id: str, title: str, upload_dt: datetime | None,
     category = categorise(title, upload_dt)
 
     return {
-        "id":         video_id,
-        "title":      title,
-        "category":   category,
-        "date":       date_iso,
-        "dateNice":   date_nice,
-        "dateShort":  date_short,
-        "year":       year,
-        "month":      month,
-        "monthShort": month_short,
-        "weekday":    weekday_name,
-        "duration":   dur_str,
-        "views":      view_count,
-        "wasLive":    was_live,
-        "liveStatus": live_status,
-        "url":        f"https://www.youtube.com/watch?v={video_id}",
-        "thumbnail":  f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
+        "id":          video_id,
+        "title":       title,
+        "description": description[:600],
+        "category":    category,
+        "date":        date_iso,
+        "dateNice":    date_nice,
+        "dateShort":   date_short,
+        "year":        year,
+        "month":       month,
+        "monthShort":  month_short,
+        "weekday":     weekday_name,
+        "duration":    dur_str,
+        "views":       view_count,
+        "wasLive":     was_live,
+        "liveStatus":  live_status,
+        "url":         f"https://www.youtube.com/watch?v={video_id}",
+        "thumbnail":   f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
     }
 
 
@@ -236,6 +238,7 @@ def fetch_videos_api(api_key: str, limit: int | None, after: str | None,
             live_det  = item.get("liveStreamingDetails", {})
 
             title      = snippet.get("title", "").strip()
+            raw_desc   = snippet.get("description", "")
             view_count = int(stats.get("viewCount") or 0)
             was_live   = bool(live_det)
             live_stat  = "was_live" if was_live else "not_live"
@@ -260,6 +263,7 @@ def fetch_videos_api(api_key: str, limit: int | None, after: str | None,
             videos.append(_make_entry(
                 vid_id, title, upload_dt, duration_secs,
                 view_count, was_live, live_stat,
+                description=raw_desc,
             ))
 
     return videos
@@ -337,8 +341,10 @@ def fetch_videos(url: str, limit: int | None, after: str | None) -> list[dict]:
                 pass
 
         duration_secs = int(duration) if duration else None
+        raw_desc = (raw.get("description") or "")
         videos.append(_make_entry(video_id, title, upload_dt, duration_secs,
-                                  view_count, was_live, live_status))
+                                  view_count, was_live, live_status,
+                                  description=raw_desc))
 
     return videos
 
