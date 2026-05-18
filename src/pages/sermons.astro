@@ -387,7 +387,7 @@ function renderResults(hits: Array<{ document: Record<string, any> }>, query: st
             </p>
           </div>
           <a
-            href="${v.url}"
+            href="${esc(v.url)}"
             target="_blank"
             rel="noopener noreferrer"
             class="sermon-row-listen"
