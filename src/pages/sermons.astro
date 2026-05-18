@@ -1,6 +1,4 @@
 ---
-import { create, insertMultiple } from '@orama/orama'
-import { persist } from '@orama/plugin-data-persistence'
 import Footer from '../components/footer.astro'
 import Nav from '../components/nav.astro'
 import rawVideos from '../data/videos.json'
@@ -35,24 +33,8 @@ for (const v of allVideos) {
 const MAX_MONTHS = 8
 const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS)
 
-// Build search index at compile time
-const searchDb = await create({
-  schema: {
-    id: 'string',
-    title: 'string',
-    description: 'string',
-    category: 'enum', // 'enum' enables where: { category: { eq: '...' } } filtering
-    date: 'string',
-    dateShort: 'string',
-    duration: 'string',
-    views: 'number',
-    url: 'string',
-    thumbnail: 'string',
-    weekday: 'string',
-  } as const,
-})
-
-await insertMultiple(searchDb, allVideos.map(v => ({
+// Prepare search data for client-side index build
+const searchData = allVideos.map(v => ({
   id: v.id,
   title: v.title,
   description: (v as any).description ?? '',
@@ -64,9 +46,7 @@ await insertMultiple(searchDb, allVideos.map(v => ({
   url: v.url,
   thumbnail: v.thumbnail,
   weekday: v.weekday,
-})))
-
-const serializedIndex = await persist(searchDb, 'json') as string
+}))
 ---
 
 <Layout
@@ -309,13 +289,12 @@ const serializedIndex = await persist(searchDb, 'json') as string
     </div>
   </section>
 
-  <script define:vars={{ serializedIndex }}>
-    window.__ORAMA_INDEX__ = serializedIndex
+  <script define:vars={{ searchData }}>
+    window.__SERMON_DATA__ = searchData
   </script>
 
   <script>
-import { search } from '@orama/orama'
-import { restore } from '@orama/plugin-data-persistence'
+import { create, insertMultiple, search } from '@orama/orama'
 
 // ── DOM refs ──────────────────────────────────────────────────────────────
 const input = document.getElementById('sermon-search') as HTMLInputElement
@@ -329,15 +308,23 @@ const archiveGrid = document.querySelector('.archive-grid') as HTMLElement
 const categoryPills = document.querySelectorAll<HTMLButtonElement>('.cat-pill')
 
 // ── State ─────────────────────────────────────────────────────────────────
-let db: Awaited<ReturnType<typeof restore>> | null = null
+let db: Awaited<ReturnType<typeof create>> | null = null
 let dbReady: Promise<void> = Promise.resolve()
 let activeCategory = ''
 let lastQuery = ''
 
-// ── Init: restore index ───────────────────────────────────────────────────
-const raw = (window as any).__ORAMA_INDEX__
-if (raw) {
-  dbReady = restore('json', raw).then((instance) => {
+// ── Init: build index client-side from injected data ─────────────────────
+const rawData = (window as any).__SERMON_DATA__
+if (rawData) {
+  dbReady = create({
+    schema: {
+      id: 'string', title: 'string', description: 'string',
+      category: 'enum', date: 'string', dateShort: 'string',
+      duration: 'string', views: 'number', url: 'string',
+      thumbnail: 'string', weekday: 'string',
+    } as const,
+  }).then(async (instance) => {
+    await insertMultiple(instance, rawData)
     db = instance
   })
 }
