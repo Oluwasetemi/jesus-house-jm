@@ -330,18 +330,27 @@ const categoryPills = document.querySelectorAll<HTMLButtonElement>('.cat-pill')
 
 // ── State ─────────────────────────────────────────────────────────────────
 let db: Awaited<ReturnType<typeof restore>> | null = null
+let dbReady: Promise<void> = Promise.resolve()
 let activeCategory = ''
 let lastQuery = ''
 
-    // ── Init: restore index ───────────────────────────────────────────────────
-    ;(async () => {
-  const raw = (window as any).__ORAMA_INDEX__
-  if (!raw)
-    return
-  db = await restore('json', raw)
-})()
+// ── Init: restore index ───────────────────────────────────────────────────
+const raw = (window as any).__ORAMA_INDEX__
+if (raw) {
+  dbReady = restore('json', raw).then((instance) => {
+    db = instance
+  })
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────
+function esc(s: string) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 function showMonthView() {
   resultsPanel.hidden = true
   tabsSection.hidden = false
@@ -371,10 +380,10 @@ function renderResults(hits: Array<{ document: Record<string, any> }>, query: st
             </svg>
           </div>
           <div class="sermon-row-info">
-            <p class="sermon-row-title">${v.title}</p>
+            <p class="sermon-row-title">${esc(v.title)}</p>
             <p class="sermon-row-pastor">
-              <span class="sermon-cat-pill">${v.category}</span>
-              ${v.dateShort}${v.duration ? ` · ${v.duration}` : ''}
+              <span class="sermon-cat-pill">${esc(v.category)}</span>
+              ${esc(v.dateShort)}${v.duration ? ` · ${esc(v.duration)}` : ''}
             </p>
           </div>
           <a
@@ -382,7 +391,7 @@ function renderResults(hits: Array<{ document: Record<string, any> }>, query: st
             target="_blank"
             rel="noopener noreferrer"
             class="sermon-row-listen"
-            aria-label="Watch ${v.title.replace(/"/g, '&quot;')} on YouTube"
+            aria-label="Watch ${esc(v.title)} on YouTube"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <polygon points="5 3 19 12 5 21 5 3"/>
@@ -393,6 +402,7 @@ function renderResults(hits: Array<{ document: Record<string, any> }>, query: st
 }
 
 async function runSearch(query: string) {
+  await dbReady
   if (!db || !query.trim()) {
     showMonthView()
     return
@@ -402,7 +412,7 @@ async function runSearch(query: string) {
 
   const searchParams: Parameters<typeof search>[1] = {
     term: query,
-    properties: ['title', 'description', 'category'],
+    properties: ['title', 'description'],
     boost: { title: 2 },
     limit: 50,
   }
