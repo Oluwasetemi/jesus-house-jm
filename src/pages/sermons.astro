@@ -341,14 +341,14 @@ function esc(s: string) {
 
 function showMonthView() {
   resultsPanel.hidden = true
-  tabsSection.hidden = false
-  archiveGrid.hidden = false
+  tabsSection.style.display = ''
+  archiveGrid.style.display = ''
 }
 
 function showSearchView() {
   resultsPanel.hidden = false
-  tabsSection.hidden = true
-  archiveGrid.hidden = true
+  tabsSection.style.display = 'none'
+  archiveGrid.style.display = 'none'
 }
 
 function renderResults(hits: Array<{ document: Record<string, any> }>, query: string) {
@@ -761,6 +761,10 @@ categoryPills.forEach((pill) => {
     background-color: var(--color-navy);
     border-color: var(--color-navy);
     color: var(--color-white);
+  }
+
+  #search-results-panel {
+    margin-bottom: 2.5rem;
   }
 
   .search-results-list {
