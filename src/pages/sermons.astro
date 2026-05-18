@@ -410,7 +410,8 @@ async function runSearch(query: string) {
   }
 
   const results = await search(db, searchParams)
-  renderResults(results.hits, query)
+  const sorted = [...results.hits].sort((a, b) => b.document.date.localeCompare(a.document.date))
+  renderResults(sorted, query)
 }
 
 // ── Debounce ──────────────────────────────────────────────────────────────
