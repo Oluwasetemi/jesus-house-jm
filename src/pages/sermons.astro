@@ -316,17 +316,18 @@ let lastQuery = ''
 // ── Init: build index client-side from injected data ─────────────────────
 const rawData = (window as any).__SERMON_DATA__
 if (rawData) {
-  dbReady = create({
-    schema: {
-      id: 'string', title: 'string', description: 'string',
-      category: 'enum', date: 'string', dateShort: 'string',
-      duration: 'string', views: 'number', url: 'string',
-      thumbnail: 'string', weekday: 'string',
-    } as const,
-  }).then(async (instance) => {
+  dbReady = (async () => {
+    const instance = create({
+      schema: {
+        id: 'string', title: 'string', description: 'string',
+        category: 'enum', date: 'string', dateShort: 'string',
+        duration: 'string', views: 'number', url: 'string',
+        thumbnail: 'string', weekday: 'string',
+      } as const,
+    })
     await insertMultiple(instance, rawData)
     db = instance
-  })
+  })()
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────
