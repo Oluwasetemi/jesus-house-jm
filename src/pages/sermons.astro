@@ -3,6 +3,8 @@ import Footer from '../components/footer.astro'
 import Nav from '../components/nav.astro'
 import rawVideos from '../data/videos.json'
 import Layout from '../layouts/Layout.astro'
+import { create, insert } from '@orama/orama'
+import { persist } from '@orama/plugin-data-persistence'
 
 const YOUTUBE_STREAMS = 'https://www.youtube.com/@jesushousekingston/streams'
 
@@ -32,6 +34,41 @@ for (const v of allVideos) {
 // Show 8 most recent months; rest via YouTube link
 const MAX_MONTHS = 8
 const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
+
+// Build search index at compile time
+const searchDb = await create({
+  schema: {
+    id:          'string',
+    title:       'string',
+    description: 'string',
+    category:    'enum',    // 'enum' enables where: { category: { eq: '...' } } filtering
+    date:        'string',
+    dateShort:   'string',
+    duration:    'string',
+    views:       'number',
+    url:         'string',
+    thumbnail:   'string',
+    weekday:     'string',
+  } as const,
+})
+
+for (const v of allVideos) {
+  await insert(searchDb, {
+    id:          v.id,
+    title:       v.title,
+    description: (v as any).description ?? '',
+    category:    v.category,
+    date:        v.date,
+    dateShort:   v.dateShort,
+    duration:    v.duration,
+    views:       v.views,
+    url:         v.url,
+    thumbnail:   v.thumbnail,
+    weekday:     v.weekday,
+  })
+}
+
+const serializedIndex = await persist(searchDb, 'json') as string
 ---
 
 <Layout
@@ -211,6 +248,10 @@ const monthGroups = [...monthMap.values()].slice(0, MAX_MONTHS);
       </form>
     </div>
   </section>
+
+  <script define:vars={{ serializedIndex }}>
+    window.__ORAMA_INDEX__ = serializedIndex
+  </script>
 
   <Footer />
 </Layout>
