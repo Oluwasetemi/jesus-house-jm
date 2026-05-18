@@ -892,7 +892,8 @@ categoryPills.forEach((pill) => {
     background-color: var(--color-white);
   }
 
-  .sermon-row {
+  /* :global required — these classes are also injected via innerHTML in search results */
+  :global(.sermon-row) {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -901,15 +902,15 @@ categoryPills.forEach((pill) => {
     transition: background-color var(--transition-base);
   }
 
-  .sermon-row:last-child {
+  :global(.sermon-row:last-child) {
     border-bottom: none;
   }
 
-  .sermon-row:hover {
+  :global(.sermon-row:hover) {
     background-color: var(--color-cream);
   }
 
-  .sermon-type {
+  :global(.sermon-type) {
     flex-shrink: 0;
     width: 32px;
     height: 32px;
@@ -921,12 +922,12 @@ categoryPills.forEach((pill) => {
     color: var(--color-gold);
   }
 
-  .sermon-row-info {
+  :global(.sermon-row-info) {
     flex: 1;
     min-width: 0;
   }
 
-  .sermon-row-title {
+  :global(.sermon-row-title) {
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 700;
@@ -937,7 +938,7 @@ categoryPills.forEach((pill) => {
     margin-bottom: 0.125rem;
   }
 
-  .sermon-row-pastor {
+  :global(.sermon-row-pastor) {
     font-size: 0.8rem;
     color: var(--color-muted);
     display: flex;
@@ -946,7 +947,7 @@ categoryPills.forEach((pill) => {
     gap: 0.4rem;
   }
 
-  .sermon-cat-pill {
+  :global(.sermon-cat-pill) {
     display: inline-block;
     font-size: 0.65rem;
     font-weight: 700;
@@ -958,7 +959,7 @@ categoryPills.forEach((pill) => {
     border-radius: 0.25rem;
   }
 
-  .sermon-row-listen {
+  :global(.sermon-row-listen) {
     flex-shrink: 0;
     width: 36px;
     height: 36px;
@@ -972,14 +973,14 @@ categoryPills.forEach((pill) => {
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .sermon-row-listen:hover {
+    :global(.sermon-row-listen:hover) {
       transform: scale(1.05);
       background-color: var(--color-coral);
       color: var(--color-white);
     }
   }
 
-  .sermon-row-listen:active {
+  :global(.sermon-row-listen:active) {
     transform: scale(0.95);
   }
 
