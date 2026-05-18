@@ -438,10 +438,14 @@ input.addEventListener('input', () => {
 })
 
 // ── Clear button ──────────────────────────────────────────────────────────
+document.querySelector('.search-form')!.addEventListener('submit', e => e.preventDefault())
+
 clearBtn.addEventListener('click', () => {
   input.value = ''
   lastQuery = ''
   clearBtn.hidden = true
+  activeCategory = ''
+  categoryPills.forEach(p => p.classList.toggle('cat-pill--active', p.dataset.category === ''))
   showMonthView()
   input.focus()
 })
