@@ -4,12 +4,12 @@ import Layout from '../../layouts/Layout.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog')
-  return posts.map(post => ({ params: { slug: post.slug } }))
+  return posts.map(post => ({ params: { slug: post.id } }))
 }
 
 const { slug } = Astro.params
 const posts = await getCollection('blog')
-const post = posts.find(p => p.slug === slug)!
+const post = posts.find(p => p.id === slug)!
 const { Content } = await render(post)
 
 const categoryLabels: Record<string, string> = {

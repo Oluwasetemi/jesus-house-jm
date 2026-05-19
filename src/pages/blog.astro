@@ -17,7 +17,7 @@ const allPosts = (await getCollection('blog')).sort(
 )
 
 const featuredPost = allPosts.find(p => p.data.featured) ?? allPosts[0]
-const gridPosts = allPosts.filter(p => p.slug !== featuredPost.slug)
+const gridPosts = allPosts.filter(p => p.id !== featuredPost.id)
 
 function dateShort(iso: string) {
   const d = new Date(iso)
@@ -116,7 +116,7 @@ function dateShort(iso: string) {
               <span class="post-author">{post.data.author}</span>
               <span class="post-read">{post.data.readTime}</span>
             </div>
-            <a href={`/blog/${post.slug}`} class="post-link" aria-label={`Read: ${post.data.title}`}>
+            <a href={`/blog/${post.id}`} class="post-link" aria-label={`Read: ${post.data.title}`}>
               Read Article
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </a>
