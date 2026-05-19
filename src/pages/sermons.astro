@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import rawVideos from '../data/videos.json'
 import Layout from '../layouts/Layout.astro'
 
@@ -53,7 +51,6 @@ const searchData = allVideos.map(v => ({
   title="Sermons"
   description="Browse the full sermon archive of Jesus House Jamaica — audio and video messages organized by month, series, and pastor. Faith, renewal, and the Word of God."
 >
-  <Nav />
 
   <!-- Hero -->
   <section class="sermons-hero">
@@ -404,7 +401,7 @@ async function runSearch(query: string) {
   }
 
   const results = await search(db, searchParams)
-  const sorted = [...results.hits].sort((a, b) => b.document.date.localeCompare(a.document.date))
+  const sorted = [...results.hits].sort((a, b) => (b as any).document.date.localeCompare((a as any).document.date)) as Array<{ document: Record<string, any> }>
   renderResults(sorted, query)
 }
 
@@ -444,7 +441,6 @@ categoryPills.forEach((pill) => {
 })
 </script>
 
-  <Footer />
 </Layout>
 
 <style>

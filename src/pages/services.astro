@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const regularServices = [
@@ -116,11 +114,10 @@ const specialServices = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Services"
   description="Join us for Sunday worship at 9:00 AM, Good Morning Jesus every Monday, Wednesday Prayer Meeting at 6:00 PM, and Friday Bible Study online at Jesus House Jamaica — RCCG Kingston."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -348,7 +345,6 @@ const specialServices = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

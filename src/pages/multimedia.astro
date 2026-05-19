@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const videoCards = [
@@ -43,11 +41,10 @@ const videoCards = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Multimedia"
   description="Watch sermons, concerts, and worship content from Jesus House Jamaica on YouTube. Including the 360° Christmas Concert and live worship recordings. RCCG Kingston, Jamaica."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -238,7 +235,6 @@ const videoCards = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

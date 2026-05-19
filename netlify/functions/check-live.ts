@@ -48,6 +48,7 @@ async function checkViaScrape(): Promise<{ isLive: boolean, videoId: string | nu
 
 export default async (_req: Request, _ctx: Context) => {
   try {
+    // eslint-disable-next-line node/prefer-global/process
     const apiKey = process.env.YOUTUBE_API_KEY
     const result = apiKey
       ? await checkViaApi(apiKey)

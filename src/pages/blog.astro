@@ -1,7 +1,5 @@
 ---
 import { partition } from '@setemiojo/utils'
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const categories = [
@@ -84,11 +82,10 @@ const posts = [
 const [[featuredPost], gridPosts] = partition(posts, p => p.featured);
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Blog"
   description="Read devotionals, church news, and faith reflections from Jesus House Jamaica — RCCG Kingston, Jamaica. Empowering you for godly living through the written Word."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -215,7 +212,6 @@ const [[featuredPost], gridPosts] = partition(posts, p => p.featured);
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

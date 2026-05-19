@@ -1,7 +1,5 @@
 ---
-import Footer from '../components/footer.astro'
 import InspirationAnimation from '../components/inspiration-animation.astro'
-import Nav from '../components/nav.astro'
 import rawVideos from '../data/videos.json'
 import Layout from '../layouts/Layout.astro'
 
@@ -67,7 +65,6 @@ const departments = [
   title="Home"
   description="Jesus House Jamaica — A thriving RCCG community in the heart of Kingston, Jamaica. Join us every Sunday at 9:00 AM for worship, preaching, and community. Empowering men and women for godly living."
 >
-  <Nav />
 
   <!-- ==================== HERO SECTION ==================== -->
   <section class="hero" aria-label="Welcome to Jesus House Jamaica">
@@ -445,7 +442,6 @@ const departments = [
   <!-- Inspiration Animation -->
   <InspirationAnimation />
 
-  <Footer />
 </Layout>
 
 <style>

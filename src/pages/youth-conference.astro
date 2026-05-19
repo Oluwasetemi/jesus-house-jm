@@ -1,7 +1,5 @@
 ---
 import { range } from '@setemiojo/utils'
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const highlights = [
@@ -50,11 +48,10 @@ const galleryItems = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Youth Conference 2023"
   description="Relive the Jesus House Jamaica Youth Conference 2023 — a powerful gathering of Caribbean youth for worship, ministry, and encounter with God. Register interest for next year."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -280,7 +277,6 @@ const galleryItems = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

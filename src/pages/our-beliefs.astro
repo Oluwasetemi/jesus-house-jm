@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const beliefs = [
@@ -63,11 +61,10 @@ const beliefs = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Our Beliefs"
   description="Explore the core doctrinal beliefs of Jesus House Jamaica — our faith in Scripture, the Trinity, salvation, the Holy Spirit, and the return of Christ. RCCG parish in Kingston, Jamaica."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -155,7 +152,6 @@ const beliefs = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const rccgTimeline = [
@@ -83,11 +81,10 @@ const jhTimeline = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="History of RCCG"
   description="Discover the history of the Redeemed Christian Church of God — from its founding in Nigeria in 1952 to its global presence, and the story of Jesus House Jamaica."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -213,7 +210,6 @@ const jhTimeline = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

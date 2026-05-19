@@ -1,4 +1,7 @@
 ---
+import Footer from '../components/footer.astro'
+import Nav from '../components/nav.astro'
+
 interface Props {
   title: string
   description: string
@@ -12,6 +15,8 @@ interface Props {
   articlePublishedTime?: string
   /** Robots directive — defaults to 'index, follow' */
   robots?: string
+  /** Dark hero variant for Nav */
+  heroDark?: boolean
 }
 
 const {
@@ -21,6 +26,7 @@ const {
   ogType = 'website',
   articlePublishedTime,
   robots = 'index, follow',
+  heroDark = false,
 } = Astro.props
 
 const SITE_URL = 'https://jesus-house-jamaica.netlify.app'
@@ -132,7 +138,9 @@ const jsonLd = {
     />
   </head>
   <body>
+    <Nav heroDark={heroDark} />
     <slot />
+    <Footer />
   </body>
 </html>
 

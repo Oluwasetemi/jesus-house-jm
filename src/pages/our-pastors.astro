@@ -1,14 +1,11 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Our Pastors"
   description="Meet Pastors George and Deborah Kamalu — the spiritual leaders of Jesus House Jamaica, an RCCG parish in Kingston, Jamaica dedicated to empowering men and women for godly living."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -190,7 +187,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

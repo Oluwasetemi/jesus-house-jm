@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const values = [
@@ -65,11 +63,10 @@ const values = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Our Values"
   description="Discover the core values that drive Jesus House Jamaica — Worship, Word, Fellowship, Outreach, and Discipleship. An RCCG parish in Kingston, Jamaica."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -226,7 +223,6 @@ const values = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

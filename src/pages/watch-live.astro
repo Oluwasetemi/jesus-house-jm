@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import rawVideos from '../data/videos.json'
 import Layout from '../layouts/Layout.astro'
 
@@ -42,11 +40,10 @@ const onlineMeetings = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Watch Live"
   description="Watch Jesus House Jamaica live on YouTube. Stream Sunday services, Good Morning Jesus (Monday), Wednesday Prayer Meeting, Friday Bible Study, and special events online."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="page-hero">
@@ -234,16 +231,15 @@ const onlineMeetings = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <!-- Live stream detector: polls /api/check-live (Netlify function) every 30s -->
 <script>
 // Minimal types for the YouTube IFrame API
 interface YTPlayer {
-  getDuration(): number
-  seekTo(seconds: number, allowSeekAhead: boolean): void
-  playVideo(): void
+  getDuration: () => number
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void
+  playVideo: () => void
 }
 interface YTPlayerEvent { target: YTPlayer }
 declare global {

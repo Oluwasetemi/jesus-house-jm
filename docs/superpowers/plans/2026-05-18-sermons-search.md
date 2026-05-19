@@ -205,33 +205,33 @@ import { persist } from '@orama/plugin-data-persistence'
 // Build search index at compile time
 const searchDb = await create({
   schema: {
-    id:          'string',
-    title:       'string',
+    id: 'string',
+    title: 'string',
     description: 'string',
-    category:    'enum',    // 'enum' enables where: { category: { eq: '...' } } filtering
-    date:        'string',
-    dateShort:   'string',
-    duration:    'string',
-    views:       'number',
-    url:         'string',
-    thumbnail:   'string',
-    weekday:     'string',
+    category: 'enum', // 'enum' enables where: { category: { eq: '...' } } filtering
+    date: 'string',
+    dateShort: 'string',
+    duration: 'string',
+    views: 'number',
+    url: 'string',
+    thumbnail: 'string',
+    weekday: 'string',
   } as const,
 })
 
 for (const v of allVideos) {
   await insert(searchDb, {
-    id:          v.id,
-    title:       v.title,
+    id: v.id,
+    title: v.title,
     description: (v as any).description ?? '',
-    category:    v.category,
-    date:        v.date,
-    dateShort:   v.dateShort,
-    duration:    v.duration,
-    views:       v.views,
-    url:         v.url,
-    thumbnail:   v.thumbnail,
-    weekday:     v.weekday,
+    category: v.category,
+    date: v.date,
+    dateShort: v.dateShort,
+    duration: v.duration,
+    views: v.views,
+    url: v.url,
+    thumbnail: v.thumbnail,
+    weekday: v.weekday,
   })
 }
 
@@ -515,55 +515,56 @@ At the bottom of the Astro template (after the `define:vars` script, before `</L
 
 ```astro
 <script>
-  import { restore } from '@orama/plugin-data-persistence'
-  import { search } from '@orama/orama'
+import { search } from '@orama/orama'
+import { restore } from '@orama/plugin-data-persistence'
 
-  // ── DOM refs ──────────────────────────────────────────────────────────────
-  const input        = document.getElementById('sermon-search') as HTMLInputElement
-  const clearBtn     = document.getElementById('search-clear') as HTMLButtonElement
-  const resultsPanel = document.getElementById('search-results-panel') as HTMLDivElement
-  const resultsList  = document.getElementById('search-results-list') as HTMLDivElement
-  const resultsCount = document.getElementById('search-results-count') as HTMLParagraphElement
-  const noResults    = document.getElementById('search-no-results') as HTMLParagraphElement
-  const tabsSection  = document.querySelector('.tabs-container') as HTMLElement
-  const archiveGrid  = document.querySelector('.archive-grid') as HTMLElement
-  const categoryPills = document.querySelectorAll<HTMLButtonElement>('.cat-pill')
+// ── DOM refs ──────────────────────────────────────────────────────────────
+const input = document.getElementById('sermon-search') as HTMLInputElement
+const clearBtn = document.getElementById('search-clear') as HTMLButtonElement
+const resultsPanel = document.getElementById('search-results-panel') as HTMLDivElement
+const resultsList = document.getElementById('search-results-list') as HTMLDivElement
+const resultsCount = document.getElementById('search-results-count') as HTMLParagraphElement
+const noResults = document.getElementById('search-no-results') as HTMLParagraphElement
+const tabsSection = document.querySelector('.tabs-container') as HTMLElement
+const archiveGrid = document.querySelector('.archive-grid') as HTMLElement
+const categoryPills = document.querySelectorAll<HTMLButtonElement>('.cat-pill')
 
-  // ── State ─────────────────────────────────────────────────────────────────
-  let db: Awaited<ReturnType<typeof restore>> | null = null
-  let activeCategory = ''
-  let lastQuery = ''
+// ── State ─────────────────────────────────────────────────────────────────
+let db: Awaited<ReturnType<typeof restore>> | null = null
+let activeCategory = ''
+let lastQuery = ''
 
   // ── Init: restore index ───────────────────────────────────────────────────
   ;(async () => {
-    const raw = (window as any).__ORAMA_INDEX__
-    if (!raw) return
-    db = await restore('json', raw)
-  })()
+  const raw = (window as any).__ORAMA_INDEX__
+  if (!raw)
+    return
+  db = await restore('json', raw)
+})()
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
-  function showMonthView() {
-    resultsPanel.hidden = true
-    tabsSection.hidden  = false
-    archiveGrid.hidden  = false
+// ── Helpers ───────────────────────────────────────────────────────────────
+function showMonthView() {
+  resultsPanel.hidden = true
+  tabsSection.hidden = false
+  archiveGrid.hidden = false
+}
+
+function showSearchView() {
+  resultsPanel.hidden = false
+  tabsSection.hidden = true
+  archiveGrid.hidden = true
+}
+
+function renderResults(hits: Array<{ document: Record<string, any> }>, query: string) {
+  resultsCount.textContent = `${hits.length} result${hits.length === 1 ? '' : 's'} for "${query}"`
+  noResults.hidden = hits.length > 0
+
+  if (hits.length === 0) {
+    resultsList.innerHTML = ''
+    return
   }
 
-  function showSearchView() {
-    resultsPanel.hidden = false
-    tabsSection.hidden  = true
-    archiveGrid.hidden  = true
-  }
-
-  function renderResults(hits: Array<{ document: Record<string, any> }>, query: string) {
-    resultsCount.textContent = `${hits.length} result${hits.length === 1 ? '' : 's'} for "${query}"`
-    noResults.hidden = hits.length > 0
-
-    if (hits.length === 0) {
-      resultsList.innerHTML = ''
-      return
-    }
-
-    resultsList.innerHTML = hits.map(({ document: v }) => `
+  resultsList.innerHTML = hits.map(({ document: v }) => `
       <div class="sermon-row">
         <div class="sermon-type" aria-label="Video">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -590,60 +591,61 @@ At the bottom of the Astro template (after the `define:vars` script, before `</L
         </a>
       </div>
     `).join('')
-  }
+}
 
-  async function runSearch(query: string) {
-    if (!db || !query.trim()) {
-      showMonthView()
-      return
-    }
-
-    showSearchView()
-
-    const searchParams: Parameters<typeof search>[1] = {
-      term: query,
-      properties: ['title', 'description', 'category'],
-      boost: { title: 2 },
-      limit: 50,
-    }
-
-    if (activeCategory) {
-      searchParams.where = { category: { eq: activeCategory } }
-    }
-
-    const results = await search(db, searchParams)
-    renderResults(results.hits, query)
-  }
-
-  // ── Debounce ──────────────────────────────────────────────────────────────
-  let debounceTimer: ReturnType<typeof setTimeout>
-
-  input.addEventListener('input', () => {
-    const query = input.value.trim()
-    lastQuery = query
-    clearBtn.hidden = query === ''
-
-    clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => runSearch(query), 250)
-  })
-
-  // ── Clear button ──────────────────────────────────────────────────────────
-  clearBtn.addEventListener('click', () => {
-    input.value = ''
-    lastQuery = ''
-    clearBtn.hidden = true
+async function runSearch(query: string) {
+  if (!db || !query.trim()) {
     showMonthView()
-    input.focus()
-  })
+    return
+  }
 
-  // ── Category pills ────────────────────────────────────────────────────────
-  categoryPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      activeCategory = pill.dataset.category ?? ''
-      categoryPills.forEach(p => p.classList.toggle('cat-pill--active', p === pill))
-      if (lastQuery) runSearch(lastQuery)
-    })
+  showSearchView()
+
+  const searchParams: Parameters<typeof search>[1] = {
+    term: query,
+    properties: ['title', 'description', 'category'],
+    boost: { title: 2 },
+    limit: 50,
+  }
+
+  if (activeCategory) {
+    searchParams.where = { category: { eq: activeCategory } }
+  }
+
+  const results = await search(db, searchParams)
+  renderResults(results.hits, query)
+}
+
+// ── Debounce ──────────────────────────────────────────────────────────────
+let debounceTimer: ReturnType<typeof setTimeout>
+
+input.addEventListener('input', () => {
+  const query = input.value.trim()
+  lastQuery = query
+  clearBtn.hidden = query === ''
+
+  clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(runSearch, 250, query)
+})
+
+// ── Clear button ──────────────────────────────────────────────────────────
+clearBtn.addEventListener('click', () => {
+  input.value = ''
+  lastQuery = ''
+  clearBtn.hidden = true
+  showMonthView()
+  input.focus()
+})
+
+// ── Category pills ────────────────────────────────────────────────────────
+categoryPills.forEach((pill) => {
+  pill.addEventListener('click', () => {
+    activeCategory = pill.dataset.category ?? ''
+    categoryPills.forEach(p => p.classList.toggle('cat-pill--active', p === pill))
+    if (lastQuery)
+      runSearch(lastQuery)
   })
+})
 </script>
 ```
 

@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const pillars = [
@@ -25,11 +23,10 @@ const pillars = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Our Mission"
   description="Discover the mission and vision of Jesus House Jamaica — empowering men and women for godly living through worship, discipleship, and outreach. RCCG Kingston, Jamaica."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -228,7 +225,6 @@ const pillars = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

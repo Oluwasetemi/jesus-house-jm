@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const trustees = [
@@ -78,11 +76,10 @@ const responsibilities = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="Board of Trustees"
   description="Meet the Board of Trustees of Jesus House Jamaica — the governance body responsible for overseeing the church's administration, finances, and strategic direction."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -185,7 +182,6 @@ const responsibilities = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>

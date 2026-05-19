@@ -1,6 +1,4 @@
 ---
-import Footer from '../components/footer.astro'
-import Nav from '../components/nav.astro'
 import Layout from '../layouts/Layout.astro'
 
 const vision = [
@@ -27,11 +25,10 @@ const vision = [
 ];
 ---
 
-<Layout
+<Layout heroDark={true}
   title="General Overseers"
   description="Learn about Pastor Enoch Adeboye, the General Overseer of the Redeemed Christian Church of God (RCCG) — the spiritual leader of the global RCCG family, including Jesus House Jamaica."
 >
-  <Nav heroDark={true} />
 
   <!-- Hero -->
   <section class="hero">
@@ -194,7 +191,6 @@ const vision = [
     </div>
   </section>
 
-  <Footer />
 </Layout>
 
 <style>
