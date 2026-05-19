@@ -1,5 +1,5 @@
 ---
-import { partition } from '@setemiojo/utils'
+import { getCollection } from 'astro:content'
 import Layout from '../layouts/Layout.astro'
 
 const categories = [
@@ -10,76 +10,23 @@ const categories = [
   { id: 'community', label: 'Community' },
 ]
 
-const posts = [
-  {
-    title: 'Presenting Yourself as a Living Sacrifice — What Romans 12:1 Really Means',
-    excerpt: 'At the heart of our church theme is one of the most demanding — and most liberating — calls in all of Scripture. What does it mean to offer your entire self to God as a living sacrifice, and what does that look like in daily Jamaican life?',
-    category: 'faith',
-    date: 'May 4, 2026',
-    dateShort: '04 MAY',
-    year: '2026',
-    author: 'Pastor George Kamalu',
-    readTime: '6 min read',
-    featured: true,
-  },
-  {
-    title: '5 Practical Ways to Make Prayer a Daily Habit',
-    excerpt: 'Many believers want a deeper prayer life but struggle to build consistency. Here are five practical, tested strategies that have transformed the prayer lives of members of our Jesus House family.',
-    category: 'devotionals',
-    date: 'April 27, 2026',
-    dateShort: '27 APR',
-    year: '2026',
-    author: 'Pastor Deborah Kamalu',
-    readTime: '5 min read',
-    featured: false,
-  },
-  {
-    title: 'Youth Conference 2023 — What God Did Among Us',
-    excerpt: 'We\'ve been reflecting on the extraordinary moments of last year\'s Youth Conference. Here\'s a full recap of the testimonies, salvations, and life-changing encounters that marked those three days.',
-    category: 'news',
-    date: 'April 18, 2026',
-    dateShort: '18 APR',
-    year: '2026',
-    author: 'Admin',
-    readTime: '8 min read',
-    featured: false,
-  },
-  {
-    title: 'When God Feels Far Away — Navigating Spiritual Dry Seasons',
-    excerpt: 'Every believer will pass through seasons when prayer feels hollow and heaven seems silent. This is normal — and it is not the end of your story. Here is how to navigate the spiritual dry season with faith and hope.',
-    category: 'faith',
-    date: 'April 10, 2026',
-    dateShort: '10 APR',
-    year: '2026',
-    author: 'Pastor George Kamalu',
-    readTime: '7 min read',
-    featured: false,
-  },
-  {
-    title: 'Jesus House Jamaica Partners with Kingston Community Outreach',
-    excerpt: 'We are thrilled to announce our new partnership with the Kingston Community Outreach Initiative — bringing food, medical care, and the Gospel to some of the most vulnerable communities in our city.',
-    category: 'community',
-    date: 'March 28, 2026',
-    dateShort: '28 MAR',
-    year: '2026',
-    author: 'Admin',
-    readTime: '4 min read',
-    featured: false,
-  },
-  {
-    title: 'The Power of Worship — Why We Sing (Even When We Don\'t Feel Like It)',
-    excerpt: 'Worship is not a thermometer — it is a thermostat. It does not merely reflect how we feel; it transforms how we feel. Here is a biblical and practical case for offering God worship even in our hardest seasons.',
-    category: 'devotionals',
-    date: 'March 15, 2026',
-    dateShort: '15 MAR',
-    year: '2026',
-    author: 'Pastor Deborah Kamalu',
-    readTime: '6 min read',
-    featured: false,
-  },
-]
+const categoryLabel = (id: string) => categories.find(c => c.id === id)?.label ?? id
 
-const [[featuredPost], gridPosts] = partition(posts, p => p.featured);
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.localeCompare(a.data.date)
+)
+
+const featuredPost = allPosts.find(p => p.data.featured) ?? allPosts[0]
+const gridPosts = allPosts.filter(p => p.slug !== featuredPost.slug)
+
+function dateShort(iso: string) {
+  const d = new Date(iso)
+  return {
+    day: String(d.getUTCDate()).padStart(2, '0'),
+    month: d.toLocaleString('en', { month: 'short', timeZone: 'UTC' }).toUpperCase(),
+    year: String(d.getUTCFullYear()),
+  }
+}
 ---
 
 <Layout heroDark={true}
@@ -107,29 +54,27 @@ const [[featuredPost], gridPosts] = partition(posts, p => p.featured);
       <article class="featured-card">
         <div class="featured-visual" aria-hidden="true">
           <div class="featured-date-badge">
-            <span class="date-day">{featuredPost.dateShort.split(' ')[0]}</span>
-            <span class="date-month">{featuredPost.dateShort.split(' ')[1]}</span>
-            <span class="date-year">{featuredPost.year}</span>
+            <span class="date-day">{dateShort(featuredPost.data.date).day}</span>
+            <span class="date-month">{dateShort(featuredPost.data.date).month}</span>
+            <span class="date-year">{dateShort(featuredPost.data.date).year}</span>
           </div>
           <div class="featured-cross" aria-hidden="true"></div>
         </div>
         <div class="featured-content">
           <div class="featured-meta">
-            <span class="featured-cat">
-              {categories.find(c => c.id === featuredPost.category)?.label}
-            </span>
+            <span class="featured-cat">{categoryLabel(featuredPost.data.category)}</span>
             <span class="meta-sep" aria-hidden="true">·</span>
-            <span class="featured-read">{featuredPost.readTime}</span>
+            <span class="featured-read">{featuredPost.data.readTime}</span>
           </div>
-          <h2 class="featured-title">{featuredPost.title}</h2>
-          <p class="featured-excerpt">{featuredPost.excerpt}</p>
+          <h2 class="featured-title">{featuredPost.data.title}</h2>
+          <p class="featured-excerpt">{featuredPost.data.excerpt}</p>
           <div class="featured-footer">
             <div class="featured-author">
               <div class="author-dot" aria-hidden="true"></div>
-              <span>{featuredPost.author}</span>
+              <span>{featuredPost.data.author}</span>
             </div>
-            <a href="mailto:jesushousekgn@hotmail.com?subject=Blog%20Article%20Request" class="featured-link">
-              Request Full Article
+            <a href={`/blog/${featuredPost.slug}`} class="featured-link">
+              Read Article
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </a>
           </div>
@@ -157,24 +102,22 @@ const [[featuredPost], gridPosts] = partition(posts, p => p.featured);
       <!-- Posts Grid -->
       <div class="archive-grid" id="archive-grid">
         {gridPosts.map(post => (
-          <article class="post-card" id={`cat-${post.category}`}>
+          <article class="post-card" id={`cat-${post.data.category}`}>
             <div class="post-card-top">
               <div class="post-date">
-                <span class="post-date-day">{post.dateShort.split(' ')[0]}</span>
-                <span class="post-date-month">{post.dateShort.split(' ')[1]}</span>
+                <span class="post-date-day">{dateShort(post.data.date).day}</span>
+                <span class="post-date-month">{dateShort(post.data.date).month}</span>
               </div>
-              <span class="post-cat">
-                {categories.find(c => c.id === post.category)?.label}
-              </span>
+              <span class="post-cat">{categoryLabel(post.data.category)}</span>
             </div>
-            <h3 class="post-title">{post.title}</h3>
-            <p class="post-excerpt">{post.excerpt}</p>
+            <h3 class="post-title">{post.data.title}</h3>
+            <p class="post-excerpt">{post.data.excerpt}</p>
             <div class="post-footer">
-              <span class="post-author">{post.author}</span>
-              <span class="post-read">{post.readTime}</span>
+              <span class="post-author">{post.data.author}</span>
+              <span class="post-read">{post.data.readTime}</span>
             </div>
-            <a href="mailto:jesushousekgn@hotmail.com?subject=Article%20Request" class="post-link" aria-label={`Request article: ${post.title}`}>
-              Request Article
+            <a href={`/blog/${post.slug}`} class="post-link" aria-label={`Read: ${post.data.title}`}>
+              Read Article
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </a>
           </article>

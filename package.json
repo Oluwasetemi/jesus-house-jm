@@ -14,6 +14,7 @@
     "test:check-live": "bun run scripts/test-check-live.ts"
   },
   "dependencies": {
+    "@astrojs/mdx": "^5.0.6",
     "@orama/orama": "3.1.18",
     "@orama/plugin-data-persistence": "3.1.18",
     "astro": "^5.17.1"
