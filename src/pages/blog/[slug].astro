@@ -4,12 +4,10 @@ import Layout from '../../layouts/Layout.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog')
-  return posts.map(post => ({ params: { slug: post.id } }))
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }))
 }
 
-const { slug } = Astro.params
-const posts = await getCollection('blog')
-const post = posts.find(p => p.id === slug)!
+const { post } = Astro.props
 const { Content } = await render(post)
 
 const categoryLabels: Record<string, string> = {
@@ -26,6 +24,8 @@ const dateFormatted = new Date(post.data.date).toLocaleDateString('en-JM', {
 const SITE_URL = 'https://jesus-house-jamaica.netlify.app'
 const ogImage = `${SITE_URL}/og/blog/${post.id}.png`
 
+const postUrl = `${SITE_URL}/blog/${post.id}/`
+
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -40,8 +40,24 @@ const articleJsonLd = {
     '@type': 'Organization',
     'name': 'Jesus House Jamaica',
     'url': SITE_URL,
+    'logo': {
+      '@type': 'ImageObject',
+      'url': `${SITE_URL}/og-image.png`,
+      'width': 512,
+      'height': 512,
+    },
   },
-  'url': `${SITE_URL}/blog/${post.id}`,
+  'image': {
+    '@type': 'ImageObject',
+    'url': ogImage,
+    'width': 1200,
+    'height': 630,
+  },
+  'mainEntityOfPage': {
+    '@type': 'WebPage',
+    '@id': postUrl,
+  },
+  'url': postUrl,
   'articleSection': categoryLabels[post.data.category],
 }
 ---

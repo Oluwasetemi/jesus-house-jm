@@ -23,7 +23,7 @@ function buildCard(title: string, subtitle: string, type: 'blog' | 'page') {
         padding: '72px 80px',
         background: 'linear-gradient(135deg, #0d1b3e 0%, #1a2d5a 60%, #0d1b3e 100%)',
         position: 'relative',
-        fontFamily: 'sans-serif',
+        fontFamily: 'Inter',
       },
       children: [
         /* Gold accent bar */
@@ -198,8 +198,8 @@ export const GET: APIRoute = async ({ props }) => {
     width: 1200,
     height: 630,
     fonts: [
-      { name: 'sans-serif', data: fontRegular, weight: 400, style: 'normal' },
-      { name: 'sans-serif', data: fontBold,    weight: 900, style: 'normal' },
+      { name: 'Inter', data: fontRegular, weight: 400, style: 'normal' },
+      { name: 'Inter', data: fontBold,    weight: 700, style: 'normal' },
     ],
   })
 
