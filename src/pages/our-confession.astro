@@ -101,6 +101,54 @@ const affirmations = [
     </div>
   </section>
 
+  <!-- 2026 Prophetic Declaration -->
+  <section class="prophetic-section">
+    <div class="container prophetic-inner">
+      <span class="section-label" style="display:block; text-align:center; margin-bottom:0.75rem;">2026</span>
+      <h2 class="prophetic-heading">Prophetic Declaration — Year of Greater Harvest</h2>
+      <p class="prophetic-ref">By the authority of God's Word in Joel 2:23–26</p>
+
+      <div class="prophetic-card">
+        <p class="prophetic-cue">I declare over this year:</p>
+
+        <p class="prophetic-line"><strong>I rejoice in the Lord my God!</strong> For He has given me the former rain faithfully, and He is releasing <strong>the former and the latter rain together</strong> for my sake.</p>
+
+        <p class="prophetic-bold">This is my year of GREATER HARVEST!</p>
+        <ul class="prophetic-list">
+          <li>What was delayed is restored.</li>
+          <li>What was dry is revived.</li>
+          <li>What was lost is multiplied.</li>
+        </ul>
+
+        <p class="prophetic-cue">I decree and declare:</p>
+        <p class="prophetic-bold">My threshing floors overflow with abundance.</p>
+        <ul class="prophetic-list">
+          <li>My vats run over with new wine and fresh oil.</li>
+          <li>Lack is broken. Scarcity is cancelled. Increase is my portion.</li>
+        </ul>
+        <p class="prophetic-bold">The years the enemy touched are being repaid — FULLY.</p>
+        <ul class="prophetic-list">
+          <li>Every wasted season turns into productive harvest.</li>
+          <li>Every silent struggle produces visible results.</li>
+        </ul>
+
+        <p class="prophetic-cue">I declare:</p>
+        <ul class="prophetic-list">
+          <li>I will eat in plenty and be satisfied.</li>
+          <li>My praise will be loud because my testimony is undeniable.</li>
+          <li>My God has dealt wondrously with me!</li>
+        </ul>
+        <ul class="prophetic-list">
+          <li>I shall never be ashamed.</li>
+          <li>I shall never be empty.</li>
+          <li>I shall never miss my harvest again.</li>
+        </ul>
+
+        <p class="prophetic-closing">This is my set time for greater harvest — spiritually, financially, materially, and generationally. So shall it be. In Jesus' name. <strong>Amen!</strong></p>
+      </div>
+    </div>
+  </section>
+
   <!-- Closing Declaration -->
   <section class="declaration-section">
     <div class="container declaration-inner">
@@ -306,6 +354,105 @@ const affirmations = [
     color: var(--color-text);
     line-height: 1.85;
     max-width: 72ch;
+  }
+
+  /* 2026 Prophetic Declaration */
+  .prophetic-section {
+    background-color: var(--color-cream);
+    padding: var(--section-padding) 0;
+  }
+
+  .prophetic-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .prophetic-heading {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .prophetic-ref {
+    font-size: 0.875rem;
+    color: var(--color-gold);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+  }
+
+  .prophetic-card {
+    background-color: var(--color-white);
+    border: 1px solid rgba(13, 27, 62, 0.08);
+    border-radius: var(--radius-card);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .prophetic-cue {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin-bottom: -0.5rem;
+  }
+
+  .prophetic-line {
+    font-family: var(--font-accent);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text);
+  }
+
+  .prophetic-bold {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    line-height: 1.5;
+  }
+
+  .prophetic-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .prophetic-list li {
+    font-family: var(--font-accent);
+    font-size: 1rem;
+    color: var(--color-text);
+    line-height: 1.7;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .prophetic-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-gold);
+    border-radius: 50%;
+  }
+
+  .prophetic-closing {
+    font-family: var(--font-accent);
+    font-size: 1.05rem;
+    color: var(--color-navy);
+    line-height: 1.8;
+    border-top: 1px solid rgba(13, 27, 62, 0.08);
+    padding-top: 1.25rem;
+    margin-top: 0.25rem;
   }
 
   /* Declaration */

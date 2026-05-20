@@ -66,6 +66,14 @@ const departments = [
   description="Jesus House Jamaica — A thriving RCCG community in the heart of Kingston, Jamaica. Join us every Sunday at 9:00 AM for worship, preaching, and community. Empowering men and women for godly living."
 >
 
+  <!-- Year Theme Banner -->
+  <div class="year-theme-banner" role="banner" aria-label="2026 Church theme">
+    <span class="year-theme-year">2026</span>
+    <span class="year-theme-sep" aria-hidden="true">·</span>
+    <span class="year-theme-text">Our Year of Great Harvest</span>
+    <a href="/our-confession" class="year-theme-link">Read the Declaration →</a>
+  </div>
+
   <!-- ==================== HERO SECTION ==================== -->
   <section class="hero" aria-label="Welcome to Jesus House Jamaica">
     <!-- Cross motif background decoration -->
@@ -445,6 +453,52 @@ const departments = [
 </Layout>
 
 <style>
+  /* ===== YEAR THEME BANNER ===== */
+  .year-theme-banner {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding: 0.6rem 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .year-theme-year {
+    font-weight: 900;
+    letter-spacing: 0.12em;
+  }
+
+  .year-theme-sep {
+    opacity: 0.5;
+  }
+
+  .year-theme-text {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .year-theme-link {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    opacity: 0.75;
+    transition: opacity var(--transition-base);
+  }
+
+  .year-theme-link:hover {
+    opacity: 1;
+    color: var(--color-navy);
+  }
+
   /* ===== HERO ===== */
   .hero {
     position: relative;
