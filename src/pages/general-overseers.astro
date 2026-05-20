@@ -397,12 +397,12 @@ const vision = [
     background-color: var(--color-cream);
     border-radius: var(--radius-card);
     padding: 2.25rem 2rem;
-    border-left: 4px solid var(--color-gold);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
 
   .vision-card:hover {
-    transform: translateX(4px);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(13, 27, 62, 0.1);
   }
 
   .vision-icon {
