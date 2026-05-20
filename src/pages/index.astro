@@ -227,6 +227,7 @@ const departments = [
       <div class="services-grid">
         {services.map(service => (
           <div class="service-card">
+            <div class="service-card-top-border" aria-hidden="true"></div>
             <div class="service-icon" aria-hidden="true" set:html={service.icon} />
             <h3 class="service-name">{service.name}</h3>
             <p class="service-time">{service.time}</p>
@@ -865,10 +866,21 @@ const departments = [
   }
 
   .service-card {
+    position: relative;
     background-color: var(--color-cream);
     border-radius: var(--radius-card);
     padding: 2rem 1.75rem;
     transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  }
+
+  .service-card-top-border {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 3px;
+    background: linear-gradient(90deg, #D4A843, #e8734a);
+    border-radius: 0 0 3px 3px;
   }
 
   @media (hover: hover) and (pointer: fine) {
