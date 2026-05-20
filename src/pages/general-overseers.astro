@@ -126,6 +126,7 @@ const vision = [
       <div class="vision-grid">
         {vision.map(item => (
           <div class="vision-card">
+            <div class="vision-card-top-border" aria-hidden="true"></div>
             <div class="vision-icon" aria-hidden="true" set:html={item.icon} />
             <h3 class="vision-title">{item.title}</h3>
             <p class="vision-desc">{item.desc}</p>
@@ -394,10 +395,21 @@ const vision = [
   }
 
   .vision-card {
+    position: relative;
     background-color: var(--color-cream);
     border-radius: var(--radius-card);
     padding: 2.25rem 2rem;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .vision-card-top-border {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 3px;
+    background: linear-gradient(90deg, #D4A843, #e8734a);
+    border-radius: 0 0 3px 3px;
   }
 
   .vision-card:hover {

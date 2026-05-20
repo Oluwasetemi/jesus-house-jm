@@ -70,6 +70,7 @@ const pillars = [
       <div class="mv-grid">
 
         <div class="mv-block">
+          <div class="mv-block-top-border" aria-hidden="true"></div>
           <div class="mv-icon" aria-hidden="true">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <circle cx="12" cy="12" r="10" />
@@ -92,6 +93,7 @@ const pillars = [
         </div>
 
         <div class="mv-block mv-block--dark">
+          <div class="mv-block-top-border" aria-hidden="true"></div>
           <div class="mv-icon" aria-hidden="true">
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -373,9 +375,20 @@ const pillars = [
   }
 
   .mv-block {
+    position: relative;
     background-color: var(--color-cream);
     border-radius: var(--radius-card);
     padding: 3rem 2.5rem;
+  }
+
+  .mv-block-top-border {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 3px;
+    background: linear-gradient(90deg, #D4A843, #e8734a);
+    border-radius: 0 0 3px 3px;
   }
 
   .mv-block--dark {

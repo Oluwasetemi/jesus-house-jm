@@ -231,6 +231,7 @@ const serviceTimes = [
       <div class="times-grid">
         {serviceTimes.map(s => (
           <div class="time-card">
+            <div class="time-card-top-border" aria-hidden="true"></div>
             <div class="time-card-left">
               <div class="time-dot" aria-hidden="true"></div>
               <h3 class="time-name">{s.name}</h3>
@@ -724,12 +725,23 @@ const serviceTimes = [
   }
 
   .time-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     background-color: var(--color-cream);
     border-radius: var(--radius-card);
     padding: 1.5rem;
+  }
+
+  .time-card-top-border {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 3px;
+    background: linear-gradient(90deg, #D4A843, #e8734a);
+    border-radius: 0 0 3px 3px;
   }
 
   .time-card-left {

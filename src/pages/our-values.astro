@@ -107,6 +107,7 @@ const values = [
       <div class="values-grid">
         {values.map((value, idx) => (
           <article class={`value-card value-card--${value.color}`} id={value.key}>
+            <div class="value-card-top-border" aria-hidden="true"></div>
             <div class="value-number" aria-hidden="true">0{idx + 1}</div>
             <div class="value-icon" aria-hidden="true" set:html={value.icon} />
             <h2 class="value-title">{value.title}</h2>
@@ -340,7 +341,6 @@ const values = [
     background-color: var(--color-cream);
     border-radius: var(--radius-card);
     padding: 2.5rem 2rem;
-    overflow: hidden;
     border: 1px solid rgba(13, 27, 62, 0.06);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
@@ -348,6 +348,16 @@ const values = [
   .value-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 40px rgba(13, 27, 62, 0.1);
+  }
+
+  .value-card-top-border {
+    position: absolute;
+    top: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 3px;
+    background: linear-gradient(90deg, #D4A843, #e8734a);
+    border-radius: 0 0 3px 3px;
   }
 
 
