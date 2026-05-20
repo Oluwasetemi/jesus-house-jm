@@ -758,10 +758,33 @@ categoryPills.forEach((pill) => {
     margin-bottom: 2.5rem;
   }
 
+  @property --smask-t {
+    syntax: '<number>';
+    initial-value: 0;
+    inherits: false;
+  }
+
+  @property --smask-b {
+    syntax: '<number>';
+    initial-value: 1;
+    inherits: false;
+  }
+
+  @keyframes smask-top    { to   { --smask-t: 1 } }
+  @keyframes smask-bottom { from { --smask-b: 1 } to { --smask-b: 0 } }
+
   .search-results-list {
     border: 1px solid rgba(13, 27, 62, 0.08);
     border-radius: var(--radius-card);
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: 520px;
+    animation: smask-top linear, smask-bottom linear;
+    animation-timeline: scroll(self);
+    mask-image:
+      linear-gradient(to bottom, oklch(0 0 0 / var(--smask-t)) 0, black 2.5rem),
+      linear-gradient(to top,    oklch(0 0 0 / var(--smask-b)) 0, black 2.5rem);
+    mask-size: 100% 100%;
+    mask-composite: intersect;
   }
 
   .search-no-results {
