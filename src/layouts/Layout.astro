@@ -17,19 +17,27 @@ interface Props {
   robots?: string
   /** Dark hero variant for Nav */
   heroDark?: boolean
+  /** Extra JSON-LD object to inject alongside the sitewide schema */
+  extraJsonLd?: Record<string, unknown>
 }
+
+const SITE_URL = 'https://jesus-house-jamaica.netlify.app'
+
+/* Derive OG image from current path before destructuring: /about → about, / → home */
+const _pathSlug = Astro.url.pathname.replace(/^\/|\/$/g, '') || 'home'
+const derivedOgImage = `${SITE_URL}/og/${_pathSlug}.png`
 
 const {
   title,
   description,
-  ogImage = 'https://jesus-house-jamaica.netlify.app/og-image.png',
+  ogImage = derivedOgImage,
   ogType = 'website',
   articlePublishedTime,
   robots = 'index, follow',
   heroDark = false,
+  extraJsonLd,
 } = Astro.props
 
-const SITE_URL = 'https://jesus-house-jamaica.netlify.app'
 const canonicalUrl = Astro.props.canonicalUrl ?? `${SITE_URL}${Astro.url.pathname}`
 const fullTitle = title === 'Home' ? 'Jesus House Jamaica | RCCG Kingston' : `${title} | Jesus House Jamaica`
 
@@ -66,10 +74,24 @@ const jsonLd = {
     },
     {
       '@type': 'OpeningHoursSpecification',
+      'dayOfWeek': 'Monday',
+      'opens': '05:00',
+      'closes': '06:30',
+      'description': 'Good Morning Jesus — Morning Prayer',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
       'dayOfWeek': 'Wednesday',
       'opens': '18:00',
       'closes': '20:00',
-      'description': 'Bible Study',
+      'description': 'Prayer Meeting',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      'dayOfWeek': 'Friday',
+      'opens': '19:00',
+      'closes': '21:00',
+      'description': 'Bible Study — Online via Zoom',
     },
   ],
   'sameAs': [
@@ -128,6 +150,9 @@ const jsonLd = {
 
     <!-- ── JSON-LD Structured Data ───────────────────── -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {extraJsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(extraJsonLd)} />
+    )}
 
     <!-- ── Google Fonts ──────────────────────────────── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

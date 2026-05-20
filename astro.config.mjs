@@ -1,9 +1,10 @@
 // @ts-check
 import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
-  integrations: [mdx()],
+  integrations: [mdx(), sitemap()],
   site: 'https://jesus-house-jamaica.netlify.app',
   output: 'static',
   vite: {

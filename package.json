@@ -15,9 +15,13 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.6",
+    "@astrojs/sitemap": "^3.7.2",
+    "@fontsource/inter": "^5.2.8",
     "@orama/orama": "3.1.18",
     "@orama/plugin-data-persistence": "3.1.18",
-    "astro": "^6.3.5"
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^6.3.5",
+    "satori": "^0.26.0"
   },
   "devDependencies": {
     "@setemiojo/eslint-config": "^9.0.0",

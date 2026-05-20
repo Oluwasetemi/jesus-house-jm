@@ -22,6 +22,28 @@ const categoryLabels: Record<string, string> = {
 const dateFormatted = new Date(post.data.date).toLocaleDateString('en-JM', {
   year: 'numeric', month: 'long', day: 'numeric',
 })
+
+const SITE_URL = 'https://jesus-house-jamaica.netlify.app'
+const ogImage = `${SITE_URL}/og/blog/${post.id}.png`
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  'headline': post.data.title,
+  'description': post.data.excerpt,
+  'datePublished': post.data.date,
+  'author': {
+    '@type': 'Person',
+    'name': post.data.author,
+  },
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'Jesus House Jamaica',
+    'url': SITE_URL,
+  },
+  'url': `${SITE_URL}/blog/${post.id}`,
+  'articleSection': categoryLabels[post.data.category],
+}
 ---
 
 <Layout
@@ -29,7 +51,9 @@ const dateFormatted = new Date(post.data.date).toLocaleDateString('en-JM', {
   title={post.data.title}
   description={post.data.excerpt}
   ogType="article"
+  ogImage={ogImage}
   articlePublishedTime={post.data.date}
+  extraJsonLd={articleJsonLd}
 >
   <article class="post-article">
     <header class="post-header">
