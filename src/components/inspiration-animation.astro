@@ -52,7 +52,7 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const CROSS_COUNT = IS_MOBILE ? 220 : 500
 
     /* ── Build cross positions ─────────────────────────── */
-    function buildCrossPoints(n) {
+    function buildCrossPoints(n: number): number[][] {
       const pts = []
       const vert = Math.floor(n * 0.62)
       const horiz = n - vert
