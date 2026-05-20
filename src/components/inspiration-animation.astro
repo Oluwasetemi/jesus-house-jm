@@ -25,7 +25,7 @@
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const THREE_ESM = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'
 
-  import(THREE_ESM).then(({
+  import(/* @vite-ignore */ THREE_ESM).then(({
     Scene, PerspectiveCamera, WebGLRenderer,
     BufferGeometry, BufferAttribute, Float32BufferAttribute,
     PointsMaterial, Points, AdditiveBlending,
