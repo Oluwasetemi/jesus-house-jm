@@ -1,0 +1,90 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# No media uploads — images are URL strings
+media_folder: ""
+public_folder: ""
+
+# Slug options
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  # ── Blog Posts ─────────────────────────────────────────────────────
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: src/content/blog
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: Title,    name: title,   widget: string }
+      - { label: Excerpt,  name: excerpt, widget: text }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - { label: Devotionals,   value: devotionals }
+          - { label: Church News,   value: news }
+          - { label: Faith & Life,  value: faith }
+          - { label: Community,     value: community }
+      - { label: Date,        name: date,      widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Author,      name: author,    widget: string }
+      - { label: Read Time,   name: readTime,  widget: string,  hint: "e.g. 4 min read" }
+      - { label: Featured,    name: featured,  widget: boolean, default: false }
+      - { label: Cover Image URL, name: coverImage, widget: string, required: false, hint: "Paste a full image URL" }
+      - { label: Body,        name: body,      widget: markdown }
+
+  # ── Events ─────────────────────────────────────────────────────────
+  - name: events
+    label: Events
+    label_singular: Event
+    folder: src/content/events
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: Title,       name: title,       widget: string }
+      - { label: Date,        name: date,        widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Time,        name: time,        widget: string,  hint: "e.g. 9:00 AM" }
+      - { label: Location,    name: location,    widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Image URL,   name: image,       widget: string,  required: false, hint: "Paste a full image URL" }
+      - { label: Featured,    name: featured,    widget: boolean, default: false }
+      - { label: Registration URL, name: registrationUrl, widget: string, required: false }
+      - { label: Body,        name: body,        widget: markdown, required: false }
+
+  # ── Image Gallery ──────────────────────────────────────────────────
+  - name: gallery
+    label: Image Gallery
+    label_singular: Album
+    folder: src/content/gallery
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: Title,        name: title,       widget: string }
+      - { label: Date,         name: date,        widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Description,  name: description, widget: text, required: false }
+      - { label: Cover Image URL, name: coverImage, widget: string, required: false, hint: "Paste a full image URL" }
+      - label: Images
+        name: images
+        widget: list
+        summary: "{{fields.alt}}"
+        fields:
+          - { label: Image URL, name: url,     widget: string, hint: "Paste a full image URL" }
+          - { label: Alt Text,  name: alt,     widget: string, hint: "Describe the image for accessibility" }
+          - { label: Caption,   name: caption, widget: string, required: false }

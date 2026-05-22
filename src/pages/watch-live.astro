@@ -312,10 +312,10 @@ declare global {
     const base = videoId
       ? `https://www.youtube.com/embed/${videoId}`
       : `https://www.youtube.com/embed/live_stream?channel=UCO1S3nxtFg0_HXEMuZji5zg`
-    iframe.src = `${base}?autoplay=1&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`
+    iframe!.src = `${base}?autoplay=1&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`
 
-    playerWrap.classList.add('is-live')
-    offlineState.style.display = 'none'
+    playerWrap?.classList.add('is-live');
+    offlineState!.style.display = 'none'
     if (liveBadge)
       liveBadge.style.display = 'inline-flex'
     if (offlineBadge)
