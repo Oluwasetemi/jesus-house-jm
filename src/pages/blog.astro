@@ -103,6 +103,7 @@ function dateShort(iso: string) {
       <div class="archive-grid" id="archive-grid">
         {gridPosts.map(post => (
           <article class="post-card" id={`cat-${post.data.category}`}>
+            <a href={`/blog/${post.id}`} class="post-card-overlay" aria-label={`Read: ${post.data.title}`}></a>
             <div class="post-card-top">
               <div class="post-date">
                 <span class="post-date-day">{dateShort(post.data.date).day}</span>
@@ -116,10 +117,10 @@ function dateShort(iso: string) {
               <span class="post-author">{post.data.author}</span>
               <span class="post-read">{post.data.readTime}</span>
             </div>
-            <a href={`/blog/${post.id}`} class="post-link" aria-label={`Read: ${post.data.title}`}>
+            <div class="post-link" aria-hidden="true">
               Read Article
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-            </a>
+            </div>
           </article>
         ))}
       </div>
@@ -435,6 +436,7 @@ function dateShort(iso: string) {
   }
 
   .post-card {
+    position: relative;
     background-color: var(--color-cream);
     border-radius: var(--radius-card);
     padding: 2rem 1.75rem;
@@ -443,6 +445,13 @@ function dateShort(iso: string) {
     flex-direction: column;
     gap: 0.875rem;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .post-card-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+    z-index: 1;
   }
 
   .post-card:hover {
