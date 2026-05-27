@@ -11,8 +11,7 @@ displays in the sermons archive and watch-live pages.
 
 Two fetch modes:
   yt-dlp (default) — no API key required; scrapes the channel streams page
-  YouTube API      — set YOUTUBE_API_KEY env var or pass --api-key; more
-                     reliable, faster, no bot-detection issues
+  YouTube API      — set YOUTUBE_API_KEY env var or pass --api-key; more reliable, faster, no bot-detection issues
 
 Usage:
     python3 scripts/fetch-youtube.py                        # all streams (yt-dlp)
@@ -30,7 +29,6 @@ import os
 import re
 import subprocess
 import sys
-import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime
@@ -72,6 +70,23 @@ DOW_CATEGORY = {
     6: "Sunday Service",           # Sunday
 }
 
+# Regex to extract the sermon start timestamp from description chapters,
+# e.g. "1:00:20 – Sermon" or "1:12:27 - Sermon"
+_SERMON_CHAPTER_RE = re.compile(
+    r'(\d+:\d{2}(?::\d{2})?)\s*[–\-—]\s*Sermon\b',
+    re.I,
+)
+
+def _extract_sermon_ts(description: str) -> int | None:  # pyright: ignore[reportGeneralTypeIssues]
+    m = _SERMON_CHAPTER_RE.search(description)
+    if not m:
+        return None
+    parts = m.group(1).split(':')
+    if len(parts) == 3:
+        return int(parts[0]) * 3600 + int(parts[1]) * 60 + int(parts[2])
+    return int(parts[0]) * 60 + int(parts[1])
+
+
 # Regex to extract a date from a video title, e.g. "May 10, 2026" or "APRIL 27, 2026"
 _TITLE_DATE_RE = re.compile(
     r"\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?"
@@ -80,7 +95,7 @@ _TITLE_DATE_RE = re.compile(
     re.I,
 )
 
-def parse_title_date(title: str) -> datetime | None:
+def parse_title_date(title: str) -> datetime | None:  # pyright: ignore[reportGeneralTypeIssues]
     """Return a datetime parsed from a date string embedded in the title, or None."""
     m = _TITLE_DATE_RE.search(title)
     if not m:
@@ -90,7 +105,7 @@ def parse_title_date(title: str) -> datetime | None:
     except ValueError:
         return None
 
-def categorise(title: str, upload_dt: datetime | None) -> str:
+def categorise(title: str, upload_dt: datetime | None) -> str:  # pyright: ignore[reportGeneralTypeIssues]
     # 1. Try title patterns
     for label, pattern in TITLE_PATTERNS:
         if pattern.search(title):
@@ -107,10 +122,7 @@ def categorise(title: str, upload_dt: datetime | None) -> str:
 
 # ── Shared helpers ────────────────────────────────────────────────────────────
 
-def _make_entry(video_id: str, title: str, upload_dt: datetime | None,
-                duration_secs: int | None, view_count: int,
-                was_live: bool, live_status: str,
-                description: str = "") -> dict:
+def _make_entry(video_id: str, title: str, upload_dt: datetime | None, duration_secs: int | None, view_count: int, was_live: bool, live_status: str, description: str = "") -> dict:  # pyright: ignore[reportGeneralTypeIssues]
     """Build the standard videos.json entry dict from parsed fields."""
     date_iso = date_nice = date_short = ""
     year = month = month_short = weekday_name = ""
@@ -130,30 +142,32 @@ def _make_entry(video_id: str, title: str, upload_dt: datetime | None,
         m, s   = divmod(rem, 60)
         dur_str = f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
 
-    category = categorise(title, upload_dt)
+    category     = categorise(title, upload_dt)
+    sermon_ts    = _extract_sermon_ts(description)
 
     return {
-        "id":          video_id,
-        "title":       title,
-        "description": description[:600],
-        "category":    category,
-        "date":        date_iso,
-        "dateNice":    date_nice,
-        "dateShort":   date_short,
-        "year":        year,
-        "month":       month,
-        "monthShort":  month_short,
-        "weekday":     weekday_name,
-        "duration":    dur_str,
-        "views":       view_count,
-        "wasLive":     was_live,
-        "liveStatus":  live_status,
-        "url":         f"https://www.youtube.com/watch?v={video_id}",
-        "thumbnail":   f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
+        "id":              video_id,
+        "title":           title,
+        "description":     description[:600],
+        "sermonTimestamp": sermon_ts,
+        "category":        category,
+        "date":            date_iso,
+        "dateNice":        date_nice,
+        "dateShort":       date_short,
+        "year":            year,
+        "month":           month,
+        "monthShort":      month_short,
+        "weekday":         weekday_name,
+        "duration":        dur_str,
+        "views":           view_count,
+        "wasLive":         was_live,
+        "liveStatus":      live_status,
+        "url":             f"https://www.youtube.com/watch?v={video_id}",
+        "thumbnail":       f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
     }
 
 
-def _iso8601_to_seconds(duration: str) -> int | None:
+def _iso8601_to_seconds(duration: str) -> int | None:  # pyright: ignore[reportGeneralTypeIssues]
     """Convert ISO 8601 duration (PT1H59M31S) to total seconds."""
     m = re.fullmatch(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", duration or "")
     if not m:
@@ -173,8 +187,7 @@ def _yt_api(endpoint: str, params: dict) -> dict:
         return json.loads(resp.read())
 
 
-def fetch_videos_api(api_key: str, limit: int | None, after: str | None,
-                     live_only: bool = True) -> list[dict]:
+def fetch_videos_api(api_key: str, limit: int | None, after: str | None, live_only: bool = True) -> list[dict]:  # pyright: ignore[reportGeneralTypeIssues]
     """Fetch completed live streams using the YouTube Data API v3.
 
     Costs: search.list = 100 quota units, videos.list = 1 unit per batch.
@@ -184,7 +197,7 @@ def fetch_videos_api(api_key: str, limit: int | None, after: str | None,
 
     # ── 1. Collect video IDs via search.list ──────────────────────────────────
     video_ids: list[str] = []
-    page_token: str | None = None
+    page_token: str | None = None  # pyright: ignore[reportGeneralTypeIssues]
     max_results = min(limit or 50, 50)  # API cap per page is 50
 
     after_dt = datetime.strptime(after, "%Y%m%d") if after else None
