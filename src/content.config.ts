@@ -52,4 +52,12 @@ const gallery = defineCollection({
   }),
 })
 
-export const collections = { blog, events, gallery }
+const sermons = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/sermons' }),
+  schema: z.object({
+    videoId: z.string(),
+    timestamp: z.number().optional(),
+  }),
+})
+
+export const collections = { blog, events, gallery, sermons }

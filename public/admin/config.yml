@@ -64,6 +64,21 @@ collections:
       - { label: Registration URL, name: registrationUrl, widget: string, required: false }
       - { label: Body,        name: body,        widget: markdown, required: false }
 
+  # ── Sermon Timestamps ──────────────────────────────────────────────
+  - name: sermons
+    label: Sermon Timestamps
+    label_singular: Sermon Timestamp
+    folder: src/content/sermons
+    create: true
+    delete: true
+    extension: md
+    format: frontmatter
+    slug: "{{fields.videoId}}"
+    summary: "{{fields.videoId}} — t={{fields.timestamp}}s"
+    fields:
+      - { label: YouTube Video ID, name: videoId, widget: string, hint: "The video ID from the YouTube URL, e.g. Dag-OB5lpc4" }
+      - { label: Start Timestamp (seconds), name: timestamp, widget: number, value_type: int, min: 0, required: false, hint: "Seconds into the video where the sermon begins, e.g. 233" }
+
   # ── Image Gallery ──────────────────────────────────────────────────
   - name: gallery
     label: Image Gallery
