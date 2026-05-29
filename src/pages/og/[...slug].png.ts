@@ -1,13 +1,15 @@
+/* eslint-disable style/no-multi-spaces */
+/* eslint-disable node/prefer-global/process */
+import type { APIRoute } from 'astro'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import type { APIRoute } from 'astro'
-import { getCollection } from 'astro:content'
 import { Resvg } from '@resvg/resvg-js'
+import { getCollection } from 'astro:content'
 import satori from 'satori'
 
 /* ── Font (process.cwd() resolves to project root during Astro builds) */
 const fontRegular = readFileSync(join(process.cwd(), 'node_modules/@fontsource/inter/files/inter-latin-400-normal.woff'))
-const fontBold    = readFileSync(join(process.cwd(), 'node_modules/@fontsource/inter/files/inter-latin-700-normal.woff'))
+const fontBold = readFileSync(join(process.cwd(), 'node_modules/@fontsource/inter/files/inter-latin-700-normal.woff'))
 
 /* ── OG card design ────────────────────────────────────────────────── */
 function buildCard(title: string, subtitle: string, type: 'blog' | 'page') {
@@ -206,7 +208,7 @@ export const GET: APIRoute = async ({ props }) => {
   const resvg = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } })
   const png = resvg.render().asPng()
 
-  return new Response(png, {
+  return new Response(png as BodyInit, {
     headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=31536000, immutable' },
   })
 }

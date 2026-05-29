@@ -1,5 +1,6 @@
 import { glob } from 'astro/loaders'
-import { defineCollection, z } from 'astro:content'
+import { z } from 'astro/zod'
+import { defineCollection } from 'astro:content'
 
 /* Decap CMS datetime widget writes unquoted YAML dates (e.g. 2026-07-04)
    which YAML parsers coerce to Date objects. This transform accepts both

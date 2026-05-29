@@ -146,14 +146,26 @@ const jsonLd = {
     <!-- Netlify Identity: redirects invite emails to /admin after password set -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', user => {
+      // 1. Define the type alias locally
+      type NetlifyIdentityWindow = Window & typeof globalThis & {
+        netlifyIdentity?: {
+          on(event: 'init', callback: (user: any) => void): void;
+          on(event: 'login', callback: () => void): void;
+        };
+      };
+      
+      // 2. Cast cleanly
+      const netlifyIdentity = (window as NetlifyIdentityWindow).netlifyIdentity;
+
+      // 3. Your implementation
+      if (netlifyIdentity) {
+        netlifyIdentity.on('init', (user) => {
           if (!user) {
-            window.netlifyIdentity.on('login', () => {
-              document.location.href = '/admin/'
-            })
+            netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
           }
-        })
+        });
       }
     </script>
   </body>

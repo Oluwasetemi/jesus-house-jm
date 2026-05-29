@@ -31,7 +31,7 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     PointsMaterial, Points, AdditiveBlending,
     PlaneGeometry, MeshBasicMaterial, Mesh, DoubleSide,
   }) => {
-    const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('inspiration-canvas'))
+    const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('inspiration-canvas')) as HTMLCanvasElement
     if (!canvas) return
 
     /* ── Scene ─────────────────────────────────────────── */
