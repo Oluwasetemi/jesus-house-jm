@@ -51,7 +51,7 @@ TITLE_PATTERNS = [
     ("Friday Bible Study",       re.compile(
         r"friday\s+bible|bible\s+study\s+friday|friday\s+study", re.I)),
     ("Sunday Service",           re.compile(
-        r"sunday\s+service|thanksgiving\s+service|communion\s+service"
+        r"sunday\s+service|thanksgiving\s+service"
         r"|resurrection\s+sunday|special\s+service|sunday\s+worship"
         r"|calling\s+things|break\s+your|think\s+higher|youth\s+sunday"
         r"|collaborations|mother'?s\s+day|father'?s\s+day"

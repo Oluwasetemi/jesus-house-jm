@@ -19,8 +19,19 @@ function videoUrl(v: { id: string; url: string; sermonTimestamp?: number | null 
   return ts != null ? `${v.url}&t=${ts}s` : v.url
 }
 
-// Newest first
-const allVideos = [...rawVideos].sort((a, b) => b.date.localeCompare(a.date))
+// Parse "H:MM:SS" or "M:SS" duration string to total seconds
+function durationToSeconds(dur: string): number {
+  const parts = dur.split(':').map(Number)
+  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2]
+  if (parts.length === 2) return parts[0] * 60 + parts[1]
+  return 0
+}
+
+// Newest first; drop clips shorter than 20 minutes
+const MIN_DURATION_SECS = 20 * 60
+const allVideos = [...rawVideos]
+  .filter(v => durationToSeconds(v.duration) >= MIN_DURATION_SECS)
+  .sort((a, b) => b.date.localeCompare(a.date))
 
 // Featured = most recent Sunday Service
 const featuredVideo = allVideos.find(v => v.category === 'Sunday Service') ?? allVideos[0]
