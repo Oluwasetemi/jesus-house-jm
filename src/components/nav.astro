@@ -93,6 +93,8 @@ function isActive(href: string) {
         </div>
       </div>
 
+      <a href="/podcast" class={`nav-link${isActive('/podcast') ? ' nav-link--active' : ''}`}>Podcast</a>
+
       <a href="/contact" class={`nav-link${isActive('/contact') ? ' nav-link--active' : ''}`}>Contact</a>
 
       <!-- Watch Live prominent link -->
@@ -163,6 +165,8 @@ function isActive(href: string) {
         ))}
       </div>
     </details>
+
+    <a href="/podcast" class="mobile-link">Podcast</a>
 
     <a href="/contact" class="mobile-link">Contact</a>
 
