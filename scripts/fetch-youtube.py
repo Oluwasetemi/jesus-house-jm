@@ -513,7 +513,11 @@ Examples:
                 "url":           v["url"],
             })
 
-        podcast_path = Path(args.out) if args.out != "src/data/videos.json" else Path("src/data/podcast.json")
+        podcast_path = (
+            Path(args.out)
+            if args.out not in (None, "src/data/videos.json")
+            else Path("src/data/podcast.json")
+        )
 
         if args.merge and podcast_path.exists():
             try:
@@ -522,8 +526,8 @@ Examples:
                 for e in fresh:
                     by_id[e["id"]] = e
                 fresh = sorted(by_id.values(), key=lambda e: e["date"], reverse=True)
-            except json.JSONDecodeError:
-                pass
+            except (json.JSONDecodeError, TypeError, KeyError) as exc:
+                print(f"  Warning: could not parse existing podcast.json ({exc}) — overwriting.", file=sys.stderr)
 
         podcast_path.parent.mkdir(parents=True, exist_ok=True)
         podcast_path.write_text(json.dumps(fresh, indent=2, ensure_ascii=False))
