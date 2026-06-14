@@ -50,7 +50,6 @@ if (featuredEntry) {
   </section>
 
   {featured && (
-    <!-- ── Featured Episode ───────────────────────── -->
     <section class="featured-section">
       <div class="container">
         <span class="section-label">Latest Episode</span>
@@ -96,13 +95,12 @@ if (featuredEntry) {
   )}
 
   {episodes.length > 1 && (
-    <!-- ── Episode Archive ────────────────────────── -->
     <section class="archive-section">
       <div class="container">
         <span class="section-label">All Episodes</span>
         <h2 class="archive-heading">Episode Archive</h2>
         <div class="episode-grid">
-          {episodes.slice(1).map(ep => {
+          {episodes.slice(1).map((ep) => {
             const notes = notesMap.get(ep.id)
             return (
               <article class="ep-card">
