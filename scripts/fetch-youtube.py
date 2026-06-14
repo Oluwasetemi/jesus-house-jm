@@ -43,6 +43,7 @@ VIDEOS_URL   = f"https://www.youtube.com/channel/{CHANNEL_ID}/videos"
 # Pass 2: day-of-week fallback (Sun=6, Mon=0, Wed=2, Fri=4 in Python isoweekday)
 
 TITLE_PATTERNS = [
+    ("In The Pews",              re.compile(r"in\s+the\s+pews", re.I)),
     ("Good Morning Jesus",       re.compile(
         r"good\s+morning\s+jesus|monday\s+morning|gmj\b", re.I)),
     ("Wednesday Prayer Meeting", re.compile(
@@ -76,6 +77,12 @@ _SERMON_CHAPTER_RE = re.compile(
     r'(\d+:\d{2}(?::\d{2})?)\s*[–\-—]\s*Sermon\b',
     re.I,
 )
+
+_EPISODE_NUM_RE = re.compile(r"episode\s+(\d+)", re.I)
+
+def _extract_episode_number(title: str) -> int | None:  # pyright: ignore[reportGeneralTypeIssues]
+    m = _EPISODE_NUM_RE.search(title)
+    return int(m.group(1)) if m else None
 
 def _extract_sermon_ts(description: str) -> int | None:  # pyright: ignore[reportGeneralTypeIssues]
     m = _SERMON_CHAPTER_RE.search(description)
@@ -478,10 +485,52 @@ Examples:
         help="Merge fetched videos into existing JSON (safe incremental update)")
     parser.add_argument("--api-key", type=str,  default=None, metavar="KEY",
         help="YouTube Data API v3 key (overrides YOUTUBE_API_KEY env var)")
+    parser.add_argument("--podcast", action="store_true",
+        help="Fetch /videos tab, filter for 'In The Pews', write to src/data/podcast.json")
     args = parser.parse_args()
 
     api_key = args.api_key or os.environ.get("YOUTUBE_API_KEY")
 
+    if args.podcast:
+        # Podcast mode: /videos tab → filter In The Pews → podcast.json
+        if api_key:
+            all_vids = fetch_videos_api(api_key, limit=None, after=None, live_only=False)
+        else:
+            all_vids = fetch_videos(VIDEOS_URL, limit=None, after=None)
+
+        fresh = []
+        for v in all_vids:
+            if v["category"] != "In The Pews":
+                continue
+            fresh.append({
+                "id":            v["id"],
+                "episodeNumber": _extract_episode_number(v["title"]),
+                "title":         v["title"],
+                "date":          v["date"],
+                "dateNice":      v["dateNice"],
+                "duration":      v["duration"],
+                "thumbnail":     v["thumbnail"],
+                "url":           v["url"],
+            })
+
+        podcast_path = Path(args.out) if args.out != "src/data/videos.json" else Path("src/data/podcast.json")
+
+        if args.merge and podcast_path.exists():
+            try:
+                existing_podcast = json.loads(podcast_path.read_text())
+                by_id = {e["id"]: e for e in existing_podcast}
+                for e in fresh:
+                    by_id[e["id"]] = e
+                fresh = sorted(by_id.values(), key=lambda e: e["date"], reverse=True)
+            except json.JSONDecodeError:
+                pass
+
+        podcast_path.parent.mkdir(parents=True, exist_ok=True)
+        podcast_path.write_text(json.dumps(fresh, indent=2, ensure_ascii=False))
+        print(f"\n✓  Podcast JSON → {podcast_path}  ({len(fresh)} episodes)")
+        return  # exit early — don't touch videos.json
+
+    # Non-podcast path (unchanged)
     if api_key:
         fresh = fetch_videos_api(api_key, args.limit, args.after)
     else:
