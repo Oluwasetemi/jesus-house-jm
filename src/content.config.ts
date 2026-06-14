@@ -65,7 +65,7 @@ const podcast = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/podcast' }),
   schema: z.object({
     videoId: z.string(),
-    episodeNumber: z.number(),
+    episodeNumber: z.number().optional(),
     topics: z.array(z.string()).default([]),
   }),
 })
