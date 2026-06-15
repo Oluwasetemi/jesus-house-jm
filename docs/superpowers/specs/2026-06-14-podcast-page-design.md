@@ -8,7 +8,7 @@
 
 ## Overview
 
-"In The Pews" is a youth-centered Christian roundtable podcast hosted by three young members of Jesus House Jamaica: **Khalichi**, **Ruth**, and **Joseph**. Each episode opens with a casual icebreaker segment, then moves into faith-focused hot-topic conversations (e.g., is church boring?, dress codes, anointing, church shopping). Episodes are ~28 minutes, released on the church's YouTube channel under the `/videos` (edited uploads) tab.
+"In The Pews" is a youth-centered Christian roundtable podcast hosted by three young members of Jesus House Jamaica: **Amarachi**, **Ruth**, and **Joseph**. Each episode opens with a casual icebreaker segment, then moves into faith-focused hot-topic conversations (e.g., is church boring?, dress codes, anointing, church shopping). Episodes are ~28 minutes, released on the church's YouTube channel under the `/videos` (edited uploads) tab.
 
 The `/podcast` page is a standalone route — not nested under Multimedia — discoverable via the main nav. Episodes must not appear in the sermon archive (`videos.json`).
 
@@ -70,7 +70,7 @@ The `podcast` content collection is added to `src/content.config.ts` with this s
 
 - Show title: **In The Pews**
 - Tagline pulled from Episode 1 intro: *"A youth-centered Christian podcast — conversations in the church, outside the church."*
-- Host names: Khalichi · Ruth · Joseph
+- Host names: Amarachi · Ruth · Joseph
 - Brown/gold palette consistent with the site rebrand; lighter, more energetic feel than the standard service pages
 
 ### 2. Featured Episode (latest)

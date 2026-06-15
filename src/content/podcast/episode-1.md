@@ -10,7 +10,7 @@ topics:
 
 ## Episode Summary
 
-Hosts Khalichi, Ruth, and Joseph launch *In The Pews* with a casual icebreaker round — lunch spots, Champs athletics championships, and a surprise archery date — before diving into four faith conversations that church young people actually have.
+Hosts Amarachi, Ruth, and Joseph launch *In The Pews* with a casual icebreaker round — lunch spots, Champs athletics championships, and a surprise archery date — before diving into four faith conversations that church young people actually have.
 
 ## Topics Discussed
 

@@ -219,7 +219,7 @@
 
   ## Episode Summary
 
-  Hosts Khalichi, Ruth, and Joseph launch *In The Pews* with a casual icebreaker round — lunch spots, Champs athletics championships, and a surprise archery date — before diving into four faith conversations that church young people actually have.
+  Hosts Amarachi, Ruth, and Joseph launch *In The Pews* with a casual icebreaker round — lunch spots, Champs athletics championships, and a surprise archery date — before diving into four faith conversations that church young people actually have.
 
   ## Topics Discussed
 
@@ -303,7 +303,7 @@
           outside the church, and everywhere in between.
         </p>
         <p class="hosts">
-          Hosted by <strong>Khalichi</strong> · <strong>Ruth</strong> · <strong>Joseph</strong>
+          Hosted by <strong>Amarachi</strong> · <strong>Ruth</strong> · <strong>Joseph</strong>
         </p>
         <a
           href="https://www.youtube.com/@jesushousekingston"
