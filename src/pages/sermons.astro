@@ -10,11 +10,11 @@ const sermonTimestamps = await getCollection('sermons')
 const timestampMap = new Map(
   sermonTimestamps
     .filter(s => s.data.timestamp != null)
-    .map(s => [s.data.videoId, s.data.timestamp as number])
+    .map(s => [s.data.videoId, s.data.timestamp as number]),
 )
 
 // Append ?t=Ns — manual .md override wins, auto-extracted from description is fallback
-function videoUrl(v: { id: string; url: string; sermonTimestamp?: number | null }) {
+function videoUrl(v: { id: string, url: string, sermonTimestamp?: number | null }) {
   const ts = timestampMap.get(v.id) ?? v.sermonTimestamp ?? undefined
   return ts != null ? `${v.url}&t=${ts}s` : v.url
 }
@@ -22,8 +22,10 @@ function videoUrl(v: { id: string; url: string; sermonTimestamp?: number | null 
 // Parse "H:MM:SS" or "M:SS" duration string to total seconds
 function durationToSeconds(dur: string): number {
   const parts = dur.split(':').map(Number)
-  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2]
-  if (parts.length === 2) return parts[0] * 60 + parts[1]
+  if (parts.length === 3)
+return parts[0] * 3600 + parts[1] * 60 + parts[2]
+  if (parts.length === 2)
+return parts[0] * 60 + parts[1]
   return 0
 }
 
@@ -336,10 +338,17 @@ if (rawData) {
   dbReady = (async () => {
     const instance = create({
       schema: {
-        id: 'string', title: 'string', description: 'string',
-        category: 'enum', date: 'string', dateShort: 'string',
-        duration: 'string', views: 'number', url: 'string',
-        thumbnail: 'string', weekday: 'string',
+        id: 'string',
+        title: 'string',
+        description: 'string',
+        category: 'enum',
+        date: 'string',
+        dateShort: 'string',
+        duration: 'string',
+        views: 'number',
+        url: 'string',
+        thumbnail: 'string',
+        weekday: 'string',
       } as const,
     })
     await insertMultiple(instance, rawData)

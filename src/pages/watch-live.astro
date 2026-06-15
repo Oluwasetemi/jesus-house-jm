@@ -32,7 +32,8 @@ const onlineMeetings = [
 ];
 ---
 
-<Layout heroDark={true}
+<Layout
+  heroDark={true}
   title="Watch Live"
   description="Watch Jesus House Jamaica live on YouTube. Stream Sunday services, Good Morning Jesus (Monday), Wednesday Prayer Meeting, Friday Bible Study, and special events online."
 >
@@ -306,7 +307,7 @@ declare global {
       : `https://www.youtube.com/embed/live_stream?channel=UCO1S3nxtFg0_HXEMuZji5zg`
     iframe!.src = `${base}?autoplay=1&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`
 
-    playerWrap?.classList.add('is-live');
+    playerWrap?.classList.add('is-live')
     offlineState!.style.display = 'none'
     if (liveBadge)
       liveBadge.style.display = 'inline-flex'

@@ -26,13 +26,23 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const THREE_ESM = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'
 
   import(/* @vite-ignore */ THREE_ESM).then(({
-    Scene, PerspectiveCamera, WebGLRenderer,
-    BufferGeometry, BufferAttribute, Float32BufferAttribute,
-    PointsMaterial, Points, AdditiveBlending,
-    PlaneGeometry, MeshBasicMaterial, Mesh, DoubleSide,
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    BufferGeometry,
+    BufferAttribute,
+    Float32BufferAttribute,
+    PointsMaterial,
+    Points,
+    AdditiveBlending,
+    PlaneGeometry,
+    MeshBasicMaterial,
+    Mesh,
+    DoubleSide,
   }) => {
     const canvas = /** @type {HTMLCanvasElement} */ (document.getElementById('inspiration-canvas')) as HTMLCanvasElement
-    if (!canvas) return
+    if (!canvas)
+      return
 
     /* ── Scene ─────────────────────────────────────────── */
     const scene = new Scene()
@@ -109,9 +119,11 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const t = Math.random()
       if (t < 0.5) {
         colors[i * 3] = 0.83; colors[i * 3 + 1] = 0.66; colors[i * 3 + 2] = 0.26
-      } else if (t < 0.8) {
+      }
+      else if (t < 0.8) {
         colors[i * 3] = 1.0; colors[i * 3 + 1] = 0.50; colors[i * 3 + 2] = 0.12
-      } else {
+      }
+      else {
         colors[i * 3] = 1.0; colors[i * 3 + 1] = 0.95; colors[i * 3 + 2] = 0.80
       }
 
@@ -152,7 +164,7 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     scene.add(glow)
 
     /* ── Mouse parallax ────────────────────────────────── */
-    let targetX = 0, targetY = 0, currentX = 0, currentY = 0
+    let targetX = 0; let targetY = 0; let currentX = 0; let currentY = 0
 
     document.addEventListener('mousemove', (e) => {
       targetX = (e.clientX / window.innerWidth - 0.5) * 0.8
@@ -173,7 +185,8 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     let frameId = 0
 
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) cancelAnimationFrame(frameId)
+      if (document.hidden)
+        cancelAnimationFrame(frameId)
       else tick()
     })
 
@@ -185,7 +198,8 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
       for (let i = CROSS_COUNT; i < TOTAL; i++) {
         pos[i * 3 + 1] += speeds[i]
-        if (pos[i * 3 + 1] > 5.5) pos[i * 3 + 1] = -5.5
+        if (pos[i * 3 + 1] > 5.5)
+          pos[i * 3 + 1] = -5.5
       }
 
       for (let i = 0; i < CROSS_COUNT; i++) {
