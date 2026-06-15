@@ -28,3 +28,8 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Python bytecode
+scripts/__pycache__/
+**/__pycache__/
+*.pyc
