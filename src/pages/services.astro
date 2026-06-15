@@ -4,16 +4,16 @@ import Layout from '../layouts/Layout.astro'
 const regularServices = [
   {
     id: 'sunday',
-    title: 'Sunday Worship Service',
+    title: 'Sunday Celebration Service',
     time: 'Every Sunday · 9:00 AM',
-    location: 'In-Person & Online',
+    location: 'Church Premises & Online',
     description: 'Our flagship weekly gathering — a full celebration of Spirit-filled worship, powerful expository preaching, and vibrant community. All are welcome. Come as you are.',
     details: [
       'Praise and worship with our live band and choir',
       'Expository message from the Word of God',
-      'Communion on the first Sunday of every month',
-      'Children\'s church runs concurrently',
+      'Sunday School at 8:00 AM for children and adults before the main service',
       'Altar call and prayer ministry after service',
+      'Streamed live on YouTube and Facebook',
     ],
     badge: 'Weekly',
     badgeColor: 'gold',
@@ -24,47 +24,47 @@ const regularServices = [
   {
     id: 'good-morning-jesus',
     title: 'Good Morning Jesus (GMJ)',
-    time: 'Every Monday · Early Morning',
-    location: 'In-Person & Online',
+    time: 'Every Monday · 5:00 AM',
+    location: 'Online via Zoom & YouTube',
     description: 'Kick-start your week with the church family. Good Morning Jesus is our Monday morning prayer gathering — a time of worship, declaration, and seeking God\'s face before the week begins.',
     details: [
       'Corporate prayer and declarations',
       'Worship and praise',
       'Prayer for the week ahead',
-      'Available in-person and streamed live',
+      'Join via Zoom or watch live on YouTube',
       'Led by the pastoral and intercessory team',
     ],
     badge: 'Weekly',
     badgeColor: 'gold',
     icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,
-    zoomLink: null,
+    zoomLink: 'zoommtg://zoom.us/join?confno=96081497065',
     featured: false,
   },
   {
     id: 'prayer-meeting',
     title: 'Wednesday Prayer Meeting',
     time: 'Every Wednesday · 6:00 PM',
-    location: 'In-Person & Zoom',
-    description: 'Our midweek gathering for corporate prayer, intercession, and the Word of God. Includes a communion service — a time to reflect, repent, and renew your covenant with God.',
+    location: 'Church Premises & Online',
+    description: 'Our midweek gathering for corporate prayer, intercession, and the Word of God. Join us in-person at 3 McGregor Square or watch live on YouTube and Facebook.',
     details: [
       'Corporate prayer and intercession',
-      'Communion service included',
       'Teaching from the Word of God',
-      'Available in-person and via Zoom',
       'Prayer ministry after service',
+      'In-person at church premises',
+      'Streamed live on YouTube and Facebook',
     ],
     badge: 'Weekly',
     badgeColor: 'gold',
     icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
-    zoomLink: 'zoommtg://zoom.us/join?confno=8761234567',
+    zoomLink: null,
     featured: false,
   },
   {
     id: 'bible-study',
     title: 'Friday Bible Study',
-    time: 'Every Friday · Online',
+    time: 'Every Friday · 7:00 PM',
     location: 'Online via Zoom',
-    description: 'A verse-by-verse journey through the Scriptures every Friday — Spirit-led, practically applied, and fully online. Study the Word, ask questions, and grow in faith from wherever you are.',
+    description: 'A verse-by-verse journey through the Scriptures every Friday at 7:00 PM — Spirit-led, practically applied, and fully online. Study the Word, ask questions, and grow in faith from wherever you are.',
     details: [
       'Verse-by-verse expository teaching',
       'Interactive Q&A and group discussion',
@@ -75,17 +75,57 @@ const regularServices = [
     badge: 'Weekly',
     badgeColor: 'gold',
     icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
-    zoomLink: 'zoommtg://zoom.us/join?confno=8769876543',
+    zoomLink: 'zoommtg://zoom.us/join?confno=96081497065',
     featured: false,
   },
 ]
 
-const specialServices = [
+const monthlyServices = [
   {
-    title: 'First Sunday Communion',
-    desc: 'We observe the Lord\'s Supper on the first Sunday of every month as part of our regular worship service.',
+    title: 'Thanksgiving Service',
+    when: 'First Sundays · 9:00 AM',
+    desc: 'Every first Sunday we gather for a special Thanksgiving Service — offering praise and gratitude to God for His faithfulness. In-person and streamed live online.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+  },
+  {
+    title: 'Communion Service',
+    when: 'Last Wednesdays · 6:00 PM',
+    desc: 'On the last Wednesday of each month, our Prayer Meeting becomes a Communion Service — a sacred time to reflect, repent, and renew our covenant with God. In-person and streamed online.',
     icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>`,
   },
+  {
+    title: 'Youth Service',
+    when: 'Fifth Sundays · 9:00 AM',
+    desc: 'On every fifth Sunday of the month, young people take the lead — a Spirit-filled service driven by the youth of Jesus House Jamaica. In-person and streamed live online.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  },
+  {
+    title: "Women's Meeting",
+    when: 'Third Saturdays',
+    desc: "A dedicated gathering for the women of Jesus House Jamaica — a space for fellowship, prayer, and spiritual growth. Details are shared within the Women's Group.",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M12 13v8"/><path d="M9 18h6"/></svg>`,
+  },
+  {
+    title: "Men's Meeting",
+    when: 'Third Saturdays',
+    desc: "A dedicated gathering for the men of Jesus House Jamaica — building brotherhood, accountability, and godly character. Details are shared within the Men's Group.",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="8" r="5"/><path d="M15 3l6 6"/><path d="M21 3l-6 6"/></svg>`,
+  },
+  {
+    title: 'Children Sunday School',
+    when: 'Every Sunday · 8:00 AM',
+    desc: 'A dedicated hour of Bible-based teaching for children before the main service — nurturing young hearts in the knowledge and love of God at church premises.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  },
+  {
+    title: 'Adult Sunday School',
+    when: 'Every Sunday · 8:00 AM',
+    desc: 'In-depth Scripture study for adults before the main Sunday service — strengthening the faith, understanding, and spiritual maturity of every believer at church premises.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`,
+  },
+]
+
+const specialServices = [
   {
     title: 'Annual Youth Conference',
     desc: 'Held each October, our Youth Conference gathers young believers from across the Caribbean for worship, ministry, and encounter with God.',
@@ -233,7 +273,33 @@ const specialServices = [
     </div>
   </section>
 
-  <!-- Special Events -->
+  <!-- Monthly & Recurring Services -->
+  <section class="monthly-section">
+    <div class="container">
+      <div class="special-header">
+        <span class="section-label">Monthly & Recurring</span>
+        <h2 class="special-heading">Additional Services</h2>
+        <p class="special-sub">
+          Beyond our weekly gatherings, these services recur on specific Sundays, Wednesdays, and Saturdays throughout the month.
+        </p>
+      </div>
+
+      <div class="special-grid">
+        {monthlyServices.map(item => (
+          <div class="special-card">
+            <div class="special-icon" aria-hidden="true" set:html={item.icon} />
+            <div class="special-content">
+              <h3 class="special-title">{item.title}</h3>
+              <p class="special-when">{item.when}</p>
+              <p class="special-desc">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Annual Events -->
   <section class="special-section">
     <div class="container">
       <div class="special-header">
@@ -277,18 +343,18 @@ const specialServices = [
               <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" />
             </svg>
           </div>
-          <h3 class="zoom-card-title">Prayer Meeting</h3>
-          <p class="zoom-card-time">Wednesday · 6:00 PM Jamaica Time</p>
-          <p class="zoom-card-id">Conference ID: 876 123 4567</p>
+          <h3 class="zoom-card-title">Good Morning Jesus</h3>
+          <p class="zoom-card-time">Monday · 5:00 AM Jamaica Time</p>
+          <p class="zoom-card-id">Conference ID: 960 8149 7065</p>
           <a
-            href="zoommtg://zoom.us/join?confno=8761234567"
+            href="zoommtg://zoom.us/join?confno=96081497065"
             class="btn btn-gold"
-            aria-label="Join Wednesday Prayer Meeting on Zoom"
+            aria-label="Join Good Morning Jesus on Zoom"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.5 10.5L22 7v10l-4.5-3.5V17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h11.5a2 2 0 012 2v3.5z" />
             </svg>
-            Join Prayer Meeting
+            Join Good Morning Jesus
           </a>
         </div>
 
@@ -299,10 +365,10 @@ const specialServices = [
             </svg>
           </div>
           <h3 class="zoom-card-title">Friday Bible Study</h3>
-          <p class="zoom-card-time">Every Friday · Online Only</p>
-          <p class="zoom-card-id">Conference ID: 876 987 6543</p>
+          <p class="zoom-card-time">Every Friday · 7:00 PM Online</p>
+          <p class="zoom-card-id">Conference ID: 960 8149 7065</p>
           <a
-            href="zoommtg://zoom.us/join?confno=8769876543"
+            href="zoommtg://zoom.us/join?confno=96081497065"
             class="btn btn-outline-white"
             aria-label="Join Friday Bible Study on Zoom"
           >
@@ -631,6 +697,21 @@ const specialServices = [
 
   .service-zoom-btn {
     align-self: flex-start;
+  }
+
+  /* Monthly Services */
+  .monthly-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding) 0;
+  }
+
+  .special-when {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 0.35rem;
   }
 
   /* Special Services */

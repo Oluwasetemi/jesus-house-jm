@@ -111,6 +111,55 @@ const vision = [
     </div>
   </section>
 
+  <!-- Pastor Folu Adeboye -->
+  <section class="moi-section">
+    <div class="container moi-grid">
+
+      <div class="moi-bio">
+        <span class="section-label">Mother-in-Israel</span>
+        <h2 class="moi-name">Pastor (Mrs) Folu Adeboye</h2>
+        <p class="moi-title-line">Wife of the General Overseer · Mother-in-Israel, RCCG</p>
+
+        <div class="moi-bio-text">
+          <p>
+            Pastor (Mrs) Folu Adeboye is the wife of the General Overseer of the Redeemed Christian
+            Church of God and Mother-in-Israel. She is greatly admired for her selfless service to
+            the body of Christ and to society — a woman of deep faith, compassion, and sacrificial
+            commitment to God's purposes.
+          </p>
+          <p>
+            Her concern for the spiritual and physical welfare of people, particularly the less
+            privileged, is demonstrated in great sacrifices of time, talent, and resources aimed
+            at improving the well-being of vulnerable women and children across the world.
+          </p>
+          <p>
+            One of her landmark ministry projects — Africa Missions — was established in 1996 to
+            promote the spread of the gospel across Africa and into other continents, while
+            introducing sustainable development programmes to improve the quality of life of
+            vulnerable children, youths, women, and families.
+          </p>
+          <p>
+            Pastor Folu remains focused on the manifold call of God on her life, particularly
+            through the helps and teaching ministries within and far beyond the RCCG. For Jesus
+            House Jamaica, she is a model of faithful, Spirit-led womanhood in ministry.
+          </p>
+        </div>
+      </div>
+
+      <div class="moi-portrait" aria-label="Portrait of Pastor Folu Adeboye">
+        <div class="moi-avatar">
+          <span class="moi-initials">F.A.</span>
+          <div class="go-avatar-ring" aria-hidden="true"></div>
+          <div class="go-avatar-ring go-avatar-ring--outer" aria-hidden="true"></div>
+        </div>
+        <div class="go-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+          Mother-in-Israel, RCCG
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Vision Pillars -->
   <section class="vision-section">
     <div class="container">
@@ -551,6 +600,73 @@ const vision = [
     max-width: 52ch;
     margin: 0 auto;
   }
+  /* Mother-in-Israel Section */
+  .moi-section {
+    background-color: var(--color-navy);
+    padding: var(--section-padding) 0;
+  }
+
+  .moi-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .moi-grid {
+      grid-template-columns: 1fr 280px;
+    }
+  }
+
+  .moi-portrait {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .moi-avatar {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212,168,67,0.35) 0%, rgba(212,168,67,0.15) 100%);
+    border: 2px solid rgba(212,168,67,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .moi-initials {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--color-gold);
+  }
+
+  .moi-name {
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    color: var(--color-white);
+    margin-bottom: 0.25rem;
+  }
+
+  .moi-title-line {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1.75rem;
+  }
+
+  .moi-bio-text p {
+    font-size: 0.975rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
   /* ── Mobile overrides ─────────────────────────────── */
   @media (max-width: 640px) {
     [class$="-hero"] { padding-top: 5.5rem; padding-bottom: 3.5rem; }
