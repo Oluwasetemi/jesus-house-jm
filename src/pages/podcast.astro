@@ -58,7 +58,7 @@ if (featuredEntry) {
             <span class="ep-badge">Ep {featured.episodeNumber}</span>
           )}
           <h2 class="ep-title">{featured.title}</h2>
-          <p class="ep-info">{featured.dateNice} · {featured.duration}</p>
+          <p class="ep-info">{featured.dateNice}{featured.duration ? ` · ${featured.duration}` : ''}</p>
         </div>
 
         <div class="video-embed">
@@ -127,7 +127,7 @@ if (featuredEntry) {
                 </a>
                 <div class="ep-card-body">
                   <h3 class="ep-card-title">{ep.title}</h3>
-                  <p class="ep-card-info">{ep.dateNice} · {ep.duration}</p>
+                  <p class="ep-card-info">{ep.dateNice}{ep.duration ? ` · ${ep.duration}` : ''}</p>
                   {notes && notes.data.topics.length > 0 && (
                     <details class="ep-notes-toggle">
                       <summary>Show Notes</summary>
