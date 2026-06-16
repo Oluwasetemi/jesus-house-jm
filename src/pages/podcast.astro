@@ -54,9 +54,14 @@ if (featuredEntry) {
       <div class="container">
         <span class="section-label">Latest Episode</span>
         <div class="ep-meta">
-          {featured.episodeNumber != null && (
-            <span class="ep-badge">Ep {featured.episodeNumber}</span>
-          )}
+          <div class="ep-badges">
+            {featured.episodeNumber != null && (
+              <span class="ep-badge">Ep {featured.episodeNumber}</span>
+            )}
+            {!featured.duration && (
+              <span class="ep-badge ep-badge--premiere">Premieres {featured.dateNice}</span>
+            )}
+          </div>
           <h2 class="ep-title">{featured.title}</h2>
           <p class="ep-info">{featured.dateNice}{featured.duration ? ` · ${featured.duration}` : ''}</p>
         </div>
@@ -78,12 +83,31 @@ if (featuredEntry) {
                 <span class="topics-label">Topics</span>
                 <ul class="topics-list">
                   {featuredEntry.data.topics.map(t => (
-                    <li class="topic-pill">{t}</li>
+                    <li class={`topic-pill${!featured.duration ? ' topic-pill--muted' : ''}`}>{t}</li>
                   ))}
                 </ul>
               </div>
             )}
-            {FeaturedContent && (
+            {!featured.duration ? (
+              <div class="coming-soon">
+                <div class="coming-soon-icon" aria-hidden="true">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <p class="coming-soon-heading">Show Notes Coming Soon</p>
+                <p class="coming-soon-sub">
+                  Full episode notes will be published when this episode premieres on <strong>{featured.dateNice}</strong>.
+                  Subscribe on YouTube so you don't miss it.
+                </p>
+                <a
+                  href={featured.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-gold"
+                >
+                  Set a Reminder on YouTube →
+                </a>
+              </div>
+            ) : FeaturedContent && (
               <div class="notes-body">
                 <FeaturedContent />
               </div>
@@ -123,11 +147,14 @@ if (featuredEntry) {
                     {ep.episodeNumber != null && (
                       <span class="ep-badge ep-badge--overlay">Ep {ep.episodeNumber}</span>
                     )}
+                    {!ep.duration && (
+                      <span class="ep-premiere-overlay">Premieres {ep.dateNice}</span>
+                    )}
                   </div>
                 </a>
                 <div class="ep-card-body">
                   <h3 class="ep-card-title">{ep.title}</h3>
-                  <p class="ep-card-info">{ep.dateNice}{ep.duration ? ` · ${ep.duration}` : ''}</p>
+                  <p class="ep-card-info">{ep.dateNice}{ep.duration ? ` · ${ep.duration}` : ' · Upcoming'}</p>
                   {notes && notes.data.topics.length > 0 && (
                     <details class="ep-notes-toggle">
                       <summary>Show Notes</summary>
@@ -207,6 +234,13 @@ if (featuredEntry) {
     margin-bottom: 1.5rem;
   }
 
+  .ep-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
   .ep-badge {
     display: inline-block;
     background-color: var(--color-gold);
@@ -218,7 +252,11 @@ if (featuredEntry) {
     text-transform: uppercase;
     padding: 0.2rem 0.6rem;
     border-radius: 999px;
-    margin-bottom: 0.75rem;
+  }
+
+  .ep-badge--premiere {
+    background-color: var(--color-coral);
+    color: var(--color-white);
   }
 
   .ep-title {
@@ -289,6 +327,52 @@ if (featuredEntry) {
     padding: 0.3rem 0.85rem;
     border-radius: 999px;
     border: 1px solid rgba(212, 168, 67, 0.35);
+  }
+
+  .coming-soon {
+    border-top: 1px solid rgba(44, 24, 16, 0.1);
+    padding-top: 2rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    max-width: 560px;
+  }
+
+  .coming-soon-icon {
+    color: var(--color-gold);
+  }
+
+  .coming-soon-heading {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+
+  .coming-soon-sub {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .topic-pill--muted {
+    opacity: 0.5;
+  }
+
+  .ep-premiere-overlay {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: rgba(224, 90, 43, 0.88);
+    color: var(--color-white);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.5rem;
   }
 
   .notes-body {
