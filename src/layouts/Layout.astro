@@ -65,10 +65,10 @@ const jsonLd = {
     'longitude': '-76.7930',
   },
   'openingHoursSpecification': [
-    { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Sunday',    'opens': '09:00', 'closes': '12:00' },
-    { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Monday',    'opens': '05:00', 'closes': '06:30' },
+    { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Sunday', 'opens': '09:00', 'closes': '12:00' },
+    { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Monday', 'opens': '05:00', 'closes': '06:30' },
     { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Wednesday', 'opens': '18:00', 'closes': '20:00' },
-    { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Friday',    'opens': '19:00', 'closes': '21:00' },
+    { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Friday', 'opens': '19:00', 'closes': '21:00' },
   ],
   'sameAs': [
     'https://www.facebook.com/rccg.jesushouse.kingston',
@@ -92,7 +92,7 @@ const jsonLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
-    <meta name="theme-color" content="#0d1b3e" />
+    <meta name="theme-color" content="#2c1810" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -146,35 +146,34 @@ const jsonLd = {
     <!-- Netlify Identity: redirects invite emails to /admin after password set -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
-      // 1. Define the type alias locally
-      type NetlifyIdentityWindow = Window & typeof globalThis & {
-        netlifyIdentity?: {
-          on(event: 'init', callback: (user: any) => void): void;
-          on(event: 'login', callback: () => void): void;
-        };
-      };
-      
-      // 2. Cast cleanly
-      const netlifyIdentity = (window as NetlifyIdentityWindow).netlifyIdentity;
+// 1. Define the type alias locally
+type NetlifyIdentityWindow = Window & typeof globalThis & {
+  netlifyIdentity?: {
+    on: ((event: 'init', callback: (user: any) => void) => void) & ((event: 'login', callback: () => void) => void)
+  }
+}
 
-      // 3. Your implementation
-      if (netlifyIdentity) {
-        netlifyIdentity.on('init', (user) => {
-          if (!user) {
-            netlifyIdentity.on('login', () => {
-              document.location.href = '/admin/';
-            });
-          }
-        });
-      }
-    </script>
+// 2. Cast cleanly
+const netlifyIdentity = (window as NetlifyIdentityWindow).netlifyIdentity
+
+// 3. Your implementation
+if (netlifyIdentity) {
+  netlifyIdentity.on('init', (user) => {
+    if (!user) {
+      netlifyIdentity.on('login', () => {
+        document.location.href = '/admin/'
+      })
+    }
+  })
+}
+</script>
   </body>
 </html>
 
 <style is:global>
   /* === CSS Custom Properties === */
   :root {
-    --color-navy: #0d1b3e;
+    --color-navy: #2c1810;
     --color-gold: #d4a843;
     --color-coral: #e05a2b;
     --color-cream: #faf8f3;

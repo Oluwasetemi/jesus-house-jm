@@ -3,14 +3,14 @@ backend:
   branch: main
 
 # No media uploads — images are URL strings
-media_folder: ""
-public_folder: ""
+media_folder: ''
+public_folder: ''
 
 # Slug options
 slug:
   encoding: ascii
   clean_accents: true
-  sanitize_replacement: "-"
+  sanitize_replacement: '-'
 
 collections:
   # ── Blog Posts ─────────────────────────────────────────────────────
@@ -22,25 +22,25 @@ collections:
     delete: true
     extension: md
     format: frontmatter
-    slug: "{{slug}}"
-    summary: "{{title}} — {{date}}"
+    slug: '{{slug}}'
+    summary: '{{title}} — {{date}}'
     fields:
-      - { label: Title,    name: title,   widget: string }
-      - { label: Excerpt,  name: excerpt, widget: text }
+      - {label: Title, name: title, widget: string}
+      - {label: Excerpt, name: excerpt, widget: text}
       - label: Category
         name: category
         widget: select
         options:
-          - { label: Devotionals,   value: devotionals }
-          - { label: Church News,   value: news }
-          - { label: Faith & Life,  value: faith }
-          - { label: Community,     value: community }
-      - { label: Date,        name: date,      widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
-      - { label: Author,      name: author,    widget: string }
-      - { label: Read Time,   name: readTime,  widget: string,  hint: "e.g. 4 min read" }
-      - { label: Featured,    name: featured,  widget: boolean, default: false }
-      - { label: Cover Image URL, name: coverImage, widget: string, required: false, hint: "Paste a full image URL" }
-      - { label: Body,        name: body,      widget: markdown }
+          - {label: Devotionals, value: devotionals}
+          - {label: Church News, value: news}
+          - {label: Faith & Life, value: faith}
+          - {label: Community, value: community}
+      - {label: Date, name: date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false, picker_utc: true}
+      - {label: Author, name: author, widget: string}
+      - {label: Read Time, name: readTime, widget: string, hint: e.g. 4 min read}
+      - {label: Featured, name: featured, widget: boolean, default: false}
+      - {label: Cover Image URL, name: coverImage, widget: string, required: false, hint: Paste a full image URL}
+      - {label: Body, name: body, widget: markdown}
 
   # ── Events ─────────────────────────────────────────────────────────
   - name: events
@@ -51,18 +51,18 @@ collections:
     delete: true
     extension: md
     format: frontmatter
-    slug: "{{slug}}"
-    summary: "{{title}} — {{date}}"
+    slug: '{{slug}}'
+    summary: '{{title}} — {{date}}'
     fields:
-      - { label: Title,       name: title,       widget: string }
-      - { label: Date,        name: date,        widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
-      - { label: Time,        name: time,        widget: string,  hint: "e.g. 9:00 AM" }
-      - { label: Location,    name: location,    widget: string }
-      - { label: Description, name: description, widget: text }
-      - { label: Image URL,   name: image,       widget: string,  required: false, hint: "Paste a full image URL" }
-      - { label: Featured,    name: featured,    widget: boolean, default: false }
-      - { label: Registration URL, name: registrationUrl, widget: string, required: false }
-      - { label: Body,        name: body,        widget: markdown, required: false }
+      - {label: Title, name: title, widget: string}
+      - {label: Date, name: date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false, picker_utc: true}
+      - {label: Time, name: time, widget: string, hint: 'e.g. 9:00 AM'}
+      - {label: Location, name: location, widget: string}
+      - {label: Description, name: description, widget: text}
+      - {label: Image URL, name: image, widget: string, required: false, hint: Paste a full image URL}
+      - {label: Featured, name: featured, widget: boolean, default: false}
+      - {label: Registration URL, name: registrationUrl, widget: string, required: false}
+      - {label: Body, name: body, widget: markdown, required: false}
 
   # ── Sermon Timestamps ──────────────────────────────────────────────
   - name: sermons
@@ -73,11 +73,11 @@ collections:
     delete: true
     extension: md
     format: frontmatter
-    slug: "{{fields.videoId}}"
-    summary: "{{fields.videoId}} — t={{fields.timestamp}}s"
+    slug: '{{fields.videoId}}'
+    summary: '{{fields.videoId}} — t={{fields.timestamp}}s'
     fields:
-      - { label: YouTube Video ID, name: videoId, widget: string, hint: "The video ID from the YouTube URL, e.g. Dag-OB5lpc4" }
-      - { label: Start Timestamp (seconds), name: timestamp, widget: number, value_type: int, min: 0, required: false, hint: "Seconds into the video where the sermon begins, e.g. 233" }
+      - {label: YouTube Video ID, name: videoId, widget: string, hint: 'The video ID from the YouTube URL, e.g. Dag-OB5lpc4'}
+      - {label: Start Timestamp (seconds), name: timestamp, widget: number, value_type: int, min: 0, required: false, hint: 'Seconds into the video where the sermon begins, e.g. 233'}
 
   # ── Image Gallery ──────────────────────────────────────────────────
   - name: gallery
@@ -88,18 +88,18 @@ collections:
     delete: true
     extension: md
     format: frontmatter
-    slug: "{{slug}}"
-    summary: "{{title}} — {{date}}"
+    slug: '{{slug}}'
+    summary: '{{title}} — {{date}}'
     fields:
-      - { label: Title,        name: title,       widget: string }
-      - { label: Date,         name: date,        widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
-      - { label: Description,  name: description, widget: text, required: false }
-      - { label: Cover Image URL, name: coverImage, widget: string, required: false, hint: "Paste a full image URL" }
+      - {label: Title, name: title, widget: string}
+      - {label: Date, name: date, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false, picker_utc: true}
+      - {label: Description, name: description, widget: text, required: false}
+      - {label: Cover Image URL, name: coverImage, widget: string, required: false, hint: Paste a full image URL}
       - label: Images
         name: images
         widget: list
-        summary: "{{fields.alt}}"
+        summary: '{{fields.alt}}'
         fields:
-          - { label: Image URL, name: url,     widget: string, hint: "Paste a full image URL" }
-          - { label: Alt Text,  name: alt,     widget: string, hint: "Describe the image for accessibility" }
-          - { label: Caption,   name: caption, widget: string, required: false }
+          - {label: Image URL, name: url, widget: string, hint: Paste a full image URL}
+          - {label: Alt Text, name: alt, widget: string, hint: Describe the image for accessibility}
+          - {label: Caption, name: caption, widget: string, required: false}

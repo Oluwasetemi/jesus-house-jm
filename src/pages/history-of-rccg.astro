@@ -10,13 +10,13 @@ const rccgTimeline = [
   },
   {
     year: '1973',
-    title: 'The Founding Pastor\'s Passing',
-    text: 'Rev. Josiah Akindayomi passed away, but not before recording his succession instructions on tape — instructions that would confirm Pastor Enoch Adejare Adeboye as his successor, in fulfilment of a divine prophecy.',
+    title: 'A Successor is Appointed',
+    text: 'Dr Enoch Adejare Adeboye — then a Mathematics lecturer at the University of Lagos — joined the RCCG and began serving as an interpreter for Rev. Akindayomi, translating live sermons from Yoruba to English. He was ordained a pastor of the church in 1975, fulfilling a prophecy the founder had received in the early 1970s about a young educated man who would be his successor.',
   },
   {
     year: '1981',
-    title: 'Pastor Adeboye Takes the Helm',
-    text: 'Pastor Enoch A. Adeboye, then a Mathematics lecturer at the University of Lagos, became the General Overseer of RCCG. Under his visionary leadership, the church would embark on an extraordinary era of global expansion.',
+    title: 'The Baton Passes',
+    text: 'Rev. Josiah Akindayomi went to be with the Lord. Prior to his passing, he had recorded succession instructions on tape that confirmed Dr Adeboye as his successor — a remarkable act for a man who could not read or write. Pastor E.A. Adeboye assumed the leadership of RCCG in January 1981, inheriting a congregation in Lagos and a covenant mandate to reach the nations.',
   },
   {
     year: '1986',
@@ -81,7 +81,8 @@ const jhTimeline = [
 ];
 ---
 
-<Layout heroDark={true}
+<Layout
+  heroDark={true}
   title="History of RCCG"
   description="Discover the history of the Redeemed Christian Church of God — from its founding in Nigeria in 1952 to its global presence, and the story of Jesus House Jamaica."
 >
@@ -106,16 +107,26 @@ const jhTimeline = [
         <span class="section-label">The RCCG Story</span>
         <h2 class="intro-heading">Founded in Faith, Built for the Nations</h2>
         <p>
-          The Redeemed Christian Church of God began not in a cathedral, but in a modest room
-          in Lagos, Nigeria — the fruit of one man's encounter with the living God. Rev. Josiah
-          Akindayomi, an unlettered but Spirit-baptised pastor, received a mandate that seemed
-          impossible by human standards: to plant a church that would reach every nation on earth.
+          The story of the Redeemed Christian Church of God begins with one man's restless pursuit
+          of the living God. Rev. Josiah Olufemi Akindayomi grew up in an environment of nature
+          worship yet sensed a greater power beyond what was commonly known to his people. His
+          search led him first to the Church Missionary Society, where he was baptised in 1927,
+          and then to the Cherubim and Seraphim Church. Through seasons of calling, business failure,
+          and repentance, he was humbled into total surrender — and God began to speak.
         </p>
         <p>
-          Seventy years later, that mandate has been fulfilled beyond anything the founder could
-          have imagined. With parishes in 198+ nations, millions of members worldwide, and one of
-          the largest single religious gatherings on earth — the RCCG stands as a testament to
-          what God can do through yielded vessels.
+          By 1952, Rev. Akindayomi had left the Cherubim and Seraphim Church over doctrinal concerns
+          and established a house fellowship in Lagos. The group grew rapidly as conversions and
+          remarkable miracles multiplied. In a supernatural encounter — extraordinary for a man who
+          could not read or write — God enabled him to write out the name of the church he was to
+          plant: "The Redeemed Christian Church of God." With it came a covenant promise: the nations
+          of the earth, and God's unfailing provision as long as His people remained obedient.
+        </p>
+        <p>
+          Seventy years on, that covenant has been honoured beyond anything the founder could have
+          imagined. With parishes in 198+ nations, tens of millions of members, and one of the
+          largest single religious gatherings on earth — the RCCG stands as a testament to what God
+          can do through yielded vessels.
         </p>
       </div>
       <div class="intro-stats">
@@ -381,7 +392,7 @@ const jhTimeline = [
 
   @media (min-width: 640px) {
     .timeline-dot {
-      left: -3.5rem;
+      left: calc(-3.5rem + 6px);
     }
   }
 
@@ -391,12 +402,12 @@ const jhTimeline = [
     width: 24px;
     height: 24px;
     top: 0.15rem;
-    left: calc(-3.5rem + 2px);
+    left: calc(-3.5rem + 4px);
   }
 
   @media (max-width: 639px) {
     .timeline-item--highlight .timeline-dot {
-      left: calc(-2.5rem + 2px);
+      left: calc(-2.5rem - 2px);
     }
   }
 
@@ -520,7 +531,8 @@ const jhTimeline = [
     flex: 1;
     min-height: 40px;
     background: rgba(212, 168, 67, 0.15);
-    margin: 0.5rem auto;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 
   @media (max-width: 640px) {

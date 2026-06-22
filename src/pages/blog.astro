@@ -13,7 +13,7 @@ const categories = [
 const categoryLabel = (id: string) => categories.find(c => c.id === id)?.label ?? id
 
 const allPosts = (await getCollection('blog')).sort(
-  (a, b) => b.data.date.localeCompare(a.data.date)
+  (a, b) => b.data.date.localeCompare(a.data.date),
 )
 
 const featuredPost = allPosts.find(p => p.data.featured) ?? allPosts[0]
@@ -29,7 +29,8 @@ function dateShort(iso: string) {
 }
 ---
 
-<Layout heroDark={true}
+<Layout
+  heroDark={true}
   title="Blog"
   description="Read devotionals, church news, and faith reflections from Jesus House Jamaica — RCCG Kingston, Jamaica. Empowering you for godly living through the written Word."
 >

@@ -1,0 +1,516 @@
+---
+import { getCollection, render } from 'astro:content'
+import rawEpisodes from '../data/podcast.json'
+import Layout from '../layouts/Layout.astro'
+
+// Sort newest first
+const episodes = [...rawEpisodes].sort((a, b) => b.date.localeCompare(a.date))
+const featured = episodes[0]
+
+// Load show notes keyed by videoId
+const noteEntries = await getCollection('podcast')
+const notesMap = new Map(noteEntries.map(e => [e.data.videoId, e]))
+
+// Render featured show notes body if a notes file exists
+const featuredEntry = featured ? notesMap.get(featured.id) : undefined
+let FeaturedContent: any = null
+if (featuredEntry) {
+  const rendered = await render(featuredEntry)
+  FeaturedContent = rendered.Content
+}
+---
+
+<Layout
+  title="Podcast — In The Pews"
+  description="In The Pews is a youth-centered Christian podcast by Jesus House Jamaica — real conversations about faith, church life, and everyday living."
+  heroDark={true}
+>
+
+  <!-- ── Hero ─────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="section-label">Jesus House Jamaica</span>
+      <h1 class="hero-title">In The Pews</h1>
+      <p class="hero-sub">
+        A youth-centered Christian podcast — conversations in the church,
+        outside the church, and everywhere in between.
+      </p>
+      <p class="hosts">
+        Hosted by <strong>Amarachi</strong> · <strong>Ruth</strong> · <strong>Joseph</strong>
+      </p>
+      <a
+        href="https://www.youtube.com/@jesushousekingston"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-gold"
+      >
+        Subscribe on YouTube
+      </a>
+    </div>
+  </section>
+
+  {featured && (
+    <section class="featured-section">
+      <div class="container">
+        <span class="section-label">Latest Episode</span>
+        <div class="ep-meta">
+          <div class="ep-badges">
+            {featured.episodeNumber != null && (
+              <span class="ep-badge">Ep {featured.episodeNumber}</span>
+            )}
+            {!featured.duration && (
+              <span class="ep-badge ep-badge--premiere">Premieres {featured.dateNice}</span>
+            )}
+          </div>
+          <h2 class="ep-title">{featured.title}</h2>
+          <p class="ep-info">{featured.dateNice}{featured.duration ? ` · ${featured.duration}` : ''}</p>
+        </div>
+
+        <div class="video-embed">
+          <iframe
+            src={`https://www.youtube.com/embed/${featured.id}`}
+            title={featured.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="eager"
+          ></iframe>
+        </div>
+
+        {featuredEntry && (
+          <div class="show-notes">
+            {featuredEntry.data.topics.length > 0 && (
+              <div class="topics">
+                <span class="topics-label">Topics</span>
+                <ul class="topics-list">
+                  {featuredEntry.data.topics.map(t => (
+                    <li class={`topic-pill${!featured.duration ? ' topic-pill--muted' : ''}`}>{t}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {!featured.duration ? (
+              <div class="coming-soon">
+                <div class="coming-soon-icon" aria-hidden="true">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <p class="coming-soon-heading">Show Notes Coming Soon</p>
+                <p class="coming-soon-sub">
+                  Full episode notes will be published when this episode premieres on <strong>{featured.dateNice}</strong>.
+                  Subscribe on YouTube so you don't miss it.
+                </p>
+                <a
+                  href={featured.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-gold"
+                >
+                  Set a Reminder on YouTube →
+                </a>
+              </div>
+            ) : FeaturedContent && (
+              <div class="notes-body">
+                <FeaturedContent />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  {episodes.length > 1 && (
+    <section class="archive-section">
+      <div class="container">
+        <span class="section-label">All Episodes</span>
+        <h2 class="archive-heading">Episode Archive</h2>
+        <div class="episode-grid">
+          {episodes.slice(1).map((ep) => {
+            const notes = notesMap.get(ep.id)
+            return (
+              <article class="ep-card">
+                <a
+                  href={ep.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="ep-thumb-link"
+                  aria-label={`Watch ${ep.title} on YouTube`}
+                >
+                  <div class="ep-thumb-wrap">
+                    <img
+                      src={ep.thumbnail}
+                      alt={ep.title}
+                      class="ep-thumb"
+                      loading="lazy"
+                      width="320"
+                      height="180"
+                    />
+                    {ep.episodeNumber != null && (
+                      <span class="ep-badge ep-badge--overlay">Ep {ep.episodeNumber}</span>
+                    )}
+                    {!ep.duration && (
+                      <span class="ep-premiere-overlay">Premieres {ep.dateNice}</span>
+                    )}
+                  </div>
+                </a>
+                <div class="ep-card-body">
+                  <h3 class="ep-card-title">{ep.title}</h3>
+                  <p class="ep-card-info">{ep.dateNice}{ep.duration ? ` · ${ep.duration}` : ' · Upcoming'}</p>
+                  {notes && notes.data.topics.length > 0 && (
+                    <details class="ep-notes-toggle">
+                      <summary>Show Notes</summary>
+                      <ul class="topics-list topics-list--sm">
+                        {notes.data.topics.map(t => (
+                          <li class="topic-pill">{t}</li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
+                  <a
+                    href={ep.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="ep-watch-link"
+                  >
+                    Watch on YouTube →
+                  </a>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+</Layout>
+
+<style>
+  /* ── Hero ──────────────────────────────────────── */
+  .hero {
+    background-color: var(--color-navy);
+    padding: var(--section-padding) 0 calc(var(--section-padding) * 0.75);
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 680px;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: var(--color-white);
+    line-height: 1.05;
+  }
+
+  .hero-sub {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.78);
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  .hosts {
+    font-size: 0.9rem;
+    color: var(--color-gold);
+    letter-spacing: 0.04em;
+  }
+
+  .hosts strong {
+    font-weight: 700;
+    color: var(--color-gold);
+  }
+
+  /* ── Featured ──────────────────────────────────── */
+  .featured-section {
+    padding: var(--section-padding) 0;
+    background-color: var(--color-cream);
+  }
+
+  .ep-meta {
+    margin-bottom: 1.5rem;
+  }
+
+  .ep-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ep-badge {
+    display: inline-block;
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+
+  .ep-badge--premiere {
+    background-color: var(--color-coral);
+    color: var(--color-white);
+  }
+
+  .ep-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: var(--color-navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .ep-info {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background-color: #000;
+    margin-bottom: 2rem;
+  }
+
+  .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ── Show Notes ────────────────────────────────── */
+  .show-notes {
+    border-top: 1px solid rgba(44, 24, 16, 0.1);
+    padding-top: 2rem;
+    margin-top: 1rem;
+  }
+
+  .topics {
+    margin-bottom: 1.5rem;
+  }
+
+  .topics-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .topics-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .topic-pill {
+    background-color: rgba(212, 168, 67, 0.15);
+    color: var(--color-navy);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 168, 67, 0.35);
+  }
+
+  .coming-soon {
+    border-top: 1px solid rgba(44, 24, 16, 0.1);
+    padding-top: 2rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    max-width: 560px;
+  }
+
+  .coming-soon-icon {
+    color: var(--color-gold);
+  }
+
+  .coming-soon-heading {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+
+  .coming-soon-sub {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .topic-pill--muted {
+    opacity: 0.5;
+  }
+
+  .ep-premiere-overlay {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: rgba(224, 90, 43, 0.88);
+    color: var(--color-white);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .notes-body {
+    color: var(--color-text);
+    line-height: 1.75;
+    max-width: 680px;
+  }
+
+  .notes-body :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-navy);
+    margin: 1.75rem 0 0.6rem;
+  }
+
+  .notes-body :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--color-navy);
+    margin: 1.25rem 0 0.4rem;
+  }
+
+  .notes-body :global(p) {
+    margin-bottom: 1rem;
+  }
+
+  /* ── Archive ───────────────────────────────────── */
+  .archive-section {
+    padding: var(--section-padding) 0;
+    background-color: var(--color-white);
+  }
+
+  .archive-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-navy);
+    margin-bottom: 2.5rem;
+  }
+
+  .episode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .ep-card {
+    border: 1px solid rgba(44, 24, 16, 0.08);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--color-white);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ep-card:hover {
+      box-shadow: 0 8px 32px rgba(44, 24, 16, 0.12);
+      transform: translateY(-2px);
+    }
+  }
+
+  .ep-thumb-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: #111;
+  }
+
+  .ep-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ep-card:hover .ep-thumb { transform: scale(1.03); }
+  }
+
+  .ep-badge--overlay {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    margin: 0;
+  }
+
+  .ep-card-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .ep-card-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    line-height: 1.3;
+  }
+
+  .ep-card-info {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .ep-notes-toggle {
+    margin-top: 0.5rem;
+  }
+
+  .ep-notes-toggle summary {
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    list-style: none;
+    user-select: none;
+  }
+
+  .ep-notes-toggle summary::-webkit-details-marker { display: none; }
+
+  .topics-list--sm {
+    margin-top: 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .topics-list--sm .topic-pill {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.65rem;
+  }
+
+  .ep-watch-link {
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .ep-watch-link:hover { color: var(--color-gold); }
+</style>
