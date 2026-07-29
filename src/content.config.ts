@@ -67,6 +67,11 @@ const podcast = defineCollection({
     videoId: z.string(),
     episodeNumber: z.number().optional(),
     topics: z.array(z.string()).default([]),
+    transcript: z.array(z.object({
+      timestamp: z.string(),
+      speaker: z.string().optional().default(''),
+      text: z.string(),
+    })).optional().default([]),
   }),
 })
 

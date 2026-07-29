@@ -33,3 +33,9 @@ pnpm-debug.log*
 scripts/__pycache__/
 **/__pycache__/
 *.pyc
+
+# Podcast audio files — download locally with:
+#   python3 scripts/fetch-transcript.py <videoId> --episode N --audio
+public/audio/*.mp3
+public/audio/*.m4a
+public/audio/*.webm

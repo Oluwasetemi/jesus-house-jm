@@ -126,14 +126,14 @@ if (featuredEntry) {
         <div class="episode-grid">
           {episodes.slice(1).map((ep) => {
             const notes = notesMap.get(ep.id)
+            const epPage = ep.episodeNumber != null ? `/podcast/${ep.episodeNumber}` : null
             return (
               <article class="ep-card">
                 <a
-                  href={ep.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={epPage ?? ep.url}
+                  {...(epPage ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
                   class="ep-thumb-link"
-                  aria-label={`Watch ${ep.title} on YouTube`}
+                  aria-label={epPage ? `View ${ep.title}` : `Watch ${ep.title} on YouTube`}
                 >
                   <div class="ep-thumb-wrap">
                     <img
@@ -165,14 +165,13 @@ if (featuredEntry) {
                       </ul>
                     </details>
                   )}
-                  <a
-                    href={ep.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="ep-watch-link"
-                  >
-                    Watch on YouTube →
-                  </a>
+                  {epPage ? (
+                    <a href={epPage} class="ep-watch-link">View Episode →</a>
+                  ) : (
+                    <a href={ep.url} target="_blank" rel="noopener noreferrer" class="ep-watch-link">
+                      Watch on YouTube →
+                    </a>
+                  )}
                 </div>
               </article>
             )

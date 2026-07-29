@@ -1,0 +1,372 @@
+---
+import { getCollection } from 'astro:content'
+import rawEpisodes from '../../../data/podcast.json'
+import Layout from '../../../layouts/Layout.astro'
+
+export async function getStaticPaths() {
+  const noteEntries = await getCollection('podcast')
+  return noteEntries
+    .filter(e => e.data.episodeNumber != null)
+    .map(e => ({ params: { episodeNumber: String(e.data.episodeNumber) } }))
+}
+
+const { episodeNumber } = Astro.params
+const epNum = Number(episodeNumber)
+
+const noteEntries = await getCollection('podcast')
+const entry = noteEntries.find(e => e.data.episodeNumber === epNum)
+const ep = rawEpisodes.find(e => e.episodeNumber === epNum)
+
+if (!entry || !ep) {
+  return Astro.redirect('/podcast')
+}
+
+const transcript = entry.data.transcript ?? []
+const isPremiered = Boolean(ep.duration)
+const basePath = `/podcast/${episodeNumber}`
+---
+
+<Layout
+  title={`Transcript: ${ep.title} — In The Pews`}
+  description={`Full transcript for ${ep.title}, a Jesus House Jamaica podcast episode.`}
+  heroDark={true}
+>
+
+  <!-- ── Episode Header ───────────────────────────── -->
+  <section class="ep-hero">
+    <div class="container ep-hero-inner">
+      <a href="/podcast" class="back-link">← All Episodes</a>
+      <div class="ep-badges">
+        <span class="ep-badge">Ep {ep.episodeNumber}</span>
+        {!isPremiered && (
+          <span class="ep-badge ep-badge--premiere">Premieres {ep.dateNice}</span>
+        )}
+      </div>
+      <h1 class="ep-title">{ep.title}</h1>
+      <p class="ep-meta">{ep.dateNice}{ep.duration ? ` · ${ep.duration}` : ''}</p>
+    </div>
+  </section>
+
+  <!-- ── Video ────────────────────────────────────── -->
+  <section class="video-section">
+    <div class="container">
+      <div class="video-embed">
+        <iframe
+          src={`https://www.youtube.com/embed/${ep.id}`}
+          title={ep.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tabs ─────────────────────────────────────── -->
+  <section class="tabs-section">
+    <div class="container">
+      <nav class="tabs" aria-label="Episode content">
+        <a href={basePath} class="tab">Show Notes</a>
+        <a href={`${basePath}/transcript`} class="tab tab--active">Transcript</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ── Transcript Body ──────────────────────────── -->
+  <section class="transcript-section">
+    <div class="container transcript-container">
+      {transcript.length === 0 ? (
+        <div class="no-transcript">
+          <div class="no-transcript-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <p class="no-transcript-heading">Transcript Not Yet Available</p>
+          <p class="no-transcript-sub">
+            {!isPremiered
+              ? `This episode premieres on ${ep.dateNice}. The transcript will be added after it airs.`
+              : 'We\'re working on the full transcript for this episode. Check back soon.'}
+          </p>
+          <a href={basePath} class="btn btn-gold">View Show Notes →</a>
+        </div>
+      ) : (
+        <div class="transcript">
+          {transcript.map((line: { timestamp: string; speaker: string; text: string }) => (
+            <div class="transcript-line">
+              <span class="ts">{line.timestamp}</span>
+              <span class="ts-connector" aria-hidden="true"></span>
+              <div class="ts-dialogue">
+                {line.speaker && <span class="ts-speaker">{line.speaker}</span>}
+                <p class="ts-text">{line.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ── Episode Nav ──────────────────────────────── -->
+  <section class="ep-nav-section">
+    <div class="container ep-nav">
+      {epNum > 1 && (
+        <a href={`/podcast/${epNum - 1}`} class="ep-nav-link ep-nav-link--prev">
+          ← Episode {epNum - 1}
+        </a>
+      )}
+      {rawEpisodes.find(e => e.episodeNumber === epNum + 1) && (
+        <a href={`/podcast/${epNum + 1}`} class="ep-nav-link ep-nav-link--next">
+          Episode {epNum + 1} →
+        </a>
+      )}
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* ── Hero ──────────────────────────────────────── */
+  .ep-hero {
+    background-color: var(--color-navy);
+    padding: var(--section-padding) 0 2rem;
+  }
+
+  .ep-hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 800px;
+  }
+
+  .back-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .back-link:hover { color: var(--color-gold); }
+
+  .ep-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .ep-badge {
+    display: inline-block;
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+
+  .ep-badge--premiere {
+    background-color: var(--color-coral);
+    color: var(--color-white);
+  }
+
+  .ep-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--color-white);
+    line-height: 1.1;
+  }
+
+  .ep-meta {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* ── Video ─────────────────────────────────────── */
+  .video-section {
+    background-color: var(--color-navy);
+    padding-bottom: 0;
+  }
+
+  .video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    background-color: #000;
+    max-width: 800px;
+  }
+
+  .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ── Tabs ──────────────────────────────────────── */
+  .tabs-section {
+    background-color: var(--color-cream);
+    border-bottom: 3px solid var(--color-gold);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    max-width: 800px;
+    padding-top: 1.25rem;
+  }
+
+  .tab {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    text-decoration: none;
+    border-radius: 5px 5px 0 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    position: relative;
+    bottom: -3px;
+  }
+
+  .tab:hover {
+    color: var(--color-navy);
+    background-color: rgba(212, 168, 67, 0.12);
+  }
+
+  .tab--active {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+    border-bottom: 3px solid var(--color-gold);
+  }
+
+  .tab--active:hover {
+    background-color: var(--color-gold);
+    color: var(--color-navy);
+  }
+
+  /* ── Transcript ────────────────────────────────── */
+  .transcript-section {
+    background-color: var(--color-cream);
+    padding: 2.5rem 0 var(--section-padding);
+  }
+
+  .transcript-container {
+    max-width: 800px;
+  }
+
+  .transcript {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .transcript-line {
+    display: grid;
+    grid-template-columns: 80px 24px 1fr;
+    gap: 0 0;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(44, 24, 16, 0.06);
+  }
+
+  .transcript-line:last-child { border-bottom: none; }
+
+  .ts {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.2rem;
+    letter-spacing: 0.02em;
+  }
+
+  .ts-connector {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ts-connector::before {
+    content: '';
+    position: absolute;
+    top: 0.55rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(212, 168, 67, 0.4);
+  }
+
+  .ts-dialogue {
+    padding-left: 0.5rem;
+  }
+
+  .ts-speaker {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-navy);
+    margin-bottom: 0.2rem;
+  }
+
+  .ts-text {
+    font-size: 0.925rem;
+    color: var(--color-text);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── No Transcript ─────────────────────────────── */
+  .no-transcript {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    max-width: 560px;
+    padding-top: 1rem;
+  }
+
+  .no-transcript-icon { color: var(--color-gold); }
+
+  .no-transcript-heading {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-navy);
+  }
+
+  .no-transcript-sub {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  /* ── Episode Nav ───────────────────────────────── */
+  .ep-nav-section {
+    padding: 2rem 0;
+    background-color: var(--color-white);
+    border-top: 1px solid rgba(44, 24, 16, 0.08);
+  }
+
+  .ep-nav {
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+  }
+
+  .ep-nav-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .ep-nav-link:hover { color: var(--color-gold); }
+
+  .ep-nav-link--next { margin-left: auto; }
+</style>

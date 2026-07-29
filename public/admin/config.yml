@@ -64,6 +64,39 @@ collections:
       - {label: Registration URL, name: registrationUrl, widget: string, required: false}
       - {label: Body, name: body, widget: markdown, required: false}
 
+  # ── Podcast Episodes ───────────────────────────────────────────────
+  - name: podcast
+    label: Podcast Episodes
+    label_singular: Podcast Episode
+    folder: src/content/podcast
+    create: true
+    delete: false
+    extension: md
+    format: frontmatter
+    slug: 'episode-{{fields.episodeNumber}}'
+    summary: 'Ep {{fields.episodeNumber}} — {{fields.videoId}}'
+    fields:
+      - {label: YouTube Video ID, name: videoId, widget: string, hint: 'e.g. VnqO4Jj-NZY'}
+      - {label: Episode Number, name: episodeNumber, widget: number, value_type: int, min: 1}
+      - label: Topics
+        name: topics
+        widget: list
+        default: []
+        hint: One topic per entry
+        field: {label: Topic, name: topic, widget: string}
+      - label: Transcript
+        name: transcript
+        widget: list
+        required: false
+        default: []
+        hint: 'Auto-generate with: python3 scripts/fetch-transcript.py <videoId> --episode N --write'
+        summary: '{{fields.timestamp}} — {{fields.text}}'
+        fields:
+          - {label: Timestamp, name: timestamp, widget: string, hint: 'e.g. 1:23 or 12:34'}
+          - {label: Speaker, name: speaker, widget: string, required: false, default: '', hint: 'Amarachi / Ruth / Joseph — leave blank if unknown'}
+          - {label: Text, name: text, widget: text}
+      - {label: Show Notes, name: body, widget: markdown, required: false}
+
   # ── Sermon Timestamps ──────────────────────────────────────────────
   - name: sermons
     label: Sermon Timestamps
